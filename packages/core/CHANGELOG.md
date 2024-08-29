@@ -1,5 +1,11 @@
 # miniprogram-subpackage-optimization
 
+## 0.1.1
+
+### Patch Changes
+
+- [`7c25532`](https://github.com/rookie-luochao/miniprogram-subpackage-optimization/commit/7c255321cf0ce8a5c4ea6179f40ee01a6220f76a) Thanks [@rookie-luochao](https://github.com/rookie-luochao)! - fix: fix script
+
 ## 0.1.0
 
 ### Minor Changes
