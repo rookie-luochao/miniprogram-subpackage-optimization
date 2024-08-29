@@ -1,0 +1,14 @@
+{
+  "component": true,
+  "usingComponents": {
+    "nut-popup": "../../../node-modules/nutui-uniapp/components/popup/popup",
+    "nut-radio": "../../../node-modules/nutui-uniapp/components/radio/radio",
+    "nut-radio-group": "../../../node-modules/nutui-uniapp/components/radiogroup/radiogroup",
+    "nut-checkbox": "../../../node-modules/nutui-uniapp/components/checkbox/checkbox",
+    "modal": "../../components/Modal/index",
+    "nav-bar": "../../components/Navbar/index",
+    "health-records-edit": "../health-records-edit/index",
+    "drug-limit-modal": "./components/DrugLimitModal/index",
+    "pending-order-modal": "./components/PendingOrderModal/index"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "usingComponents": {
+    "overlay": "../../base/Overlay/Overlay",
+    "loading": "../../base/Loading/Loading",
+    "t-k-text": "../../base/TKText/TKText",
+    "avatar": "../../base/Avatar/Avatar"
+  }
+}

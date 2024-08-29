@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "添加药品",
+  "usingComponents": {
+    "add-drug": "../../node-modules/@clinic/core/src/pages/add-drug/index"
+  }
+}

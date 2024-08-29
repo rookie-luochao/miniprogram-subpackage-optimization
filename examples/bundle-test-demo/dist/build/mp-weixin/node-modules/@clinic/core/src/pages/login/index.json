@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "mp-weixin": "./components/mp-weixin/index"
+  }
+}

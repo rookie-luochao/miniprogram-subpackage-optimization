@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "登录",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "login": "../../node-modules/@clinic/core/src/pages/login/index"
+  }
+}

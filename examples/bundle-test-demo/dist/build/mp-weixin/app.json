@@ -1,0 +1,62 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/mine/index",
+    "pages/login/index",
+    "pages/settings/index",
+    "pages/dispatch-wait/index",
+    "pages/dispatch-success/index",
+    "pages/pay-detail/index",
+    "pages/inquiry-info/index",
+    "pages/inquiry-order/index",
+    "pages/inquiry-order-detail/index",
+    "pages/health-records/index",
+    "pages/health-records-detail/index",
+    "pages/health-records-edit/index",
+    "pages/add-drug/index",
+    "pages/chat/index",
+    "TUICallKit/src/Components/TUICallKit",
+    "pages/web-view/index"
+  ],
+  "subPackages": [
+    {
+      "root": "pages-patient",
+      "pages": ["patient/index", "patient-detail/index"]
+    },
+    {
+      "root": "pages-prescription",
+      "pages": ["prescription/index", "prescription-detail/index"]
+    }
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "便民门诊",
+    "navigationStyle": "default",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#F8F8F8",
+    "rpxCalcMaxDeviceWidth": 3840,
+    "rpxCalcBaseDeviceWidth": 3840,
+    "rpxCalcIncludeWidth": 750
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#2787fc",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "iconPath": "./static/home.png",
+        "selectedIconPath": "./static/home_active.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "iconPath": "./static/mine.png",
+        "selectedIconPath": "./static/mine_active.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

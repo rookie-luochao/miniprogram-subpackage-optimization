@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "等待派单",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "dispatch-wait": "../../node-modules/@clinic/core/src/pages/dispatch-wait/index"
+  }
+}

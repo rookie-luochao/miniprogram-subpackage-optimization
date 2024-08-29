@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "nut-pop-up": "../popup/popup",
+    "nut-cascader-item": "../cascaderitem/cascaderitem"
+  }
+}

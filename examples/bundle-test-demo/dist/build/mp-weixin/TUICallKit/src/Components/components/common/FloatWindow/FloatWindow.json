@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "float-window-mobile": "./mobile/FloatWindow"
+  }
+}

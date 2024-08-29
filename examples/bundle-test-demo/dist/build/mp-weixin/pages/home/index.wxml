@@ -1,0 +1,1 @@
+<view class="page data-v-3571dd29"><home wx:if="{{b}}" class="r data-v-3571dd29" u-r="homeRef" u-i="3571dd29-0" bind:__l="__l" u-p="{{b}}"/></view>

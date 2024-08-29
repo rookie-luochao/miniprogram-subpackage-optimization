@@ -1,0 +1,1 @@
+<view><message wx:if="{{c}}" class="{{['r', b]}}" u-r="message" u-i="8c538f86-0" bind:__l="__l" u-p="{{c}}"></message></view>

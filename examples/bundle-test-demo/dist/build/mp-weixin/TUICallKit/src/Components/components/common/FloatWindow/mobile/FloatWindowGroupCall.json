@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "t-k-image": "../../../base/TKImage/TKImage",
+    "timer": "../../Timer/Timer",
+    "t-k-text": "../../../base/TKText/TKText"
+  }
+}

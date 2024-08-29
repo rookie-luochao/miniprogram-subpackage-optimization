@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "nut-transition": "../transition/transition",
+    "nut-overlay": "../overlay/overlay",
+    "nut-icon": "../icon/icon"
+  }
+}

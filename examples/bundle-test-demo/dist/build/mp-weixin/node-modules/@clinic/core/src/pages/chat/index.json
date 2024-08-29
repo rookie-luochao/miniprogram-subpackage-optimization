@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "t-u-i-custom-message": "./components/message-custom/index",
+    "t-u-i-system-message": "./components/message-system/index",
+    "t-u-i-text-message": "./components/message-text/index"
+  }
+}

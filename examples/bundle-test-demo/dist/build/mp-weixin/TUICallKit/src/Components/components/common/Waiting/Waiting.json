@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "overlay-stream": "../OverlayStream/OverlayStream",
+    "avatar": "../../base/Avatar/Avatar",
+    "t-k-text": "../../base/TKText/TKText"
+  }
+}

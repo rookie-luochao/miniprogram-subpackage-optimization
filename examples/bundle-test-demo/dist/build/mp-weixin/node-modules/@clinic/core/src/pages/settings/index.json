@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "usingComponents": {
+    "nut-radio": "../../../node-modules/nutui-uniapp/components/radio/radio",
+    "nut-radio-group": "../../../node-modules/nutui-uniapp/components/radiogroup/radiogroup",
+    "nut-date-picker": "../../../node-modules/nutui-uniapp/components/datepicker/datepicker",
+    "nut-popup": "../../../node-modules/nutui-uniapp/components/popup/popup",
+    "modal": "../../components/Modal/index"
+  }
+}

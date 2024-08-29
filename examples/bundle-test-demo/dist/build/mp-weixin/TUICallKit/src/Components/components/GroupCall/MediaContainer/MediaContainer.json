@@ -1,0 +1,14 @@
+{
+  "component": true,
+  "usingComponents": {
+    "pusher": "../../common/Pusher/Pusher",
+    "player": "../../common/Player/Player",
+    "grid": "../../base/Grid/Grid",
+    "grid-item": "../../base/Grid/GridItem/GridItem",
+    "audio-stream": "../../common/AudioStream/AudioStream",
+    "t-k-stream-info": "../../common/TKStreamInfo/TKStreamInfo",
+    "float-window": "../../common/FloatWindow/FloatWindow",
+    "portal": "../../base/Portal/Portal",
+    "stream-loading": "./StreamLoading/StreamLoading"
+  }
+}

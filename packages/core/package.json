@@ -1,0 +1,41 @@
+{
+  "name": "miniprogram-subpackage-optimization",
+  "type": "module",
+  "description": "A powerful nodejs plugin which can help you to optimize miniprogram subpackage directory",
+  "version": "0.0.0",
+  "author": "rookie-luochao",
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=9"
+  },
+  "scripts": {
+    "build": "vite build",
+    "prepare": "rm -rf ./dist/",
+    "test": "npm run prepare && npm run build && vitest run"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "homepage": "https://github.com/rookie-luochao/miniprogram-subpackage-optimization",
+  "bugs": "https://github.com/rookie-luochao/miniprogram-subpackage-optimization/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rookie-luochao/miniprogram-subpackage-optimization.git",
+    "directory": "packages/core"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "fs-extra": "^11.2.0",
+    "globby": "^11.0.4"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.14.12",
+    "vite": "^5.3.5",
+    "vite-plugin-dts": "^3.9.1",
+    "vitest": "^2.0.4"
+  }
+}

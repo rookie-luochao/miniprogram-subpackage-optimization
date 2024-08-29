@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "t-dialog": "./components/Dialog/TDialog",
+    "t-transfer": "./components/Transfer/TTransfer"
+  }
+}

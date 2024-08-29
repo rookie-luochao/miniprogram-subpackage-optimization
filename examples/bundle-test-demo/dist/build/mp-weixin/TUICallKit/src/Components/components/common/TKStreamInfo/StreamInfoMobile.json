@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "usingComponents": {
+    "row": "../../base/Layout/Row/Row",
+    "col": "../../base/Layout/Col/Col",
+    "icon": "../../base/Icon/Icon",
+    "t-k-image": "../../base/TKImage/TKImage",
+    "t-k-text": "../../base/TKText/TKText"
+  }
+}

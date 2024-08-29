@@ -1,0 +1,17 @@
+{
+  "component": true,
+  "usingComponents": {
+    "grid": "../../base/Grid/Grid",
+    "grid-item": "../../base/Grid/GridItem/GridItem",
+    "t-k-camera": "../Button/Camera",
+    "hangup": "../Button/Hangup",
+    "accept": "../Button/Accept",
+    "microphone": "../Button/Microphone",
+    "reject": "../Button/Reject",
+    "speaker": "../Button/Speaker",
+    "switch-camera": "../Button/SwitchCamera",
+    "virtual-background": "../Button/VirtualBackground",
+    "toggle-button-panel": "../Button/ToggleButtonPanel",
+    "invite-user": "../Button/InviteUser"
+  }
+}

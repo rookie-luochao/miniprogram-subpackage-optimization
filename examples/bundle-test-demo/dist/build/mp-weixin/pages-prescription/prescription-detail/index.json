@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "处方详情",
+  "usingComponents": {
+    "prescription-detail": "../../node-modules/@clinic/core/src/pages/prescription-detail/index"
+  }
+}

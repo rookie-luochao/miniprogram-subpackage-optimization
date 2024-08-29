@@ -1,0 +1,1 @@
+<view class="page"><inquiry-order wx:if="{{b}}" class="r" u-r="inquiryOrderRef" u-i="5c777290-0" bind:__l="__l" u-p="{{b}}"/></view>

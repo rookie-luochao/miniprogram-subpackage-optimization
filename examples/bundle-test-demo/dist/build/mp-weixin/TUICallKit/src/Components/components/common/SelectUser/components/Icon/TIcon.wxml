@@ -1,0 +1,1 @@
+<view class="icon data-v-ce5f868e" bindtap="{{h}}"><image wx:if="{{a}}" class="icon data-v-ce5f868e" src="{{b}}" style="{{'width:' + c + ';' + ('height:' + d)}}"/><image wx:else class="icon data-v-ce5f868e" src="{{e}}" style="{{'width:' + f + ';' + ('height:' + g)}}"/></view>

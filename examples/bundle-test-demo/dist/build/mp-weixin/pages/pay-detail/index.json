@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "确认支付",
+  "usingComponents": {
+    "pay-detail": "../../node-modules/@clinic/core/src/pages/pay-detail/index"
+  }
+}

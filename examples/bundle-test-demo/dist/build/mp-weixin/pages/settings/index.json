@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "设置",
+  "usingComponents": {
+    "settings": "../../node-modules/@clinic/core/src/pages/settings/index"
+  }
+}

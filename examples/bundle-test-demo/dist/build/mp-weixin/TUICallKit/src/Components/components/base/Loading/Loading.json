@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "loading-dot": "./Dot/Dot",
+    "loading-circle": "./Circle/Circle"
+  }
+}

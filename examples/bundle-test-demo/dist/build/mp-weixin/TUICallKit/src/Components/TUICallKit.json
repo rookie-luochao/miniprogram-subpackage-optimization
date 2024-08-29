@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "视频问诊",
+  "usingComponents": {
+    "single-call": "./components/SingleCall/SingleCall",
+    "group-call": "./components/GroupCall/GroupCall"
+  }
+}

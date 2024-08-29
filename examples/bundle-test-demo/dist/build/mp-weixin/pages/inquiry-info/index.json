@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "问诊信息",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "inquiry-info": "../../node-modules/@clinic/core/src/pages/inquiry-info/index"
+  }
+}

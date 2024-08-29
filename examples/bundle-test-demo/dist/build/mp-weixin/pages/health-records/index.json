@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "健康档案",
+  "usingComponents": {
+    "health-records": "../../node-modules/@clinic/core/src/pages/health-records/index"
+  }
+}

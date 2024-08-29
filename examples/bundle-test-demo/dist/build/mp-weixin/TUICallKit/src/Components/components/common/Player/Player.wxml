@@ -1,0 +1,1 @@
+<view hidden="{{!e}}" id="{{f}}" class="player-container data-v-9e8318dd"><view hidden="{{!a}}" class="audio-stream-container data-v-9e8318dd"><slot name="audio-stream"/></view><slot name="loading"/><view class="{{['data-v-9e8318dd', b]}}"><slot name="stream-info"/></view><w-x-player wx:if="{{c}}" class="data-v-9e8318dd" u-i="9e8318dd-0" bind:__l="__l" u-p="{{d}}"/></view>

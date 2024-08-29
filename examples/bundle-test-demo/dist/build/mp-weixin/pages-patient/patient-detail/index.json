@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "就诊人信息",
+  "usingComponents": {
+    "patient-detail": "../../node-modules/@clinic/core/src/pages/patient-detail/index"
+  }
+}

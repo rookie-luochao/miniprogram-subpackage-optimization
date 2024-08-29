@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "派单成功",
+  "usingComponents": {
+    "dispatch-success": "../../node-modules/@clinic/core/src/pages/dispatch-success/index"
+  }
+}

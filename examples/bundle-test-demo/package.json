@@ -1,0 +1,12 @@
+{
+  "name": "bundle-test-demo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "miniprogram-subpackage-optimization": "node ./miniprogram-subpackage-optimization.config.mjs"
+  },
+  "devDependencies": {
+    "miniprogram-subpackage-optimization": "workspace:*"
+  }
+}

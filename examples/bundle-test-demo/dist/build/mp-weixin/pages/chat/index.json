@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "问诊室",
+  "usingComponents": {
+    "chat": "../../node-modules/@clinic/core/src/pages/chat/index"
+  }
+}

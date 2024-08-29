@@ -1,0 +1,13 @@
+{
+  "component": true,
+  "usingComponents": {
+    "toggle-window": "../../base/ToggleWindow/ToggleWindow",
+    "portal": "../../base/Portal/Portal",
+    "toggle-window-item": "../../base/ToggleWindow/ToggleWindowItem/ToggleWindowItem",
+    "t-k-stream-info": "../../common/TKStreamInfo/TKStreamInfo",
+    "pusher": "../../common/Pusher/Pusher",
+    "player": "../../common/Player/Player",
+    "audio-stream": "../../common/AudioStream/AudioStream",
+    "float-window": "../../common/FloatWindow/FloatWindow"
+  }
+}

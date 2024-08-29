@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "usingComponents": {
+    "row": "../../base/Layout/Row/Row",
+    "col": "../../base/Layout/Col/Col",
+    "minimize": "../Button/Minimize",
+    "invite-user": "../Button/InviteUser",
+    "timer": "../Timer/Timer"
+  }
+}

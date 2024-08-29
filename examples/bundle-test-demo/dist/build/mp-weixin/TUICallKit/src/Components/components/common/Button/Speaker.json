@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "button": "../../base/Button/Button",
+    "t-k-text": "../../base/TKText/TKText"
+  }
+}

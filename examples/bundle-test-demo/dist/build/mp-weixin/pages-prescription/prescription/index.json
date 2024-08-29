@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "我的处方",
+  "usingComponents": {
+    "prescription": "../../node-modules/@clinic/core/src/pages/prescription/index"
+  }
+}

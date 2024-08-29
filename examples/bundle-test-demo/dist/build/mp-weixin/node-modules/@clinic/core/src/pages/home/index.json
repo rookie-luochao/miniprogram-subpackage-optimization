@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "modal": "../../components/Modal/index",
+    "one-tree": "./components/OneTree/index"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "问诊订单",
+  "onReachBottomDistance": 50,
+  "usingComponents": {
+    "inquiry-order": "../../node-modules/@clinic/core/src/pages/inquiry-order/index"
+  }
+}

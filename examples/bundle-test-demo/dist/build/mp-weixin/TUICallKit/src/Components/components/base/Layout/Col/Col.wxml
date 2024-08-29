@@ -1,0 +1,1 @@
+<view class="{{a}}" style="{{'width:' + b + ';' + ('margin-left:' + c) + ';' + ('padding-left:' + d) + ';' + ('padding-right:' + e)}}"><slot/></view>

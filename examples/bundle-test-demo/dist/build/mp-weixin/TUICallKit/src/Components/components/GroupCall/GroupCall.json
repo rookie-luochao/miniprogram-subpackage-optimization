@@ -1,0 +1,12 @@
+{
+  "component": true,
+  "usingComponents": {
+    "top-bar": "../common/TopBar/TopBar",
+    "waiting": "../common/Waiting/Waiting",
+    "media-container": "./MediaContainer/MediaContainer",
+    "tip": "../common/Tip/Tip",
+    "button-panel": "../common/ButtonPanel/ButtonPanel",
+    "select-user": "../common/SelectUser/SelectUser",
+    "back-ground": "./BackGround/BackGround"
+  }
+}

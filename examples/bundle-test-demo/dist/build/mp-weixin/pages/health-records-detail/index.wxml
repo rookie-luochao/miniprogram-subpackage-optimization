@@ -1,0 +1,1 @@
+<view class="page"><health-records-detail wx:if="{{b}}" class="r" u-r="healthRecordsDetailRef" u-i="27e45d55-0" bind:__l="__l" u-p="{{b}}"/></view>

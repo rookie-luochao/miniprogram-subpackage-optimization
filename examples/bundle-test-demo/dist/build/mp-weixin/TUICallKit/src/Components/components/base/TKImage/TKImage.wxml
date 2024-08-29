@@ -1,0 +1,1 @@
+<view class="{{l}}" style="{{m}}"><block wx:if="{{a}}"><slot name="error"/></block><block wx:else><image wx:if="{{b}}" class="{{c}}" src="{{d}}" style="{{'object-fit:' + e}}" binderror="{{f}}"/><image wx:if="{{g}}" class="{{h}}" src="{{i}}" mode="{{j}}" binderror="{{k}}"/></block></view>

@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "float-window-single-call": "./FloatWindowSingleCall",
+    "float-window-group-call": "./FloatWindowGroupCall"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "nut-tabs": "../tabs/tabs",
+    "nut-tab-pane": "../tabpane/tabpane",
+    "nut-icon": "../icon/icon"
+  }
+}
