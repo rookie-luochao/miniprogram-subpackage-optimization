@@ -2,7 +2,7 @@
   "name": "miniprogram-subpackage-optimization",
   "type": "module",
   "description": "A powerful nodejs plugin which can help you to optimize miniprogram subpackage directory",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "rookie-luochao",
   "engines": {
     "node": ">=18",
