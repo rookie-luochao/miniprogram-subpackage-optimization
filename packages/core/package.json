@@ -10,8 +10,7 @@
   },
   "scripts": {
     "build": "vite build",
-    "prepare": "rm -rf ./dist/",
-    "test": "npm run prepare && npm run build && vitest run"
+    "test": "npm run build && vitest run"
   },
   "main": "dist/index.cjs",
   "module": "dist/index.js",
