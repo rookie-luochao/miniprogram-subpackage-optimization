@@ -1,5 +1,11 @@
 # miniprogram-subpackage-optimization
 
+## 0.2.0
+
+### Minor Changes
+
+- [`3a0522f`](https://github.com/rookie-luochao/miniprogram-subpackage-optimization/commit/3a0522f360f4e2f3fd5c7e9e5364fda1edb9da5b) Thanks [@rookie-luochao](https://github.com/rookie-luochao)! - feat: support collecting common dependencies of pages
+
 ## 0.1.1
 
 ### Patch Changes
