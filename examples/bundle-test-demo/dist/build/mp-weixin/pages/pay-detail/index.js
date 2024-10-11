@@ -7,13 +7,19 @@ const n = () => '../../node-modules/@clinic/core/src/pages/pay-detail/index.js',
     setup(n) {
       const a = e.ref(null);
       return (
-        e.onShow(async () => {
+        e.onLoad((n) => {
+          e.nextTick$1(() => {
+            var e;
+            null == (e = a.value) || e.pageOnLoad(n);
+          });
+        }),
+        e.onPageShow(() => {
           e.nextTick$1(() => {
             var e;
             null == (e = a.value) || e.pageOnShow();
           });
         }),
-        (n, o) => ({ a: e.sr(a, '4ef73e24-0', { k: 'payDetailRef' }) })
+        (n, o) => ({ a: e.sr(a, '6abfaa35-0', { k: 'payDetailRef' }) })
       );
     },
   });

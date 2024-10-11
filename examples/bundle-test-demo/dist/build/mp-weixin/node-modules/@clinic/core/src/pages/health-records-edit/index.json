@@ -4,6 +4,7 @@
     "nut-textarea": "../../../node-modules/nutui-uniapp/components/textarea/textarea",
     "nut-date-picker": "../../../node-modules/nutui-uniapp/components/datepicker/datepicker",
     "nut-popup": "../../../node-modules/nutui-uniapp/components/popup/popup",
+    "modal": "../../components/Modal/index",
     "upload-img": "../../components/Upload/index",
     "drug-item-scan": "./components/DrugItemScan/index"
   }

@@ -148,7 +148,7 @@ const O = '3.3.3',
             console.log(
               `${i.NAME.PREFIX}init sdkAppId: ${C || A}, userId: ${o}`
             ),
-            (this._tuiCallEngine = l.QS.createInstance({
+            (this._tuiCallEngine = l.ZS.createInstance({
               tim: r,
               sdkAppID: C || A,
               callkitVersion: O,

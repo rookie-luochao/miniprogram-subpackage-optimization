@@ -231,7 +231,7 @@ const t = () => '../icon/icon.js',
                       'line' === t.type ? { a: e.s(R.value) } : {},
                       'smile' === t.type
                         ? {
-                            b: '32481f08-0-' + o,
+                            b: '0c383266-0-' + o,
                             c: e.p({
                               name: 'joy-smile',
                               'custom-color': t.customColor,

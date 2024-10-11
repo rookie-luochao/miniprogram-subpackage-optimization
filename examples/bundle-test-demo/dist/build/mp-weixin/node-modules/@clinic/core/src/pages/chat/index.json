@@ -1,6 +1,7 @@
 {
   "component": true,
   "usingComponents": {
+    "uni-load-more": "../../../node-modules/@dcloudio/uni-ui/lib/uni-load-more/uni-load-more",
     "t-u-i-custom-message": "./components/message-custom/index",
     "t-u-i-system-message": "./components/message-system/index",
     "t-u-i-text-message": "./components/message-text/index"

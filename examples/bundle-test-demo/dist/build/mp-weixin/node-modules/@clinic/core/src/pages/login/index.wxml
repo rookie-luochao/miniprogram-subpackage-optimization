@@ -1,1 +1,1 @@
-<view class="login data-v-ce7030ea"><mp-weixin wx:if="{{b}}" class="r data-v-ce7030ea" u-r="weixinRef" u-i="ce7030ea-0" bind:__l="__l" u-p="{{b}}"></mp-weixin></view>
+<view class="login data-v-06d19484"><mp-weixin wx:if="{{b}}" class="r data-v-06d19484" u-r="weixinRef" u-i="06d19484-0" bind:__l="__l" u-p="{{b}}"></mp-weixin></view>

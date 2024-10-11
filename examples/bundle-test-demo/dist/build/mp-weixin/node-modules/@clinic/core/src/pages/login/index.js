@@ -16,7 +16,7 @@ const n = () => './components/mp-weixin/index.js',
       return (
         a({
           pageOnLoad: (n) => {
-            (t.value = n),
+            n && (t.value = n),
               e.nextTick$1(() => {
                 var e, n, a;
                 null == (e = l.value) || e.pageOnLoad(),
@@ -26,11 +26,11 @@ const n = () => './components/mp-weixin/index.js',
           },
         }),
         (n, a) => ({
-          a: e.sr(u, 'ce7030ea-0', { k: 'weixinRef' }),
+          a: e.sr(u, '06d19484-0', { k: 'weixinRef' }),
           b: e.p({ 'init-tcsdk': r }),
         })
       );
     },
   }),
-  l = e._export_sfc(a, [['__scopeId', 'data-v-ce7030ea']]);
+  l = e._export_sfc(a, [['__scopeId', 'data-v-06d19484']]);
 wx.createComponent(l);

@@ -26,7 +26,11 @@ const n = () =>
             null == (e = a.value) || e.pageOnHide();
           });
         }),
-        (n, o) => ({ a: e.sr(a, '7ce87ca0-0', { k: 'dispatchWaitRef' }) })
+        e.onUnload(() => {
+          var e;
+          null == (e = a.value) || e.pageOnHide();
+        }),
+        (n, o) => ({ a: e.sr(a, '3c38e002-0', { k: 'dispatchWaitRef' }) })
       );
     },
   });

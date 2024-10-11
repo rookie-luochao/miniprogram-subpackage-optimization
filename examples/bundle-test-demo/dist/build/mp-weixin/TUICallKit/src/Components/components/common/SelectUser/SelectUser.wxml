@@ -1,1 +1,1 @@
-<t-dialog wx:if="{{g}}" u-s="{{['d']}}" bindupdateModuleValue="{{f}}" u-i="29ac4436-0" bind:__l="__l" u-p="{{g}}"><t-transfer wx:if="{{e}}" bindgetMore="{{a}}" bindsearch="{{b}}" bindsubmit="{{c}}" bindcancel="{{d}}" u-i="29ac4436-1,29ac4436-0" bind:__l="__l" u-p="{{e}}"/></t-dialog>
+<t-dialog wx:if="{{g}}" u-s="{{['d']}}" bindupdateModuleValue="{{f}}" u-i="1eee1d98-0" bind:__l="__l" u-p="{{g}}"><t-transfer wx:if="{{e}}" bindgetMore="{{a}}" bindsearch="{{b}}" bindsubmit="{{c}}" bindcancel="{{d}}" u-i="1eee1d98-1,1eee1d98-0" bind:__l="__l" u-p="{{e}}"/></t-dialog>

@@ -26,9 +26,14 @@ const n = () =>
             null == (e = o.value) || e.pageOnScroll(n);
           });
         }),
-        (n, r) => ({
-          a: e.sr(o, '7d20a87c-0', { k: 'inquiryInfoRef' }),
-          b: e.p({ 'is-follow-up-info-required': !1 }),
+        (n, i) => ({
+          a: e.sr(o, '0ccd5793-0', { k: 'inquiryInfoRef' }),
+          b: e.p({
+            'is-prescription-auth': !1,
+            'is-follow-up-info-required': !1,
+            'is-payment': !0,
+            'is-open-drug-confirm': !0,
+          }),
         })
       );
     },

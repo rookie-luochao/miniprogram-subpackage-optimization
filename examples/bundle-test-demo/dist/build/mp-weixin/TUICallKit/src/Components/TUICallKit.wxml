@@ -1,1 +1,1 @@
-<view wx:if="{{a}}" style="{{c}}" id="tuicallkit-id" class="{{[d, e, f, g]}}"><single-call wx:if="{{b}}" class="singCall" u-i="2280b77f-0" bind:__l="__l"></single-call><group-call wx:else class="singCall" u-i="2280b77f-1" bind:__l="__l"></group-call></view>
+<view wx:if="{{a}}" style="{{c}}" id="tuicallkit-id" class="{{[d, e, f, g]}}"><single-call wx:if="{{b}}" class="singCall" u-i="eea39c60-0" bind:__l="__l"></single-call><group-call wx:else class="singCall" u-i="eea39c60-1" bind:__l="__l"></group-call></view>

@@ -2,7 +2,12 @@
 const e = require('../../../../../../../../common/vendor.js'),
   a = e.defineComponent({
     __name: 'index',
-    props: { message: {} },
+    props: {
+      message: {},
+      orderDetail: {},
+      handleToTransfer: {},
+      handleToRefund: {},
+    },
     setup(a) {
       const t = a,
         l = e.ref(null);
@@ -16,7 +21,7 @@ const e = require('../../../../../../../../common/vendor.js'),
       const u = (a) => {
           e.index.previewImage({ urls: [a], current: 1 });
         },
-        v = () => {
+        n = () => {
           var a, t;
           e.appNavigator.navigateTo(
             e.appNavigator.pagesMap['prescription-detail'],
@@ -28,24 +33,16 @@ const e = require('../../../../../../../../common/vendor.js'),
               },
             }
           );
-        },
-        r = () => {
-          var a;
-          e.appNavigator.redirectTo(e.appNavigator.pagesMap.chat, {
-            query: {
-              orderID: null == (a = l.value) ? void 0 : a.inquiryOrderID,
-            },
-          });
         };
       return (a, t) => {
-        var o, i, n, p, d, s, m, c, g, N, y, f, I, x;
+        var r, o, v, i, d, p, s, m, c, N, y, f, g, h, D, I, S, T, x, O;
         return e.e(
-          { a: 'image' === (null == (o = l.value) ? void 0 : o.type) },
-          'image' === (null == (i = l.value) ? void 0 : i.type)
+          { a: 'image' === (null == (r = l.value) ? void 0 : r.type) },
+          'image' === (null == (o = l.value) ? void 0 : o.type)
             ? { b: l.value.src, c: e.o((e) => u(l.value.src)) }
             : {},
-          { d: 'patientInfo' === (null == (n = l.value) ? void 0 : n.type) },
-          'patientInfo' === (null == (p = l.value) ? void 0 : p.type)
+          { d: 'patientInfo' === (null == (v = l.value) ? void 0 : v.type) },
+          'patientInfo' === (null == (i = l.value) ? void 0 : i.type)
             ? e.e(
                 { e: e.t(l.value.patientName), f: l.value.patientName },
                 (l.value.patientName, {}),
@@ -55,7 +52,7 @@ const e = require('../../../../../../../../common/vendor.js'),
                   i: e.t(e.unref(e.formatValue)(l.value.illDesc)),
                   j: null == (d = l.value.treatedFileUrls) ? void 0 : d.length,
                 },
-                (null == (s = l.value.treatedFileUrls) ? void 0 : s.length)
+                (null == (p = l.value.treatedFileUrls) ? void 0 : p.length)
                   ? {
                       k: e.f(l.value.treatedFileUrls, (a, t, l) => ({
                         a: a,
@@ -66,8 +63,8 @@ const e = require('../../../../../../../../common/vendor.js'),
                   : {}
               )
             : {},
-          { l: 'reviewPass' === (null == (m = l.value) ? void 0 : m.type) },
-          'reviewPass' === (null == (c = l.value) ? void 0 : c.type)
+          { l: 'reviewPass' === (null == (s = l.value) ? void 0 : s.type) },
+          'reviewPass' === (null == (m = l.value) ? void 0 : m.type)
             ? e.e(
                 { m: e.t(l.value.patientName), n: l.value.patientName },
                 (l.value.patientName, {}),
@@ -75,50 +72,90 @@ const e = require('../../../../../../../../common/vendor.js'),
                   o: e.t(l.value.patientSex),
                   p: e.t(l.value.patientAge),
                   q: e.t(e.unref(e.formatValue)(l.value.diagnosis)),
-                  r: e.o(v),
+                  r: e.o(n),
                 }
               )
             : {},
-          { s: 'transfer' === (null == (g = l.value) ? void 0 : g.type) },
+          { s: 'transfer' === (null == (c = l.value) ? void 0 : c.type) },
           'transfer' === (null == (N = l.value) ? void 0 : N.type)
             ? e.e(
                 {
-                  t: l.value.photoUrl,
-                  v: e.t(l.value.doctorName),
-                  w: l.value.doctorName,
+                  t: e.t(
+                    (null == (y = a.orderDetail) ? void 0 : y.payStatus) ===
+                      e.unref(e.PaymentStatusEnum).NoNeed
+                      ? '已为您转诊，请联系医生'
+                      : '请点击下方按钮进行转诊'
+                  ),
+                  v: l.value.photoUrl,
+                  w: e.t(l.value.doctorName),
+                  x: l.value.doctorName,
                 },
                 (l.value.doctorName, {}),
                 {
-                  x: e.t(l.value.titleName),
-                  y: e.t(l.value.sectionName),
-                  z: e.t(l.value.orgName),
-                  A: e.o(r),
+                  y: e.t(l.value.titleName),
+                  z: e.t(l.value.sectionName),
+                  A: e.t(l.value.orgName),
+                  B: e.t(
+                    (null == (f = a.orderDetail) ? void 0 : f.payStatus) ===
+                      e.unref(e.PaymentStatusEnum).NoNeed
+                      ? '联系医生'
+                      : '去转诊'
+                  ),
+                  C: e.o((t) => {
+                    var u;
+                    return (null == (u = a.orderDetail)
+                      ? void 0
+                      : u.payStatus) === e.unref(e.PaymentStatusEnum).NoNeed
+                      ? (() => {
+                          var a;
+                          e.appNavigator.redirectTo(
+                            e.appNavigator.pagesMap.chat,
+                            {
+                              query: {
+                                orderID:
+                                  null == (a = l.value)
+                                    ? void 0
+                                    : a.inquiryOrderID,
+                              },
+                            }
+                          );
+                        })()
+                      : a.handleToTransfer(l.value);
+                  }),
                 }
               )
             : {},
-          { B: 'goOn' === (null == (y = l.value) ? void 0 : y.type) },
-          'goOn' === (null == (f = l.value) ? void 0 : f.type)
+          { D: 'goOn' === (null == (g = l.value) ? void 0 : g.type) },
+          'goOn' === (null == (h = l.value) ? void 0 : h.type)
             ? e.e(
                 {
-                  C: l.value.photoUrl,
-                  D: e.t(l.value.doctorName),
-                  E: l.value.doctorName,
+                  E: l.value.photoUrl,
+                  F: e.t(l.value.doctorName),
+                  G: l.value.doctorName,
                 },
                 (l.value.doctorName, {}),
                 {
-                  F: e.t(l.value.titleName),
-                  G: e.t(l.value.sectionName),
-                  H: e.t(l.value.orgName),
+                  H: e.t(l.value.titleName),
+                  I: e.t(l.value.sectionName),
+                  J: e.t(l.value.orgName),
                 }
               )
             : {},
-          { I: 'notSupport' === (null == (I = l.value) ? void 0 : I.type) },
-          'notSupport' === (null == (x = l.value) ? void 0 : x.type)
-            ? { J: e.t(l.value.text) }
+          { K: 'refund' === (null == (D = l.value) ? void 0 : D.type) },
+          'refund' === (null == (I = l.value) ? void 0 : I.type)
+            ? { L: e.o((e) => a.handleToRefund(l.value)) }
+            : {},
+          { M: 'checkOutRefund' === (null == (S = l.value) ? void 0 : S.type) },
+          'checkOutRefund' === (null == (T = l.value) ? void 0 : T.type)
+            ? { N: e.o((e) => a.handleToRefund(l.value)) }
+            : {},
+          { O: 'notSupport' === (null == (x = l.value) ? void 0 : x.type) },
+          'notSupport' === (null == (O = l.value) ? void 0 : O.type)
+            ? { P: e.t(l.value.text) }
             : {}
         );
       };
     },
   }),
-  t = e._export_sfc(a, [['__scopeId', 'data-v-b43022e8']]);
+  t = e._export_sfc(a, [['__scopeId', 'data-v-59b54c47']]);
 wx.createComponent(t);

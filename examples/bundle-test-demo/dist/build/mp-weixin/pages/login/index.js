@@ -14,7 +14,7 @@ const o = () => '../../node-modules/@clinic/core/src/pages/login/index.js',
             null == (e = r.value) || e.pageOnLoad(n.TCSDK);
           });
         }),
-        (n, o) => ({ a: e.sr(r, '0e70d41e-0', { k: 'loginRef' }) })
+        (n, o) => ({ a: e.sr(r, '1cde2340-0', { k: 'loginRef' }) })
       );
     },
   });

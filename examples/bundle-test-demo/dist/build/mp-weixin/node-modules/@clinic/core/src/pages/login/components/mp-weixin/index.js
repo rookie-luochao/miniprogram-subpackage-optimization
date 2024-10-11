@@ -14,12 +14,12 @@ const a = e.defineComponent({
         {
           ORG_ID: s,
           ORG_CODE: c,
-          YOU_AI_SOURCE: r,
-          YOU_AI_USERNAME: d,
+          ORG_SOURCE: r,
+          WECHAT_ORIGINAL_ID: d,
         } = i.CONFIG,
         p = a,
         g = e.ref(!0),
-        u = async () => {
+        l = async () => {
           try {
             e.index.showLoading({ title: '加载中…', mask: !0 });
             const { code: a } = await e.index.login(),
@@ -34,9 +34,9 @@ const a = e.defineComponent({
             e.index.hideLoading();
           }
         },
-        l = e.ref(!1),
+        u = e.ref(!1),
         m = () =>
-          !!l.value ||
+          !!u.value ||
           (e.index.showToast({ title: '请先阅读用户协议并勾选', icon: 'none' }),
           !1),
         h = async (a) => {
@@ -46,26 +46,32 @@ const a = e.defineComponent({
               icon: 'none',
             });
           const o = a.detail.code;
-          try {
-            e.index.showLoading({ title: '登录中...', mask: !0 });
-            const { code: a } = await e.index.login(),
-              t = await e.index.getUserInfo(),
-              { iv: n, encryptedData: i } = t,
-              p = {
-                code: a,
-                encryptedData: i,
-                iv: n,
-                phoneCode: o,
-                orgCode: c,
-                orgID: s,
-                source: r,
-                toUserName: d,
-              },
-              { data: g } = await e.requestWxLogin(p);
-            v({ access_token: g.access_token });
-          } finally {
-            e.index.hideLoading();
-          }
+          if (o)
+            try {
+              e.index.showLoading({ title: '登录中...', mask: !0 });
+              const { code: a } = await e.index.login(),
+                t = await e.index.getUserInfo(),
+                { iv: n, encryptedData: i } = t,
+                p = {
+                  code: a,
+                  encryptedData: i,
+                  iv: n,
+                  phoneCode: o,
+                  orgCode: c,
+                  orgID: s,
+                  source: r,
+                  toUserName: d,
+                },
+                { data: g } = await e.requestWxLogin(p);
+              v({ access_token: g.access_token });
+            } finally {
+              e.index.hideLoading();
+            }
+          else
+            e.index.showToast({
+              title: '未获取到授权码，请重试',
+              icon: 'none',
+            });
         },
         y = async () => {
           if (m())
@@ -123,7 +129,7 @@ const a = e.defineComponent({
       return (
         o({
           pageOnLoad: () => {
-            u();
+            l();
           },
         }),
         (a, o) =>
@@ -137,23 +143,23 @@ const a = e.defineComponent({
               f: g.value,
             },
             g.value
-              ? { g: e.n(l.value ? 'login-btn-active' : ''), h: e.o(y) }
+              ? { g: e.n(u.value ? 'login-btn-active' : ''), h: e.o(y) }
               : {
-                  i: e.n(l.value ? 'login-btn-active' : ''),
-                  j: l.value ? 'getPhoneNumber' : void 0,
+                  i: e.n(u.value ? 'login-btn-active' : ''),
+                  j: u.value ? 'getPhoneNumber' : void 0,
                   k: e.o(h),
                   l: e.o(m),
                 },
             {
-              m: e.o((e) => (l.value = e)),
-              n: e.p({ modelValue: l.value }),
+              m: e.o((e) => (u.value = e)),
+              n: e.p({ modelValue: u.value }),
               o: e.o((e) => I('TERMS_OF_SERVICE')),
               p: e.o((e) => I('PRIVACY_POLICY')),
-              q: e.o((e) => (l.value = !l.value)),
+              q: e.o((e) => (u.value = !u.value)),
             }
           )
       );
     },
   }),
-  o = e._export_sfc(a, [['__scopeId', 'data-v-8f9882ae']]);
+  o = e._export_sfc(a, [['__scopeId', 'data-v-01b020cf']]);
 wx.createComponent(o);

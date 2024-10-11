@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "退款结果",
+  "usingComponents": {
+    "refund-result": "../../node-modules/@clinic/core/src/pages/refund-result/index"
+  }
+}

@@ -1,1 +1,1 @@
-<view style="{{i}}" class="{{j}}" bindtap="{{k}}"><loading wx:if="{{a}}" u-i="7082956b-0" bind:__l="__l" u-p="{{b}}"/><icon wx:if="{{c}}" u-i="7082956b-1" bind:__l="__l" u-p="{{d}}"></icon><view wx:if="{{e}}" style="{{g}}" class="{{h}}">{{f}}</view></view>
+<view style="{{i}}" class="{{j}}" bindtap="{{k}}"><loading wx:if="{{a}}" u-i="6393af7a-0" bind:__l="__l" u-p="{{b}}"/><icon wx:if="{{c}}" u-i="6393af7a-1" bind:__l="__l" u-p="{{d}}"></icon><view wx:if="{{e}}" style="{{g}}" class="{{h}}">{{f}}</view></view>

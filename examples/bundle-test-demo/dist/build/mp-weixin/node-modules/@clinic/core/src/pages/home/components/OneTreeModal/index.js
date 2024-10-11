@@ -8,14 +8,14 @@ const a = e.defineComponent({
     __name: 'index',
     setup(a, { expose: o }) {
       const n = e.ref(!1),
-        r = e.ref(null),
         t = e.ref(null),
+        r = e.ref(null),
         i = async () => {
           var a;
           try {
             e.index.showLoading({ title: '删除中…', mask: !0 }),
               await e.requestDelErpInquiryOrder({
-                patientID: (null == (a = r.value) ? void 0 : a.patientID) || '',
+                patientID: (null == (a = t.value) ? void 0 : a.patientID) || '',
               }),
               (n.value = !1),
               e.index.showToast({ title: '删除成功', icon: 'none' });
@@ -24,34 +24,33 @@ const a = e.defineComponent({
           }
         },
         l = () => {
-          console.log(t.value),
-            e.appNavigator.navigateTo(e.appNavigator.pagesMap['inquiry-info'], {
-              query: {
-                subOrgInfo: JSON.stringify(t.value),
-                orderDetail: JSON.stringify(r.value),
-              },
-            });
+          e.appNavigator.navigateTo(e.appNavigator.pagesMap['inquiry-info'], {
+            query: {
+              subOrgInfo: JSON.stringify(r.value),
+              orderDetail: JSON.stringify(t.value),
+            },
+          });
         };
       return (
         o({
           openModal: (e) => {
-            (r.value = { ...e.orderDetail, formSource: 'yishuerp' }),
-              (t.value = e.subOrgInfo),
+            (t.value = { ...e.orderDetail }),
+              (r.value = e.subOrgInfo),
               (n.value = !0);
           },
         }),
         (a, o) => {
-          var t, u;
+          var r, u;
           return {
             a: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24082318520149813220201233.png',
             b: e.o((e) => (n.value = !1)),
             c: e.t(
               e.unref(e.formatValue)(
-                null == (t = r.value) ? void 0 : t.patientName
+                null == (r = t.value) ? void 0 : r.patientName
               )
             ),
             d: e.t(
-              e.unref(e.formatValue)(null == (u = r.value) ? void 0 : u.illDesc)
+              e.unref(e.formatValue)(null == (u = t.value) ? void 0 : u.illDesc)
             ),
             e: e.o(i),
             f: e.o(l),
@@ -66,5 +65,5 @@ const a = e.defineComponent({
       );
     },
   }),
-  o = e._export_sfc(a, [['__scopeId', 'data-v-d6b7430b']]);
+  o = e._export_sfc(a, [['__scopeId', 'data-v-248e5119']]);
 wx.createComponent(o);

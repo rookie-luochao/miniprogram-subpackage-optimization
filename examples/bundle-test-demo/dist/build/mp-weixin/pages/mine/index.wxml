@@ -1,1 +1,1 @@
-<view class="page"><mine class="r" u-r="mineRef" u-i="33f3c761-0" bind:__l="__l"/></view>
+<view class="page"><mine wx:if="{{b}}" class="r" u-r="mineRef" u-i="8d82579c-0" bind:__l="__l" u-p="{{b}}"/></view>

@@ -1,1 +1,1 @@
-<view id="float-window-id"><float-window-single-call wx:if="{{a}}" u-s="{{['d']}}" u-i="2df3649c-0" bind:__l="__l"><slot/></float-window-single-call><float-window-group-call wx:else u-s="{{['d']}}" u-i="2df3649c-1" bind:__l="__l"><slot/></float-window-group-call></view>
+<view id="float-window-id"><float-window-single-call wx:if="{{a}}" u-s="{{['d']}}" u-i="ccf8cba6-0" bind:__l="__l"><slot/></float-window-single-call><float-window-group-call wx:else u-s="{{['d']}}" u-i="ccf8cba6-1" bind:__l="__l"><slot/></float-window-group-call></view>

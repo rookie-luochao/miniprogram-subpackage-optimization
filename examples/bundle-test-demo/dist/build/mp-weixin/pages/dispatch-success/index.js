@@ -3,25 +3,25 @@ const e = require('../../common/vendor.js');
 Math || n();
 const n = () =>
     '../../node-modules/@clinic/core/src/pages/dispatch-success/index.js',
-  a = e.defineComponent({
+  s = e.defineComponent({
     __name: 'index',
     setup(n) {
-      const a = e.ref(null);
+      const s = e.ref(null);
       return (
         e.onLoad((n) => {
           e.nextTick$1(() => {
             var e;
-            null == (e = a.value) || e.pageOnLoad(n);
+            null == (e = s.value) || e.pageOnLoad(n);
           });
         }),
         e.onShow(() => {
           e.nextTick$1(() => {
             var e;
-            null == (e = a.value) || e.pageOnShow();
+            null == (e = s.value) || e.pageOnShow();
           });
         }),
-        (n, a) => ({ a: e.sr('dispatchWaitRef', 'af84a804-0') })
+        (n, c) => ({ a: e.sr(s, '724f074f-0', { k: 'dispatchSuccessRef' }) })
       );
     },
   });
-wx.createPage(a);
+wx.createPage(s);

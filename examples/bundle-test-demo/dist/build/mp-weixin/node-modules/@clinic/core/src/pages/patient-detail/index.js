@@ -27,8 +27,8 @@ const a =
     __name: 'index',
     setup(l, { expose: u }) {
       const o = e.useUserInfoStore(),
-        { userInfo: n } = e.storeToRefs(o),
-        t = /^1[3456789]\d{9}$/,
+        { userInfo: t } = e.storeToRefs(o),
+        n = /^1[3456789]\d{9}$/,
         i =
           /^[1-9]\d{5}(?:18|19|20)\d{2}(?:0[1-9]|10|11|12)(?:0[1-9]|[1-2]\d|30|31)\d{3}[\dXx]$/,
         r = (a) => e.index.showToast({ icon: 'none', title: a }),
@@ -67,18 +67,18 @@ const a =
         s = e.ref(!1),
         d = e.ref(!1),
         c = async (a, l) => {
-          var u, o, n, t, i, r;
+          var u, o, t, n, i, r;
           const { data: s } = await e.requestGetOrgPersonFamilyInfo({
             orgID: l,
             keyID: a,
           });
-          1 === s.isInsuranceUser && (d.value = !0);
+          s.isInsuranceUser === e.IsMedicalAuthPatient.YES && (d.value = !0);
           const c = (e) => s.orgPersonHealths.find((a) => a.docItemCode === e),
             p = c('ILLNESS'),
             m = c('ALLERGY'),
             y = c('INHERIT'),
-            g = c('LIVER'),
-            h = c('KIDNEY'),
+            h = c('LIVER'),
+            g = c('KIDNEY'),
             f = c('PREGNANCY');
           (v.value = {
             ...s,
@@ -92,13 +92,13 @@ const a =
               null != (o = null == m ? void 0 : m.docItemDesc) ? o : '',
             inherit: '有' === (null == y ? void 0 : y.docItemValue),
             inheritDesc:
-              null != (n = null == y ? void 0 : y.docItemDesc) ? n : '',
-            liver: '异常' === (null == g ? void 0 : g.docItemValue),
+              null != (t = null == y ? void 0 : y.docItemDesc) ? t : '',
+            liver: '异常' === (null == h ? void 0 : h.docItemValue),
             liverDesc:
-              null != (t = null == g ? void 0 : g.docItemDesc) ? t : '',
-            kidney: '异常' === (null == h ? void 0 : h.docItemValue),
+              null != (n = null == h ? void 0 : h.docItemDesc) ? n : '',
+            kidney: '异常' === (null == g ? void 0 : g.docItemValue),
             kidneyDesc:
-              null != (i = null == h ? void 0 : h.docItemDesc) ? i : '',
+              null != (i = null == g ? void 0 : g.docItemDesc) ? i : '',
             pregnancy: '否' !== (null == f ? void 0 : f.docItemValue),
             pregnancyDecs:
               null != (r = null == f ? void 0 : f.docItemDesc) ? r : '',
@@ -148,11 +148,11 @@ const a =
         );
       const m = e.ref(!1),
         y = e.ref(),
-        g = ({ selectedValue: a }) => {
+        h = ({ selectedValue: a }) => {
           (v.value.birthDay = e.dayjs(a.join('-')).format('YYYY-MM-DD')),
             (m.value = !1);
         },
-        h = () => {
+        g = () => {
           p.value && (m.value = !0);
         },
         f = e.ref([]),
@@ -206,28 +206,28 @@ const a =
             (v.value.area = o.text),
             (v.value.areaCode = o.value);
         },
-        R = e.ref([
+        P = e.ref([
           { text: '否', value: 0 },
           { text: '备孕', value: 1 },
           { text: '妊娠', value: 2 },
           { text: '哺乳', value: 3 },
         ]),
-        P = e.ref(!1),
-        S = e.ref([]),
+        S = e.ref(!1),
+        R = e.ref([]),
         Y = ({ selectedValue: e }) => {
           var a, l;
           (v.value.pregnancy = !0),
             (v.value.pregnancyDecs =
               null !=
               (l =
-                null == (a = R.value.find((a) => a.value === e[0]))
+                null == (a = P.value.find((a) => a.value === e[0]))
                   ? void 0
                   : a.text)
                 ? l
                 : ''),
-            (P.value = !1);
+            (S.value = !1);
         },
-        j = async () => {
+        A = async () => {
           var a, l, u;
           const {
             keyID: o,
@@ -235,8 +235,8 @@ const a =
             idNumber: p,
             sex: m,
             birthDay: y,
-            age: g,
-            month: h,
+            age: h,
+            month: g,
             weight: f,
             phone: D,
             relationName: b,
@@ -249,25 +249,25 @@ const a =
             areaCode: V,
             illness: E,
             illnessDesc: L,
-            allergy: R,
-            allergyDesc: P,
-            inherit: S,
+            allergy: P,
+            allergyDesc: S,
+            inherit: R,
             inheritDesc: Y,
-            liver: j,
-            kidney: A,
+            liver: A,
+            kidney: j,
             pregnancy: G,
-            pregnancyDecs: T,
-            orgPersonHealths: _,
+            pregnancyDecs: M,
+            orgPersonHealths: O,
           } = v.value;
           if (!c) return r('请填写患者姓名');
           if (!p) return r('请填写身份证号');
           if (!i.test(p) || 18 !== p.length)
             return r('请填写正确的18位身份证号码');
-          if (!t.test(D)) return r('请填写正确的手机号');
+          if (!n.test(D)) return r('请填写正确的手机号');
           if (!I) return r('请选择与本人关系');
           if (!m) return r('请选择性别');
           if (!y) return r('请选择出生日期');
-          if ((g && g < 14) || h) {
+          if ((h && h < 14) || (0 === h && g)) {
             if (!f && 0 !== f) return r('请输入体重');
             const e = Number(f);
             if (isNaN(e)) return r('请输入正确的数字');
@@ -276,56 +276,59 @@ const a =
             if (e > 999) return r('体重请小于999');
           }
           if (E && !L) return r('请输入既往病史描述');
-          if (R && !P) return r('请输入过敏史描述');
-          if (S && !Y) return r('请输入家族遗传史描述');
-          if (S && !Y) return r('请输入家族遗传史描述');
-          const O = {
-              orgID: null == (a = n.value) ? void 0 : a.orgID,
-              orgCode: null == (l = n.value) ? void 0 : l.orgCode,
-              orgPersonUserID: null == (u = n.value) ? void 0 : u.keyID,
+          if (P && !S) return r('请输入过敏史描述');
+          if (R && !Y) return r('请输入家族遗传史描述');
+          if (R && !Y) return r('请输入家族遗传史描述');
+          const T = {
+              orgID: null == (a = t.value) ? void 0 : a.orgID,
+              orgCode: null == (l = t.value) ? void 0 : l.orgCode,
+              orgPersonUserID: null == (u = t.value) ? void 0 : u.keyID,
             },
-            z = (e) => {
+            _ = (e) => {
               var a, l;
               return null !=
                 (l =
-                  null == (a = _.find((a) => a.docItemCode === e))
+                  null == (a = O.find((a) => a.docItemCode === e))
                     ? void 0
                     : a.keyID)
                 ? l
                 : '';
             },
-            H = (e, a, l, u) => {
+            z = (e, a, l, u) => {
               const o = 'LIVER' === e || 'KIDNEY' === e,
-                n = 'PREGNANCY' === e;
-              let t = '无';
+                t = 'PREGNANCY' === e;
+              let n = '无';
               return (
-                o && (t = u ? '异常' : '正常'),
-                n && (t = '否' !== l ? '有' : '无'),
-                o || n || (t = u ? '有' : '无'),
+                o && (n = u ? '异常' : '正常'),
+                t && (n = '否' !== l ? '有' : '无'),
+                o || t || (n = u ? '有' : '无'),
                 {
-                  ...O,
-                  keyID: s.value ? z(e) : '',
+                  ...T,
+                  keyID: s.value ? _(e) : '',
                   belongType: 'Self' === I ? 0 : 1,
                   docGroupCode: 'D_PERSON_DOCS_SICKNESS',
                   docGroupName: '疾病史',
                   docItemCode: e,
                   docItemName: a,
-                  docItemDesc: n ? T : u ? l : '',
-                  docItemValue: t,
+                  docItemDesc: t ? M : u ? l : '',
+                  docItemValue: n,
                 }
               );
             },
-            $ = [
-              H('ILLNESS', '既往病史', L, E),
-              H('ALLERGY', '过敏史', P, R),
-              H('INHERIT', '家族遗传史', Y, S),
-              H('LIVER', '肝功能异常', '', j),
-              H('KIDNEY', '肾功能异常', '', A),
-              H('PREGNANCY', '妊娠哺乳', T, G),
+            H = [
+              z('ILLNESS', '既往病史', L, E),
+              z('ALLERGY', '过敏史', S, P),
+              z('INHERIT', '家族遗传史', Y, R),
+              z('LIVER', '肝功能异常', '', A),
+              z('KIDNEY', '肾功能异常', '', j),
+              z('PREGNANCY', '妊娠哺乳', M, G),
             ],
+            $ = d.value
+              ? e.IsMedicalAuthPatient.YES
+              : e.IsMedicalAuthPatient.NO,
             q = {
               orgPersonFamily: {
-                ...O,
+                ...T,
                 keyID: o,
                 familyName: c,
                 idNumber: p,
@@ -341,9 +344,9 @@ const a =
                 cityCode: k,
                 area: w,
                 areaCode: V,
-                isInsuranceUser: d.value ? 1 : 0,
+                isInsuranceUser: $,
               },
-              orgPersonHealth: $,
+              orgPersonHealth: H,
             };
           try {
             e.index.showLoading({ title: '保存中…', mask: !0 }),
@@ -352,7 +355,7 @@ const a =
               setTimeout(() => {
                 e.index.hideToast(), e.appNavigator.navigateBack();
               }, 1500);
-          } catch (M) {
+          } catch (F) {
             e.index.hideLoading();
           }
         };
@@ -407,8 +410,8 @@ const a =
               : {},
             {
               q: a,
-              r: e.o(h),
-              s: e.o(g),
+              r: e.o(g),
+              s: e.o(h),
               t: e.o((e) => (m.value = !1)),
               v: e.o((e) => (y.value = e)),
               w: e.p({
@@ -537,20 +540,20 @@ const a =
                     : {},
                   {
                     aH: a,
-                    aI: e.o((e) => (P.value = !0)),
+                    aI: e.o((e) => (S.value = !0)),
                     aJ: e.o(Y),
-                    aK: e.o((e) => (P.value = !1)),
-                    aL: e.o((e) => (S.value = e)),
-                    aM: e.p({ columns: R.value, modelValue: S.value }),
-                    aN: e.o((e) => (P.value = e)),
-                    aO: e.p({ position: 'bottom', visible: P.value }),
+                    aK: e.o((e) => (S.value = !1)),
+                    aL: e.o((e) => (R.value = e)),
+                    aM: e.p({ columns: P.value, modelValue: R.value }),
+                    aN: e.o((e) => (S.value = e)),
+                    aO: e.p({ position: 'bottom', visible: S.value }),
                   }
                 )
               : {},
-            { aP: e.o(j) }
+            { aP: e.o(A) }
           )
       );
     },
   }),
-  u = e._export_sfc(l, [['__scopeId', 'data-v-d1fbae07']]);
+  u = e._export_sfc(l, [['__scopeId', 'data-v-521b5d23']]);
 wx.createComponent(u);

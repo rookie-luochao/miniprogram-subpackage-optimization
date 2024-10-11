@@ -1,1 +1,1 @@
-<view class="{{g}}" style="{{h}}"><loading-dot wx:if="{{a}}" u-i="7efe61e5-0" bind:__l="__l" u-p="{{b}}"/><loading-circle wx:else u-i="7efe61e5-1" bind:__l="__l" u-p="{{c||''}}"/><view wx:if="{{d}}" class="{{f}}">{{e}}</view></view>
+<view class="{{g}}" style="{{h}}"><loading-dot wx:if="{{a}}" u-i="1b9d9798-0" bind:__l="__l" u-p="{{b}}"/><loading-circle wx:else u-i="1b9d9798-1" bind:__l="__l" u-p="{{c||''}}"/><view wx:if="{{d}}" class="{{f}}">{{e}}</view></view>

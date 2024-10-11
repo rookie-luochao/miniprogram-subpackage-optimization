@@ -4,28 +4,37 @@
     "pages/mine/index",
     "pages/login/index",
     "pages/settings/index",
+    "pages/inquiry-info/index",
+    "pages/add-drug/index",
     "pages/dispatch-wait/index",
     "pages/dispatch-success/index",
     "pages/pay-detail/index",
-    "pages/inquiry-info/index",
-    "pages/inquiry-order/index",
-    "pages/inquiry-order-detail/index",
-    "pages/health-records/index",
-    "pages/health-records-detail/index",
-    "pages/health-records-edit/index",
-    "pages/add-drug/index",
+    "pages/pay-result/index",
+    "pages/refund-result/index",
     "pages/chat/index",
-    "TUICallKit/src/Components/TUICallKit",
-    "pages/web-view/index"
+    "pages/web-view/index",
+    "TUICallKit/src/Components/TUICallKit"
   ],
   "subPackages": [
+    {
+      "root": "pages-inquiry-order",
+      "pages": ["inquiry-order/index", "inquiry-order-detail/index"]
+    },
+    {
+      "root": "pages-prescription",
+      "pages": ["prescription/index", "prescription-detail/index"]
+    },
     {
       "root": "pages-patient",
       "pages": ["patient/index", "patient-detail/index"]
     },
     {
-      "root": "pages-prescription",
-      "pages": ["prescription/index", "prescription-detail/index"]
+      "root": "pages-health-records",
+      "pages": [
+        "health-records/index",
+        "health-records-detail/index",
+        "health-records-edit/index"
+      ]
     }
   ],
   "window": {

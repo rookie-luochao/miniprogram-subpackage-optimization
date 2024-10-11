@@ -1,1 +1,1 @@
-<view class="page"><chat wx:if="{{b}}" class="r" u-r="chatRef" u-i="6fb017b4-0" bind:__l="__l" u-p="{{b}}"/></view>
+<view class="page"><chat wx:if="{{b}}" class="r" u-r="chatRef" u-i="4d7300f7-0" bind:__l="__l" u-p="{{b}}"/></view>

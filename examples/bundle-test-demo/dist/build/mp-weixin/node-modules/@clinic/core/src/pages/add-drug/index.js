@@ -5,39 +5,39 @@ if (!Array) {
 }
 Math ||
   (
-    a + (() => '../../../node-modules/nutui-uniapp/components/popup/popup.js')
+    o + (() => '../../../node-modules/nutui-uniapp/components/popup/popup.js')
   )();
-const a = () => './components/DrugItem/index.js',
-  o =
+const o = () => './components/DrugItem/index.js',
+  n =
     'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24070915093918373960201240.png',
-  n = e.defineComponent({
+  a = e.defineComponent({
     __name: 'index',
-    setup(a, { expose: n }) {
-      const t = e.useAppConfigStore(),
-        { ORG_ID: i, ORG_CODE: u } = t.CONFIG,
+    setup(o, { expose: a }) {
+      const i = e.useAppConfigStore(),
+        { ORG_ID: t, ORG_CODE: u } = i.CONFIG,
         s = e.useUserInfoStore(),
         { userInfo: l } = e.storeToRefs(s),
         r = e.ref(!1),
-        d = e.ref(!1),
-        c = e.ref(null),
+        c = e.ref(!1),
+        d = e.ref(null),
         v = e.ref(''),
         p = e.ref(''),
         m = e.ref(''),
         h = e.ref(''),
         g = e.ref([]),
         f = async () => {
-          const a = p.value.trim().split(' '),
-            o = a[0] || '',
-            n = a[1] || '',
-            t = a[2] || '';
-          if (!o && !m.value && !h.value) return;
+          const o = p.value.trim().split(' '),
+            n = o[0] || '',
+            a = o[1] || '',
+            i = o[2] || '';
+          if (!n && !m.value && !h.value) return;
           const s = {
             approvalNumber: m.value,
             nhsaCode: h.value,
-            drugCommonName: o,
-            drugManufacturerName: n,
-            drugSpec: t,
-            orgID: i,
+            drugCommonName: n,
+            drugManufacturerName: a,
+            drugSpec: i,
+            orgID: t,
             orgCode: u,
             classCodeList: ['WesternMedicine_V1', 'ChinesePatentMedicine_V1'],
             pageIndex: 1,
@@ -45,19 +45,21 @@ const a = () => './components/DrugItem/index.js',
           };
           try {
             e.index.showLoading({ title: '搜索中...', mask: !0 });
-            const { data: a } = await e.requestPageMedicine(s);
-            if ((e.index.hideLoading(), !a.records.length))
+            const { data: o } = await e.requestPageMedicine(s);
+            if ((e.index.hideLoading(), !o.records.length))
               return void e.index.showToast({
                 title: '没有找到药品',
                 icon: 'none',
               });
-            g.value = a.records.map((e) => {
-              const a = I.value.find((a) => a.keyID === e.keyID);
-              return {
-                ...e,
-                itemCount: (null == a ? void 0 : a.itemCount) || 0,
-              };
-            });
+            g.value = o.records
+              .map((e) => {
+                const o = x.value.find((o) => o.keyID === e.keyID);
+                return {
+                  ...e,
+                  itemCount: (null == o ? void 0 : o.itemCount) || 0,
+                };
+              })
+              .sort((e, o) => e.nhsaType - o.nhsaType);
           } catch (l) {
             e.index.hideLoading();
           }
@@ -74,28 +76,44 @@ const a = () => './components/DrugItem/index.js',
             (g.value = []),
             f();
         },
-        I = e.ref([]),
-        D = e.ref([]);
-      e.watch(I, () => {
-        D.value = I.value.filter((e) => e.isMatching);
+        x = e.ref([]),
+        I = e.ref([]);
+      e.watch(x, () => {
+        I.value = x.value.filter((e) => e.isMatching);
       });
-      const k = (e) => {
-          b(e, g.value);
+      const D = (e) => {
+          w(e, g.value);
         },
-        x = (e) => {
-          b(e, I.value);
+        k = (e) => {
+          w(e, x.value);
         },
-        b = async (a, o) => {
-          var n, t;
-          const { operationType: i, drugInfo: u } = a,
-            { prohibited: s, nhsaType: r, drugCommonName: v } = u,
-            p = o.find((e) => e.keyID === u.keyID),
-            m = I.value.some((e) => e.keyID === u.keyID);
-          if (p) {
-            if (i === e.Operation.Increase) {
-              if (I.value.length >= 5)
+        w = async (o, n) => {
+          var a, i;
+          const { operationType: t, drugInfo: u } = o,
+            {
+              prohibited: s,
+              restricted: r,
+              gynecological: v,
+              nhsaType: p,
+              drugCommonName: m,
+            } = u,
+            h = n.find((e) => e.keyID === u.keyID),
+            f = x.value.some((e) => e.keyID === u.keyID);
+          if (h) {
+            if (t === e.Operation.Increase) {
+              if (x.value.length >= 5)
                 return void e.index.showToast({
                   title: '最多只能选购5种药品',
+                  icon: 'none',
+                });
+              if (r)
+                return void e.index.showToast({
+                  title: '该药品限制条件不适宜互联网复诊，不可添加',
+                  icon: 'none',
+                });
+              if (v)
+                return void e.index.showToast({
+                  title: '该药品为妇科用药，不可添加',
                   icon: 'none',
                 });
               if (s)
@@ -103,7 +121,7 @@ const a = () => './components/DrugItem/index.js',
                   title: '该药品属于“网络禁售药品”不可添加',
                   icon: 'none',
                 });
-              if (r === e.DrugType.ClassC)
+              if (p === e.DrugType.ClassC)
                 return void e.index.showToast({
                   title: '丙类药品不参与医保报销，无法添加',
                   icon: 'none',
@@ -115,98 +133,125 @@ const a = () => './components/DrugItem/index.js',
                 });
               if (
                 0 === u.itemCount &&
-                I.value.some((e) => e.drugCommonName === v)
+                x.value.some((e) => e.drugCommonName === m)
               )
                 return void e.index.showToast({
                   title: '已添加该通用名相关药品，请勿重复添加',
                   icon: 'none',
                 });
-              if (d.value && 0 === p.itemCount)
+              if (c.value && 0 === h.itemCount)
                 try {
                   e.index.showLoading({ title: '添加中…', mask: !0 });
-                  const a = {
-                      drugCommonName: v,
-                      phone: null == (n = c.value) ? void 0 : n.phone,
-                      patientID: null == (t = l.value) ? void 0 : t.keyID,
+                  const o = {
+                      drugCommonName: m,
+                      phone: null == (a = d.value) ? void 0 : a.phone,
+                      patientID: null == (i = l.value) ? void 0 : i.keyID,
                     },
-                    { data: o } = await e.requestCheckH5MedicineSwitch(a, !0);
-                  o.closecheckH5Medicine ||
-                    (await e.requestCheckH5Medicine(a, !0)),
-                    e.index.hideLoading();
-                } catch (h) {
-                  const { success: e } = h;
-                  if (!e) return;
+                    { data: n } = await e.requestCheckH5MedicineSwitch(o, !0);
+                  if (!n.closecheckH5Medicine) {
+                    const { success: n } = await e.requestCheckH5Medicine(
+                      o,
+                      !0
+                    );
+                    if (!n) return;
+                  }
+                  e.index.hideLoading();
+                } catch (C) {
+                  console.log(C);
                 }
-              if (!m)
+              if (!f)
                 return (
-                  p.itemCount++,
-                  void (I.value = [...I.value, { ...p, isMatching: !0 }])
+                  h.itemCount++,
+                  void (x.value = [...x.value, { ...h, isMatching: !0 }])
                 );
-              (g.value = w(g.value, u.keyID, 1)),
-                (I.value = w(I.value, u.keyID, 1));
+              (g.value = T(g.value, u.keyID, 1)),
+                (x.value = T(x.value, u.keyID, 1));
             }
-            i === e.Operation.Decrease &&
-              p.itemCount > 0 &&
-              ((I.value = w(I.value, u.keyID, -1)),
-              (g.value = w(g.value, u.keyID, -1)),
-              (I.value = I.value.filter((e) => 0 !== e.itemCount)),
-              0 === I.value.length && (T.value = !1));
+            t === e.Operation.Decrease &&
+              h.itemCount > 0 &&
+              ((x.value = T(x.value, u.keyID, -1)),
+              (g.value = T(g.value, u.keyID, -1)),
+              (x.value = x.value.filter((e) => 0 !== e.itemCount)),
+              0 === x.value.length && (b.value = !1));
           }
         },
-        w = (e, a, o) =>
+        T = (e, o, n) =>
           e.map((e) =>
-            e.keyID === a
-              ? { ...e, isMatching: !0, itemCount: e.itemCount + o }
+            e.keyID === o
+              ? { ...e, isMatching: !0, itemCount: e.itemCount + n }
               : e
           ),
-        T = e.ref(!1),
+        b = e.ref(!1),
         N = () => {
-          D.value.length
-            ? (T.value = !0)
+          I.value.length
+            ? (b.value = !0)
             : e.index.showToast({ title: '请选择药品', icon: 'none' });
         },
-        M = async ({ drugInfo: a }) => {
-          var o, n;
-          const { prohibited: t, nhsaType: i, keyID: u, drugCommonName: s } = a;
-          if (t)
+        M = async ({ drugInfo: o }) => {
+          var n, a, i, t;
+          const {
+            prohibited: u,
+            restricted: s,
+            gynecological: r,
+            nhsaType: p,
+            keyID: m,
+            drugCommonName: h,
+          } = o;
+          if (s)
+            return void e.index.showToast({
+              title: '该药品限制条件不适宜互联网复诊，不可添加',
+              icon: 'none',
+            });
+          if (r)
+            return void e.index.showToast({
+              title: '该药品为妇科用药，不可添加',
+              icon: 'none',
+            });
+          if (u)
             return void e.index.showToast({
               title: '该药品属于“网络禁售药品”不可添加',
               icon: 'none',
             });
-          if (i === e.DrugType.ClassC)
+          if (p === e.DrugType.ClassC)
             return void e.index.showToast({
               title: '丙类药品不参与医保报销，无法添加',
               icon: 'none',
             });
-          if (I.value.some((e) => e.keyID === u))
+          if (null == (n = x.value) ? void 0 : n.some((e) => e.keyID === m))
             return void e.index.showToast({
               title: '该药品已存在，请勿重复添加',
               icon: 'none',
             });
-          if (I.value.some((e) => e.drugCommonName === s))
+          if (
+            null == (a = x.value)
+              ? void 0
+              : a.some((e) => e.drugCommonName === h)
+          )
             return void e.index.showToast({
               title: '已添加该通用名相关药品，请勿重复添加',
               icon: 'none',
             });
-          if (d.value)
+          if (c.value)
             try {
               e.index.showLoading({ title: '添加中…', mask: !0 });
-              const a = {
-                  drugCommonName: s,
-                  phone: null == (o = c.value) ? void 0 : o.phone,
-                  patientID: null == (n = l.value) ? void 0 : n.keyID,
+              const o = {
+                  drugCommonName: h,
+                  phone: null == (i = d.value) ? void 0 : i.phone,
+                  patientID: null == (t = l.value) ? void 0 : t.keyID,
                 },
-                { data: t } = await e.requestCheckH5MedicineSwitch(a, !0);
-              t.closecheckH5Medicine || (await e.requestCheckH5Medicine(a, !0)),
-                e.index.hideLoading();
-            } catch (p) {
-              const { success: e } = p;
-              if (!e) return;
+                { data: n } = await e.requestCheckH5MedicineSwitch(o, !0);
+              if (!n.closecheckH5Medicine) {
+                const { success: n } = await e.requestCheckH5Medicine(o, !0);
+                if (!n) return;
+              }
+              e.index.hideLoading();
+            } catch (f) {
+              console.log(f);
             }
-          const r = I.value.map((e) =>
+          const g = x.value.map((e) =>
             e.barCode === v.value
               ? {
-                  ...a,
+                  ...o,
                   itemCount: 1,
                   barCode: v.value,
                   isMatching: !0,
@@ -214,24 +259,24 @@ const a = () => './components/DrugItem/index.js',
                 }
               : e
           );
-          e.index.$emit('setDrugList', r), e.index.navigateBack();
+          e.index.$emit('setDrugList', g), e.index.navigateBack();
         },
         L = () => {
-          D.value.length
-            ? (e.index.$emit('setDrugList', I.value), e.index.navigateBack())
+          I.value.length
+            ? (e.index.$emit('setDrugList', x.value), e.index.navigateBack())
             : e.index.showToast({ title: '请选择药品', icon: 'none' });
         };
       return (
-        n({
+        a({
           pageOnLoad: (e) => {
             (r.value = JSON.parse(e.isScanToAdd)),
-              (d.value = JSON.parse(e.isDrugLimit)),
-              (I.value = JSON.parse(e.drugList)),
-              (c.value = JSON.parse(e.patientInfo)),
+              (c.value = JSON.parse(e.isDrugLimit)),
+              (x.value = JSON.parse(e.drugList)),
+              (d.value = JSON.parse(e.patientInfo)),
               (v.value = e.barCode);
           },
         }),
-        (a, n) =>
+        (o, a) =>
           e.e(
             {
               a: 'https://com-shuibei-peach-pharmacy-cs.100cbc.com/rp/21030410325655262692822001/24022716291397301660201253.png',
@@ -240,7 +285,7 @@ const a = () => './components/DrugItem/index.js',
               d: e.o((e) => (p.value = e.detail.value)),
               e: p.value,
             },
-            p.value ? { f: o } : {},
+            p.value ? { f: n } : {},
             {
               g: e.o((e) => y('drugCommonName')),
               h: e.o(C),
@@ -248,7 +293,7 @@ const a = () => './components/DrugItem/index.js',
               j: e.o((e) => (m.value = e.detail.value)),
               k: m.value,
             },
-            m.value ? { l: o } : {},
+            m.value ? { l: n } : {},
             {
               m: e.o((e) => y('approvalNumber')),
               n: e.o(C),
@@ -256,16 +301,16 @@ const a = () => './components/DrugItem/index.js',
               p: e.o((e) => (h.value = e.detail.value)),
               q: h.value,
             },
-            h.value ? { r: o } : {},
+            h.value ? { r: n } : {},
             { s: e.o((e) => y('nhsaCode')), t: g.value.length },
             g.value.length
               ? {
-                  v: e.f(g.value, (a, o, n) => ({
-                    a: e.o(k, a.keyID),
-                    b: e.o(M, a.keyID),
-                    c: 'b4739949-0-' + n,
-                    d: e.p({ 'drug-info': a, 'is-scan-to-add': r.value }),
-                    e: a.keyID,
+                  v: e.f(g.value, (o, n, a) => ({
+                    a: e.o(D, o.keyID),
+                    b: e.o(M, o.keyID),
+                    c: '7972fac0-0-' + a,
+                    d: e.p({ 'drug-info': o, 'is-scan-to-add': r.value }),
+                    e: o.keyID,
                   })),
                 }
               : {
@@ -276,24 +321,24 @@ const a = () => './components/DrugItem/index.js',
               ? {}
               : {
                   y: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24071716502525374580201233.png',
-                  z: e.t(D.value.length),
+                  z: e.t(I.value.length),
                   A: e.o(N),
-                  B: e.n(D.value.length ? '' : 'card-submit-disabled'),
+                  B: e.n(I.value.length ? '' : 'card-submit-disabled'),
                   C: e.o(L),
                 },
             {
-              D: e.f(D.value, (a, o, n) => ({
-                a: e.o(x, a.keyID),
-                b: 'b4739949-2-' + n + ',b4739949-1',
-                c: e.p({ 'drug-info': a, 'is-scan-to-add': r.value }),
-                d: a.keyID,
+              D: e.f(I.value, (o, n, a) => ({
+                a: e.o(k, o.keyID),
+                b: '7972fac0-2-' + a + ',7972fac0-1',
+                c: e.p({ 'drug-info': o, 'is-scan-to-add': r.value }),
+                d: o.keyID,
               })),
-              E: e.o((e) => (T.value = e)),
+              E: e.o((e) => (b.value = e)),
               F: e.p({
                 round: !0,
                 position: 'bottom',
                 'pop-class': 'drug-cart-pop',
-                visible: T.value,
+                visible: b.value,
               }),
               G: e.n(r.value ? '' : 'drug-safe-area-inset-bottom'),
             }
@@ -301,5 +346,5 @@ const a = () => './components/DrugItem/index.js',
       );
     },
   }),
-  t = e._export_sfc(n, [['__scopeId', 'data-v-b4739949']]);
-wx.createComponent(t);
+  i = e._export_sfc(a, [['__scopeId', 'data-v-7972fac0']]);
+wx.createComponent(i);

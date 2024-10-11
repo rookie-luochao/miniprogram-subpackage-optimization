@@ -8,7 +8,7 @@
     "urlCheck": false,
     "es6": false,
     "postcss": false,
-    "minified": true,
+    "minified": false,
     "newFeature": true,
     "bigPackageSizeSupport": true,
     "babelSetting": {
@@ -18,8 +18,8 @@
     }
   },
   "compileType": "miniprogram",
-  "libVersion": "3.5.5",
-  "appid": "wx2fb69f502f2e1d55",
+  "libVersion": "3.5.8",
+  "appid": "wx1744752090a66e60",
   "projectname": "",
   "condition": {},
   "editorSetting": {

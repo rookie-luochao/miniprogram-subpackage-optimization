@@ -1,21 +1,27 @@
 'use strict';
 const e = require('../../../../../../common/vendor.js');
-Math || (a + o)();
+Math || (n + o)();
 const o = () => '../../components/Modal/index.js',
-  a = () => './components/OneTree/index.js',
-  n = e.defineComponent({
+  n = () => './components/OneTree/index.js',
+  a = e.defineComponent({
     __name: 'index',
-    props: { mainBg: { default: '' }, logoIcon: { default: '' } },
-    setup(o, { expose: a }) {
-      const n = e.useAppConfigStore(),
-        { ORG_ID: i, ORG_CODE: l, ORG_NAME: r } = n.CONFIG,
-        t = e.useUserInfoStore(),
-        { userInfo: s } = e.storeToRefs(t),
-        u = e.ref(null),
+    props: {
+      mainBg: { default: '' },
+      logoIcon: { default: '' },
+      isCheckCode: { type: Boolean, default: !1 },
+    },
+    setup(o, { expose: n }) {
+      const a = e.useAppConfigStore(),
+        { ORG_ID: i, ORG_CODE: t, ORG_NAME: l } = a.CONFIG,
+        r = e.useUserInfoStore(),
+        { userInfo: s } = e.storeToRefs(r),
+        { scanCode: u } = e.useScanCode(),
         d = e.ref(null),
-        p = e.ref({ orgCode: '', orgID: '', orgName: '' }),
-        c = e.ref(),
-        g = async () => {
+        c = e.ref(null),
+        p = o,
+        g = e.ref({ orgCode: '', orgID: '', orgName: '' }),
+        v = e.ref(),
+        h = async () => {
           try {
             e.index.showLoading({ title: '加载中…', mask: !0 });
             const { data: o } = await e.requestSelectGroupOneJson({
@@ -23,32 +29,32 @@ const o = () => '../../components/Modal/index.js',
               groupCode: 'INQUIRY_CONVENIENT_CONFIG',
               paraCode: '1',
             });
-            c.value = o;
+            v.value = o;
           } finally {
             e.index.hideLoading();
           }
         },
-        v = e.ref(null),
+        f = e.ref(null),
         m = async () => {
-          if (p.value.orgID)
+          if (g.value.orgID)
             try {
               e.index.showLoading({ title: '加载中…', mask: !0 });
               const { data: o } = await e.requestGetBaseInfo({
-                orgID: p.value.orgID,
+                orgID: g.value.orgID,
                 serviceCode: e.SERVICE_CODE,
               });
-              v.value = o;
+              f.value = o;
             } finally {
               e.index.hideLoading();
             }
         },
-        f = async () => {
-          var o, a, n;
-          if (c.value) {
-            const { paraValueJson: e } = c.value;
-            if (!e.service_expire)
+        I = async () => {
+          var o, n, a, t, l, r;
+          if (v.value) {
+            const { paraValueJson: e } = v.value;
+            if (!(null == e ? void 0 : e.service_expire))
               return (
-                null == (o = u.value) ||
+                null == (o = d.value) ||
                   o.openModal({
                     title: '当前不在服务时间',
                     serviceTime: e.periods.map(
@@ -60,17 +66,36 @@ const o = () => '../../components/Modal/index.js',
                 !1
               );
           }
-          if (v.value) {
+          if ((null == (n = g.value) ? void 0 : n.uuidStr) && p.isCheckCode)
+            try {
+              e.index.showLoading({ title: '加载中…', mask: !0 });
+              const { data: o } = await e.requestCheckUrlExpire({
+                orgID: i,
+                uuid: null == (a = g.value) ? void 0 : a.uuidStr,
+              });
+              if ((e.index.hideLoading(), !o))
+                return (
+                  null == (t = d.value) ||
+                    t.openModal({
+                      content: '该二维码已失效，请使用新的二维码进行问诊',
+                      showCancel: !1,
+                    }),
+                  !1
+                );
+            } catch (u) {
+              return e.index.hideLoading(), !1;
+            }
+          if (f.value) {
             const {
               orgID: o,
-              orgCode: l,
-              clientAppIsDisable: r,
-              orgIsDisable: t,
-            } = v.value;
-            if (1 === r || 1 === t)
+              orgCode: n,
+              clientAppIsDisable: a,
+              orgIsDisable: i,
+            } = f.value;
+            if (1 === a || 1 === i)
               return (
-                null == (a = u.value) ||
-                  a.openModal({
+                null == (l = d.value) ||
+                  l.openModal({
                     title: '当前服务已关闭',
                     content: '请联系工作人员',
                     showCancel: !1,
@@ -78,20 +103,24 @@ const o = () => '../../components/Modal/index.js',
                 !1
               );
             try {
-              e.index.showLoading({ title: '加载中…', mask: !0 }),
-                await e.requestQueryCurrentPrepaid({ orgID: o, orgCode: l });
-            } catch (i) {
-              const { message: e } = i;
-              if (e.includes('门店处方余量不足'))
+              e.index.showLoading({ title: '加载中…', mask: !0 });
+              const { success: a, message: i } =
+                await e.requestQueryCurrentPrepaid({ orgID: o, orgCode: n });
+              if (!a)
                 return (
-                  null == (n = u.value) ||
-                    n.openModal({
-                      title: '处方提示',
-                      content: '请联系工作人门店处方余量不足，请联系店员处理员',
-                      showCancel: !1,
-                    }),
+                  i.includes('门店处方余量不足') &&
+                    (null == (r = d.value) ||
+                      r.openModal({
+                        title: '处方提示',
+                        content:
+                          '请联系工作人门店处方余量不足，请联系店员处理员',
+                        showCancel: !1,
+                      })),
                   !1
                 );
+            } catch (u) {
+              const { message: o } = u;
+              return e.index.showToast({ title: o, icon: 'none' }), !1;
             } finally {
               e.index.hideLoading();
             }
@@ -102,125 +131,128 @@ const o = () => '../../components/Modal/index.js',
           );
         };
       return (
-        a({
+        n({
           pageOnShow: async () => {
             e.nextTick$1(() => {
               var e;
-              null == (e = d.value) || e.pageOnShow();
+              null == (e = c.value) || e.pageOnShow();
             });
           },
           pageOnLoad: async (o) => {
-            if (o.q) {
-              const a = e.queryURLParams(decodeURIComponent(o.q));
-              (p.value = a), await m();
+            if (null == o ? void 0 : o.q) {
+              const n = e.queryURLParams(decodeURIComponent(o.q));
+              (g.value = n), await m();
             }
-            await g();
+            await h();
           },
           pageOnHide: () => {
             e.nextTick$1(() => {
               var e;
-              null == (e = d.value) || e.pageOnHide();
+              null == (e = c.value) || e.pageOnHide();
             });
           },
         }),
-        (o, a) => {
-          var n, i, t, s, c, g, I, h, y;
+        (o, n) => {
+          var a, i, r, s, p, v, h, C, y;
           return e.e(
             {
               a: o.logoIcon,
               b: o.mainBg,
               c: e.n(
-                (null == (n = v.value) ? void 0 : n.orgID)
+                (null == (a = f.value) ? void 0 : a.orgID)
                   ? 'icon-position'
                   : 'icon-hi'
               ),
-              d: (null == (i = v.value) ? void 0 : i.orgID)
+              d: (null == (i = f.value) ? void 0 : i.orgID)
                 ? 'http://hospital-pro-1308953979.cos.ap-chengdu.myqcloud.com/img/111/24041015563248097670201018.png'
                 : 'https://hospital-pro-1308953979.cos.ap-chengdu.myqcloud.com/img/111/24041015563219991240201018.png',
               e: e.t(
-                (null == (t = v.value) ? void 0 : t.orgID)
+                (null == (r = f.value) ? void 0 : r.orgID)
                   ? '当前药店'
                   : '欢迎进入'
               ),
               f: e.t(
-                (null == (s = v.value) ? void 0 : s.orgID)
-                  ? `${p.value.orgName}`
-                  : e.unref(r)
+                (null == (s = f.value) ? void 0 : s.orgID)
+                  ? `${g.value.orgName}`
+                  : e.unref(l)
               ),
-              g: e.sr(d, '50320e59-0', { k: 'oneTreeRef' }),
-              h: e.p({ 'sub-org-info': v.value, 'sub-org-params': p.value }),
-              i: !(null == (c = d.value) ? void 0 : c.isErpOpen),
+              g: e.sr(c, '2718b01b-0', { k: 'oneTreeRef' }),
+              h: e.p({ 'sub-org-info': f.value, 'sub-org-params': g.value }),
+              i: !(null == (p = c.value) ? void 0 : p.isErpOpen),
             },
-            (null == (g = d.value) ? void 0 : g.isErpOpen)
+            (null == (v = c.value) ? void 0 : v.isErpOpen)
               ? {}
               : {
                   j: e.t(
-                    (null == (I = v.value) ? void 0 : I.orgID)
+                    (null == (h = f.value) ? void 0 : h.orgID)
                       ? '点击下方按钮进行问诊'
                       : '请扫描药店二维码进行购药'
                   ),
                 },
             {
-              k: (null == (h = v.value) ? void 0 : h.orgID)
+              k: (null == (C = f.value) ? void 0 : C.orgID)
                 ? 'https://hospital-pro-1308953979.cos.ap-chengdu.myqcloud.com/img/111/24041015563239840190201018.png'
                 : 'https://hospital-pro-1308953979.cos.ap-chengdu.myqcloud.com/img/111/24041015563260162680201018.png',
               l: e.t(
-                (null == (y = v.value) ? void 0 : y.orgID)
+                (null == (y = f.value) ? void 0 : y.orgID)
                   ? '立即问诊'
                   : '扫码问诊'
               ),
               m: e.o((o) => {
-                var a;
-                return (null == (a = v.value) ? void 0 : a.orgID)
+                var n;
+                return (null == (n = f.value) ? void 0 : n.orgID)
                   ? (async () => {
-                      (await f()) &&
+                      (await I()) &&
                         e.appNavigator.navigateTo(
                           e.appNavigator.pagesMap['inquiry-info'],
                           {
                             query: {
                               subOrgInfo: JSON.stringify({
-                                ...v.value,
-                                ...p.value,
+                                ...f.value,
+                                ...g.value,
                               }),
                             },
                           }
                         );
                     })()
                   : (async () => {
-                      (await f()) &&
-                        (l
-                          ? e.index.scanCode({
-                              success: async (o) => {
-                                var a, n;
-                                const i = e.queryURLParams(o.result);
-                                (
-                                  null == (a = i.orgCode)
-                                    ? void 0
-                                    : a.includes(l)
-                                )
-                                  ? ((p.value = i),
-                                    await m(),
-                                    await (null == (n = d.value)
-                                      ? void 0
-                                      : n.getOneTreeBusiness()))
-                                  : e.index.showToast({
-                                      title: 'Error: 请扫描正确的药店码',
-                                      icon: 'none',
-                                    });
-                              },
-                            })
-                          : e.index.showToast({
-                              title: '未配置机构信息',
-                              icon: 'none',
-                            }));
+                      var o, n;
+                      if (await I())
+                        if (t)
+                          try {
+                            const a = await u(),
+                              i = e.queryURLParams(a);
+                            if (
+                              !(null == (o = i.orgCode)
+                                ? void 0
+                                : o.includes(t))
+                            )
+                              return void e.index.showToast({
+                                title: 'Error: 请扫描正确的药店码',
+                                icon: 'none',
+                              });
+                            (g.value = i),
+                              await m(),
+                              await (null == (n = c.value)
+                                ? void 0
+                                : n.getOneTreeBusiness());
+                          } catch (a) {
+                            'string' == typeof a &&
+                              e.index.showToast({ title: a, icon: 'none' });
+                          }
+                        else
+                          e.index.showToast({
+                            title: '未配置机构信息',
+                            icon: 'none',
+                          });
                     })();
               }),
-              n: e.sr(u, '50320e59-1', { k: 'modalRef' }),
+              n: e.sr(d, '2718b01b-1', { k: 'modalRef' }),
             }
           );
         }
       );
     },
   }),
-  i = e._export_sfc(n, [['__scopeId', 'data-v-50320e59']]);
+  i = e._export_sfc(a, [['__scopeId', 'data-v-2718b01b']]);
 wx.createComponent(i);

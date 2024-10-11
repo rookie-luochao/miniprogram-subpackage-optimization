@@ -1,0 +1,1 @@
+<view class="page"><health-records-edit wx:if="{{b}}" class="r" u-r="healthRecordsEditRef" u-i="dccfde36-0" bind:__l="__l" u-p="{{b}}"/></view>

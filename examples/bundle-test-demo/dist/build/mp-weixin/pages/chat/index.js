@@ -25,9 +25,16 @@ const n = () => '../../node-modules/@clinic/core/src/pages/chat/index.js',
             null == (e = a.value) || e.pageOnHide();
           });
         }),
+        e.onUnload(() => {
+          var e;
+          null == (e = a.value) || e.pageOnHide();
+        }),
         (n, o) => ({
-          a: e.sr(a, '6fb017b4-0', { k: 'chatRef' }),
-          b: e.p({ 'is-show-medical-documents': !1 }),
+          a: e.sr(a, '4d7300f7-0', { k: 'chatRef' }),
+          b: e.p({
+            'is-prescription-auth': !1,
+            'is-show-medical-documents': !1,
+          }),
         })
       );
     },

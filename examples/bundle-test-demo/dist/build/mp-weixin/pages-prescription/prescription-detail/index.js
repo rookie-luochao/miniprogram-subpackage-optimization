@@ -20,7 +20,7 @@ const n = () =>
             null == (e = o.value) || e.pageOnShow();
           });
         }),
-        (n, r) => ({ a: e.sr(o, '040413fb-0', { k: 'prescriptionDetailRef' }) })
+        (n, a) => ({ a: e.sr(o, '73bead4c-0', { k: 'prescriptionDetailRef' }) })
       );
     },
   });

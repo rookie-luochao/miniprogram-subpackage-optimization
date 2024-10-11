@@ -6,30 +6,42 @@ const e = require('../../../../../../common/vendor.js'),
       const o = e.useUserInfoStore(),
         { userInfo: n } = e.storeToRefs(o),
         t = e.ref(null),
-        r = async () => {
+        i = async () => {
           var a, l, o;
           try {
             e.index.showLoading({ title: '加载中…', mask: !0 });
-            const { data: r } = await e.requestGetOrgPersonFamily({
+            const { data: i } = await e.requestGetOrgPersonFamily({
               orgID: null == (a = n.value) ? void 0 : a.orgID,
               orgPersonUserID: null == (l = n.value) ? void 0 : l.keyID,
             });
-            (t.value = r),
+            (t.value = i),
               (null == (o = t.value) ? void 0 : o.keyID) && (await u());
           } finally {
             e.index.hideLoading();
           }
         },
-        i = e.ref([]),
+        r = e.ref([]),
         u = async () => {
-          var a, l, o, r;
+          var a, l, o, i;
           const { data: u } = await e.requestGetListByOrgPersonUserID({
             orgID: null == (a = n.value) ? void 0 : a.orgID,
             orgCode: null == (l = n.value) ? void 0 : l.orgCode,
             orgPersonUserID: null == (o = n.value) ? void 0 : o.keyID,
-            orgPersonFamilyID: null == (r = t.value) ? void 0 : r.keyID,
+            orgPersonFamilyID: null == (i = t.value) ? void 0 : i.keyID,
           });
-          i.value = u;
+          r.value =
+            null == u
+              ? void 0
+              : u.map((e) => {
+                  var a;
+                  return {
+                    ...e,
+                    orgPatientFilesMedicineList:
+                      null == (a = e.orgPatientFilesMedicineList)
+                        ? void 0
+                        : a.map((e) => ({ ...e, ...e.originalParam })),
+                  };
+                });
         },
         v = () => {
           e.appNavigator.navigateTo(
@@ -43,11 +55,11 @@ const e = require('../../../../../../common/vendor.js'),
       return (
         l({
           pageOnShow: () => {
-            r();
+            i();
           },
         }),
         (a, l) => {
-          var o, n, r, u, g, d, p;
+          var o, n, i, u, d, g, p;
           return e.e(
             { a: null == (o = t.value) ? void 0 : o.keyID },
             (null == (n = t.value) ? void 0 : n.keyID)
@@ -61,11 +73,11 @@ const e = require('../../../../../../common/vendor.js'),
                         t.value.ageMonth
                       )
                     ),
-                    e: i.value.length,
+                    e: r.value.length,
                   },
-                  i.value.length
+                  r.value.length
                     ? {
-                        f: e.f(i.value, (a, l, o) => ({
+                        f: e.f(r.value, (a, l, o) => ({
                           a: e.t(e.unref(e.formatValue)(a.illDesc)),
                           b: e.t(e.unref(e.formatValue)(a.diagnosis)),
                           c: e.o(
@@ -93,16 +105,16 @@ const e = require('../../../../../../common/vendor.js'),
                 )
               : {},
             {
-              h: !(null == (r = t.value) ? void 0 : r.keyID) || !i.value.length,
+              h: !(null == (i = t.value) ? void 0 : i.keyID) || !r.value.length,
             },
-            (null == (u = t.value) ? void 0 : u.keyID) && i.value.length
+            (null == (u = t.value) ? void 0 : u.keyID) && r.value.length
               ? {}
               : e.e(
                   {
                     i: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24082717393171685640201233.png',
-                    j: !(null == (g = t.value) ? void 0 : g.keyID),
+                    j: !(null == (d = t.value) ? void 0 : d.keyID),
                   },
-                  (null == (d = t.value) ? void 0 : d.keyID)
+                  (null == (g = t.value) ? void 0 : g.keyID)
                     ? {}
                     : { k: e.o(s) }
                 ),
@@ -118,5 +130,5 @@ const e = require('../../../../../../common/vendor.js'),
       );
     },
   }),
-  l = e._export_sfc(a, [['__scopeId', 'data-v-8ec465ce']]);
+  l = e._export_sfc(a, [['__scopeId', 'data-v-3eacc72b']]);
 wx.createComponent(l);

@@ -39,13 +39,13 @@ const o = () => '../../components/Modal/index.js',
                 orgID: null == (o = t.value) ? void 0 : o.orgID,
                 personID: null == (a = t.value) ? void 0 : a.personID,
               }),
-              { niceName: s, birthDay: p, personID: u, sex: i, phone: l } = n;
+              { niceName: s, birthDay: p, personID: u, sex: l, phone: i } = n;
             r.value = {
               personName: s,
-              birthDay: p,
+              birthDay: null != p ? p : e.dayjs().format('YYYY-MM-DD HH:mm:ss'),
               personID: u,
-              sex: i,
-              phone: l,
+              sex: null != l ? l : e.Gender.male,
+              phone: i,
             };
           } finally {
             e.index.hideLoading();
@@ -57,9 +57,9 @@ const o = () => '../../components/Modal/index.js',
             ? ((p.value = !1), c())
             : e.index.showToast({ icon: 'none', title: '请填写用户昵称' });
         },
-        i = e.ref(!0),
-        l = (e) => {
-          i.value ? (i.value = !1) : ((r.value.sex = e), c());
+        l = e.ref(!0),
+        i = (e) => {
+          l.value ? (l.value = !1) : ((r.value.sex = e), c());
         },
         d = e.ref(!1),
         m = e.ref(),
@@ -115,7 +115,7 @@ const o = () => '../../components/Modal/index.js',
               g: e.t(e.unref(e.encryptPhone)(r.value.phone)),
               h: e.p({ label: 1 }),
               i: e.p({ label: 2 }),
-              j: e.o(l),
+              j: e.o(i),
               k: e.o((e) => (r.value.sex = e)),
               l: e.p({ direction: 'horizontal', modelValue: r.value.sex }),
               m: r.value.birthDay,
@@ -140,11 +140,11 @@ const o = () => '../../components/Modal/index.js',
               v: e.o((e) => (d.value = e)),
               w: e.p({ position: 'bottom', visible: d.value }),
               x: e.o(f),
-              y: e.sr(h, 'f395b841-5', { k: 'modalRef' }),
+              y: e.sr(h, '40d1e5d3-5', { k: 'modalRef' }),
             }
           )
       );
     },
   }),
-  n = e._export_sfc(a, [['__scopeId', 'data-v-f395b841']]);
+  n = e._export_sfc(a, [['__scopeId', 'data-v-40d1e5d3']]);
 wx.createComponent(n);

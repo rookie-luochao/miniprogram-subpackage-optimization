@@ -1,1 +1,1 @@
-<nut-picker wx:if="{{e}}" u-s="{{['top','d']}}" bindchange="{{a}}" bindconfirm="{{b}}" bindcancel="{{c}}" u-i="1b9e8508-0" bind:__l="__l" bindupdateModelValue="{{d}}" u-p="{{e}}"><view slot="top"><slot name="top"/></view><slot/></nut-picker>
+<nut-picker wx:if="{{e}}" u-s="{{['top','d']}}" bindchange="{{a}}" bindconfirm="{{b}}" bindcancel="{{c}}" u-i="126cc24d-0" bind:__l="__l" bindupdateModelValue="{{d}}" u-p="{{e}}"><view slot="top"><slot name="top"/></view><slot/></nut-picker>

@@ -2,7 +2,7 @@
 const e = require('../../common/vendor.js');
 Math || n();
 const n = () =>
-    '../../node-modules/@clinic/core/src/pages/inquiry-order-detail/index.js',
+    '../../node-modules/@clinic/core/src/pages/refund-result/index.js',
   r = e.defineComponent({
     __name: 'index',
     setup(n) {
@@ -14,14 +14,8 @@ const n = () =>
             null == (e = r.value) || e.pageOnLoad(n);
           });
         }),
-        e.onPageScroll((n) => {
-          e.nextTick$1(() => {
-            var e;
-            null == (e = r.value) || e.pageOnScroll(n);
-          });
-        }),
-        (n, o) => ({ a: e.sr(r, '5af3a978-0', { k: 'inquiryOrderDetailRef' }) })
+        (n, o) => ({ a: e.sr(r, 'f1b016ae-0', { k: 'refundResultRef' }) })
       );
     },
   });
-(r.__runtimeHooks = 1), wx.createPage(r);
+wx.createPage(r);

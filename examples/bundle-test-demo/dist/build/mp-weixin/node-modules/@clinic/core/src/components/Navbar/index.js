@@ -45,5 +45,5 @@ const e = require('../../../../../../common/vendor.js'),
       );
     },
   }),
-  t = e._export_sfc(a, [['__scopeId', 'data-v-3b7aa4d5']]);
+  t = e._export_sfc(a, [['__scopeId', 'data-v-e288ed9a']]);
 wx.createComponent(t);

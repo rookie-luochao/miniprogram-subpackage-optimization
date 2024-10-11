@@ -1,1 +1,1 @@
-<nut-transition wx:if="{{b}}" u-s="{{['d']}}" bindclick="{{a}}" u-i="ba2aac44-0" bind:__l="__l" u-p="{{b}}"><slot/></nut-transition>
+<nut-transition wx:if="{{b}}" u-s="{{['d']}}" bindclick="{{a}}" u-i="0e7adf6f-0" bind:__l="__l" u-p="{{b}}"><slot/></nut-transition>

@@ -1,1 +1,1 @@
-<t-k-image wx:if="{{a}}" u-i="2ae81f0b-0" bind:__l="__l" u-p="{{a}}"></t-k-image>
+<t-k-image wx:if="{{a}}" u-i="3002cecc-0" bind:__l="__l" u-p="{{a}}"></t-k-image>

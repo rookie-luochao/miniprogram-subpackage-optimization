@@ -12,17 +12,17 @@ const o = () => '../../../add-drug/components/DrugItem/index.js',
   n = e.defineComponent({
     __name: 'index',
     setup(o, { expose: n }) {
-      const s = e.ref(!1),
-        u = e.ref([]);
+      const u = e.ref(!1),
+        p = e.ref([]);
       return (
         n({
           openModal: (e) => {
-            console.log(e), (s.value = !0), (u.value = e.drugList);
+            (u.value = !0), (p.value = e.drugList);
           },
         }),
         (o, n) => ({
-          a: e.f(u.value, (o, n, s) => ({
-            a: '9ff784da-1-' + s + ',9ff784da-0',
+          a: e.f(p.value, (o, n, u) => ({
+            a: '14921685-1-' + u + ',14921685-0',
             b: e.p({
               'drug-info': o,
               'is-show-operate': !1,
@@ -30,15 +30,15 @@ const o = () => '../../../add-drug/components/DrugItem/index.js',
             }),
             c: o.keyID,
           })),
-          b: e.o((e) => (s.value = !1)),
-          c: e.o((e) => (s.value = e)),
+          b: e.o((e) => (u.value = !1)),
+          c: e.o((e) => (u.value = e)),
           d: e.p({
             'custom-style': { borderRadius: '12px' },
-            visible: s.value,
+            visible: u.value,
           }),
         })
       );
     },
   }),
-  s = e._export_sfc(n, [['__scopeId', 'data-v-9ff784da']]);
-wx.createComponent(s);
+  u = e._export_sfc(n, [['__scopeId', 'data-v-14921685']]);
+wx.createComponent(u);

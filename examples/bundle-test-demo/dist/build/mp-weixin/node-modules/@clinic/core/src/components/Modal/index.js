@@ -4,77 +4,83 @@ if (!Array) {
   e.resolveComponent('nut-popup')();
 }
 Math;
-const l = e.defineComponent({
+const n = e.defineComponent({
     __name: 'index',
-    setup(l, { expose: o }) {
-      const n = e.ref({
+    setup(n, { expose: l }) {
+      const o = {
           title: '温馨提示',
           serviceTime: [],
           content: '',
+          contentAlign: 'center',
           showCancel: !0,
           cancelText: '取消',
           showConfirm: !0,
           confirmText: '确定',
-        }),
-        a = e.ref(!1),
-        t = () => {
-          (a.value = !1), n.value.onConfirm && n.value.onConfirm();
         },
+        a = e.ref(o),
+        t = e.ref(!1),
         u = () => {
-          (a.value = !1), n.value.onCancel && n.value.onCancel();
+          (t.value = !1), a.value.onConfirm && a.value.onConfirm();
+        },
+        v = () => {
+          (t.value = !1), a.value.onCancel && a.value.onCancel();
         };
       return (
-        o({
+        l({
           openModal: (e) => {
-            (a.value = !0), (n.value = { ...n.value, ...e });
+            (t.value = !0), (a.value = { ...o, ...e });
           },
         }),
-        (l, o) => {
-          var v, i;
+        (n, l) => {
+          var o, c, i;
           return e.e(
-            { a: n.value.title },
-            n.value.title
-              ? { b: e.t(n.value.title), c: n.value.content ? '' : '32px' }
+            { a: a.value.title },
+            a.value.title
+              ? { b: e.t(a.value.title), c: a.value.content ? '' : '32px' }
               : {},
-            { d: null == (v = n.value.serviceTime) ? void 0 : v.length },
-            (null == (i = n.value.serviceTime) ? void 0 : i.length)
+            { d: null == (o = a.value.serviceTime) ? void 0 : o.length },
+            (null == (c = a.value.serviceTime) ? void 0 : c.length)
               ? {
-                  e: e.f(n.value.serviceTime, (l, o, n) => ({
-                    a: e.t(l),
-                    b: l,
+                  e: e.f(a.value.serviceTime, (n, l, o) => ({
+                    a: e.t(n),
+                    b: n,
                   })),
                 }
               : {},
-            { f: n.value.content },
-            n.value.content
-              ? { g: e.t(n.value.content), h: n.value.title ? '' : '0' }
+            { f: a.value.content },
+            a.value.content
+              ? {
+                  g: e.t(a.value.content),
+                  h: a.value.title ? '' : '0',
+                  i: null != (i = a.value.contentAlign) ? i : 'center',
+                }
               : {},
-            { i: n.value.showConfirm || n.value.showCancel },
-            n.value.showConfirm || n.value.showCancel
+            { j: a.value.showConfirm || a.value.showCancel },
+            a.value.showConfirm || a.value.showCancel
               ? e.e(
-                  { j: n.value.showCancel },
-                  n.value.showCancel
+                  { k: a.value.showCancel },
+                  a.value.showCancel
                     ? {
-                        k: e.t(n.value.cancelText),
-                        l: n.value.showConfirm ? '' : '80%',
-                        m: e.o(u),
+                        l: e.t(a.value.cancelText),
+                        m: a.value.showConfirm ? '' : '80%',
+                        n: e.o(v),
                       }
                     : {},
-                  { n: n.value.showConfirm },
-                  n.value.showConfirm
+                  { o: a.value.showConfirm },
+                  a.value.showConfirm
                     ? {
-                        o: e.t(n.value.confirmText),
-                        p: n.value.showCancel ? '' : '80%',
-                        q: e.o(t),
+                        p: e.t(a.value.confirmText),
+                        q: a.value.showCancel ? '' : '80%',
+                        r: e.o(u),
                       }
                     : {}
                 )
               : {},
             {
-              r: e.o((e) => (a.value = e)),
-              s: e.p({
+              s: e.o((e) => (t.value = e)),
+              t: e.p({
                 'custom-style': { borderRadius: '12px' },
-                visible: a.value,
+                visible: t.value,
               }),
             }
           );
@@ -82,5 +88,5 @@ const l = e.defineComponent({
       );
     },
   }),
-  o = e._export_sfc(l, [['__scopeId', 'data-v-85e6d46e']]);
-wx.createComponent(o);
+  l = e._export_sfc(n, [['__scopeId', 'data-v-e9a95047']]);
+wx.createComponent(l);

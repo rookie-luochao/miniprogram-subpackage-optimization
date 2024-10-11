@@ -10,201 +10,211 @@ Math ||
     a
   )();
 const a = () => '../../components/Modal/index.js',
-  t = e.defineComponent({
+  t =
+    'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24071710451661521470201233.png',
+  u = e.defineComponent({
     __name: 'index',
-    setup(a, { expose: t }) {
-      const u = e.ref({ d: '00', h: '00', m: '00', s: '00' }),
-        { medicalInfo: o, fetchMedicalInfo: r } = e.useMedicalInfo(),
-        n = e.useMedicalInsuranceAuthStore(),
+    setup(a, { expose: u }) {
+      const r = e.ref({ d: '00', h: '00', m: '00', s: '00' }),
+        { medicalInfo: o, fetchMedicalPrescription: n } = e.useMedicalInfo(),
+        i = e.useMedicalInsuranceAuthStore(),
         {
-          medicalAuthStatus: i,
+          medicalAuthStatus: l,
           medicalAuthType: s,
           prescriptionAuthInfo: c,
-        } = e.storeToRefs(n),
-        { scanCodeData: l, scanCodeAuth: p } = e.useScanCodeAuth(),
-        d = e.ref(null),
-        v = e.ref({ rpID: '', inquiryOrderID: '' }),
-        h = e.ref(!0),
-        m = e.ref(!1),
+        } = e.storeToRefs(i),
+        { scanCodeData: p, scanCodeAuth: d } = e.useScanCodeAuth(),
+        v = e.ref(null),
+        m = e.ref({ rpID: '', inquiryOrderID: '' }),
+        h = e.ref(null),
+        y = e.ref(!0),
         f = e.ref(!1),
-        y = e.ref(0),
-        g = e.ref(null),
+        S = e.ref(!1),
+        g = e.ref(0),
+        D = e.ref(null),
         I = async (a) => {
-          const { rpID: t, inquiryOrderID: u } = v.value;
+          const { rpID: t, inquiryOrderID: u } = m.value;
           try {
             a &&
-              ((h.value = !0),
+              ((y.value = !0),
               e.index.showLoading({ title: '加载中…', mask: !0 }));
-            const { data: o } = await e.requestGetDetailXz({
+            const { data: r } = await e.requestGetDetailXz({
               type: 'rp',
               rpID: t,
               inquiryOrderID: u,
             });
-            (g.value = o.rp),
-              o.rp.rpUploadStatus == e.PrescriptionStatusEnum.Revoke &&
-                (f.value = !0),
-              (y.value = e.dayjs(o.rp.expirationTime).valueOf());
-            const r = e.calculateTimeDifference(
+            (D.value = r.rp),
+              r.rp.rpUploadStatus == e.PrescriptionStatusEnum.Revoke &&
+                (S.value = !0),
+              (g.value = e.dayjs(r.rp.expirationTime).valueOf());
+            const o = e.calculateTimeDifference(
               e.dayjs(),
-              e.dayjs(o.rp.expirationTime)
+              e.dayjs(r.rp.expirationTime)
             );
-            m.value = r.diffValue <= 0;
+            f.value = o.diffValue <= 0;
           } finally {
-            a && ((h.value = !1), e.index.hideLoading());
+            a && ((y.value = !1), e.index.hideLoading());
           }
         },
-        S = e.computed(() => {
-          const { d: a, h: t, m: o, s: r } = u.value;
-          return `${e.padZeroToTwoDigits(a)}天${e.padZeroToTwoDigits(t)}小时${e.padZeroToTwoDigits(o)}分${e.padZeroToTwoDigits(r)}秒`;
+        w = e.computed(() => {
+          const { d: a, h: t, m: u, s: o } = r.value;
+          return `${e.padZeroToTwoDigits(a)}天${e.padZeroToTwoDigits(t)}小时${e.padZeroToTwoDigits(u)}分${e.padZeroToTwoDigits(o)}秒`;
         }),
-        D = e.computed(() => {
+        T = e.computed(() => {
           var a;
-          const t = null == (a = g.value) ? void 0 : a.rpUploadStatus;
+          const t = null == (a = D.value) ? void 0 : a.rpUploadStatus;
           return `处方${e.PrescriptionStatusDesc[t]}` || '无法进行处方流转';
         }),
-        w = e.computed(() => {
+        A = e.computed(() => {
           var a;
-          const t = null == (a = g.value) ? void 0 : a.rpUploadStatus;
+          const u = null == (a = D.value) ? void 0 : a.rpUploadStatus;
           return {
-            [e.PrescriptionStatusEnum.Processing]:
-              'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24071710451661521470201233.png',
+            [e.PrescriptionStatusEnum.ToProcess]: t,
+            [e.PrescriptionStatusEnum.Processing]: t,
             [e.PrescriptionStatusEnum.Success]:
               'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24071710443751248550201240.png',
             [e.PrescriptionStatusEnum.Fail]:
               'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24071710455475979970201240.png',
-          }[t];
+          }[u];
         }),
-        T = e.computed(() => {
+        P = e.computed(() => {
           var a;
           return (
-            !m.value &&
-            (null == (a = g.value) ? void 0 : a.rpUploadStatus) ===
+            !f.value &&
+            (null == (a = D.value) ? void 0 : a.rpUploadStatus) ===
               e.PrescriptionStatusEnum.Fail
           );
         }),
-        A = async () => {
-          i.value !== e.AuthStatus.NO_AUTH
-            ? (s.value === e.AuthType.MINI_PROGRAM &&
-                e.wxPrescriptionTransferAuth(),
-              s.value === e.AuthType.SCAN_CODE && (await p(), P('test', '')))
-            : P('test', '');
+        x = async () => {
+          l.value === e.AuthStatus.NO_AUTH && _(),
+            l.value === e.AuthStatus.NEED_AUTH &&
+              ((h.value = e.AutoJumpEnum.Prescription),
+              s.value === e.AuthType.MINI_PROGRAM && e.wxPrescriptionAuth(),
+              s.value === e.AuthType.SCAN_CODE && (await d(), _()));
         },
-        P = async (a, t) => {
-          var u;
-          if (g.value)
+        _ = async () => {
+          var a, t, u, r, n;
+          if (D.value)
             try {
               e.index.showLoading({ title: '处方流转中…', mask: !0 });
               const {
-                keyID: o,
-                orgID: r,
-                orgCode: n,
-                inquiryOrderID: i,
-              } = g.value;
+                  keyID: i,
+                  orgID: l,
+                  orgCode: s,
+                  inquiryOrderID: c,
+                } = D.value,
+                d =
+                  null != (t = null == (a = o.value) ? void 0 : a.auth_no)
+                    ? t
+                    : '',
+                v =
+                  null != (r = null == (u = o.value) ? void 0 : u.city_id)
+                    ? r
+                    : '',
+                m = null == (n = p.value) ? void 0 : n.ecToken;
               await e.requestRecipePush({
-                orgID: r,
-                orgCode: n,
-                inquiryOrderID: i,
-                rpID: o,
-                authno: a,
-                cityId: t,
-                ecToken: null == (u = l.value) ? void 0 : u.ecToken,
+                orgID: l,
+                orgCode: s,
+                inquiryOrderID: c,
+                rpID: i,
+                authno: d,
+                cityId: v,
+                ecToken: m,
               }),
-                b();
-            } catch (o) {
+                await E();
+            } catch (i) {
               e.index.hideLoading();
             }
         },
-        b = async () => {
-          if (!g.value) return;
-          const { keyID: a } = g.value,
+        E = async () => {
+          if (!D.value) return;
+          const { keyID: a } = D.value,
             t = async () => {
               var u;
               try {
-                const { data: o } = await e.requestGetRpUpdateStatusAndUpdate({
+                const { data: r } = await e.requestGetRpUpdateStatusAndUpdate({
                     rpId: a,
                   }),
-                  { pushStatus: r, pushResult: n } = o;
-                r === e.PrescriptionStatus.Success ||
-                r === e.PrescriptionStatus.Failed
+                  { pushStatus: o, pushResult: n } = r;
+                o === e.PrescriptionStatus.Success ||
+                o === e.PrescriptionStatus.Failed
                   ? (e.index.hideLoading(),
                     I(!1),
-                    r === e.PrescriptionStatus.Failed &&
-                      (null == (u = d.value) ||
+                    o === e.PrescriptionStatus.Failed &&
+                      (null == (u = v.value) ||
                         u.openModal({
                           title: n || '处方流转失败',
                           showCancel: !1,
                         })))
                   : (await e.sleep(2e3), await t());
-              } catch (o) {
-                console.log(o);
+              } catch (r) {
+                console.log(r);
               }
             };
           t();
         };
       return (
-        t({
+        u({
           pageOnLoad: (e) => {
-            (v.value = e), I(!0);
+            (m.value = e), I(!0);
           },
           pageOnShow: async () => {
-            var e, a;
-            if (c.value.authNo)
+            var a;
+            if (h.value === e.AutoJumpEnum.Prescription) {
+              if (!c.value.authNo) return;
               try {
-                await r(),
-                  (null == (e = o.value) ? void 0 : e.auth_no) &&
-                    (n.resetPrescriptionAuthInfo(),
-                    P(
-                      null == (a = o.value) ? void 0 : a.auth_no,
-                      o.value.city_id
-                    ));
+                await n(),
+                  (null == (a = o.value) ? void 0 : a.auth_no) &&
+                    ((h.value = null), _());
               } catch (t) {}
+            }
           },
         }),
         (a, t) => {
-          var o, r, n;
+          var u, o, n;
           return e.e(
-            { a: !h.value },
-            h.value
+            { a: !y.value },
+            y.value
               ? {
                   q: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24082717531384828430201233.png',
                 }
               : e.e(
-                  { b: f.value },
-                  f.value
+                  { b: S.value },
+                  S.value
                     ? {
                         c: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24071710462412404360201233.png',
-                        d: e.t(null == (o = g.value) ? void 0 : o.undoRea),
+                        d: e.t(null == (u = D.value) ? void 0 : u.undoRea),
                       }
-                    : m.value
-                      ? { f: e.t(D.value) }
+                    : f.value
+                      ? { f: e.t(T.value) }
                       : {
-                          g: w.value,
-                          h: e.t(D.value),
-                          i: e.t(S.value),
-                          j: e.o((e) => (u.value = e)),
-                          k: e.p({ 'end-time': y.value, modelValue: u.value }),
+                          g: A.value,
+                          h: e.t(T.value),
+                          i: e.t(w.value),
+                          j: e.o((e) => (r.value = e)),
+                          k: e.p({ 'end-time': g.value, modelValue: r.value }),
                           l: e.n(
-                            (null == (r = g.value)
+                            (null == (o = D.value)
                               ? void 0
-                              : r.rpUploadStatus) ===
+                              : o.rpUploadStatus) ===
                               e.unref(e.PrescriptionStatusEnum).Fail
                               ? 'prescription-error'
                               : 'prescription-progress'
                           ),
                         },
                   {
-                    e: m.value,
-                    m: null == (n = g.value) ? void 0 : n.rpImgFileUrl,
-                    n: e.n(T.value ? 'prescription-content-fail' : ''),
-                    o: T.value,
+                    e: f.value,
+                    m: null == (n = D.value) ? void 0 : n.rpImgFileUrl,
+                    n: e.n(P.value ? 'prescription-content-fail' : ''),
+                    o: P.value,
                   },
-                  T.value ? { p: e.o(A) } : {}
+                  P.value ? { p: e.o(x) } : {}
                 ),
-            { r: e.sr(d, '0feab302-1', { k: 'modalRef' }) }
+            { r: e.sr(v, 'c02e8a00-1', { k: 'modalRef' }) }
           );
         }
       );
     },
   }),
-  u = e._export_sfc(t, [['__scopeId', 'data-v-0feab302']]);
-wx.createComponent(u);
+  r = e._export_sfc(u, [['__scopeId', 'data-v-c02e8a00']]);
+wx.createComponent(r);

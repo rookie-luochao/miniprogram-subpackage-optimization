@@ -2,7 +2,7 @@
 const e = require('../../common/vendor.js');
 Math || n();
 const n = () =>
-    '../../node-modules/@clinic/core/src/pages/health-records-detail/index.js',
+    '../../node-modules/@clinic/core/src/pages/health-records-edit/index.js',
   o = e.defineComponent({
     __name: 'index',
     setup(n) {
@@ -15,7 +15,7 @@ const n = () =>
           });
         }),
         (n, r) => ({
-          a: e.sr(o, '27e45d55-0', { k: 'healthRecordsDetailRef' }),
+          a: e.sr(o, 'dccfde36-0', { k: 'healthRecordsEditRef' }),
           b: e.p({ 'is-follow-up-info-required': !1 }),
         })
       );

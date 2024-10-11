@@ -9,29 +9,30 @@ const a = () => '../../components/Modal/index.js',
         {
           medicalAuthStatus: o,
           medicalAuthType: i,
-          prescriptionAuthInfo: r,
+          userAuthInfo: u,
         } = e.storeToRefs(n),
-        s = e.useAppConfigStore(),
-        { ORG_ID: c } = s.CONFIG,
-        u = e.useUserInfoStore(),
-        { userInfo: l } = e.storeToRefs(u),
+        r = e.useAppConfigStore(),
+        { ORG_ID: s } = r.CONFIG,
+        l = e.useUserInfoStore(),
+        { userInfo: c } = e.storeToRefs(l),
         { scanCodeData: p, scanCodeAuth: d } = e.useScanCodeAuth(),
-        { medicalInfo: m, fetchMedicalInfo: g } = e.useMedicalInfo(),
+        { medicalInfo: m, fetchMedicalUserInfo: v } = e.useMedicalInfo(),
+        g = e.ref(null),
         h = e.ref([]),
-        v = async () => {
+        f = async () => {
           var a;
           try {
             e.index.showLoading({ title: '加载中…', mask: !0 });
             const { data: t } = await e.requestSelectOrgPersonFamily({
-              orgID: c,
-              orgPersonUserID: null == (a = l.value) ? void 0 : a.keyID,
+              orgID: s,
+              orgPersonUserID: null == (a = c.value) ? void 0 : a.keyID,
             });
             h.value = t;
           } finally {
             e.index.hideLoading();
           }
         },
-        f = (a) => {
+        I = (a) => {
           const { age: t, month: n } = e.calculateAge(a);
           return e.formatPatientAge(t, n);
         },
@@ -40,12 +41,13 @@ const a = () => '../../components/Modal/index.js',
         t({
           pageOnShow: async () => {
             var a;
-            if ((await v(), r.value.authNo))
+            if ((await f(), g.value === e.AutoJumpEnum.AddPatient)) {
+              if (!u.value.authNo) return;
               try {
-                await g(),
+                await v(),
                   (null == (a = m.value) ? void 0 : a.user_name) &&
                     m.value.user_card_no &&
-                    (n.resetPrescriptionAuthInfo(),
+                    ((g.value = null),
                     e.appNavigator.navigateTo(
                       e.appNavigator.pagesMap['patient-detail'],
                       {
@@ -56,6 +58,7 @@ const a = () => '../../components/Modal/index.js',
                       }
                     ));
               } catch (t) {}
+            }
           },
         }),
         (a, t) =>
@@ -65,12 +68,19 @@ const a = () => '../../components/Modal/index.js',
               ? {
                   b: e.f(h.value, (a, t, n) =>
                     e.e(
-                      { a: e.t(a.familyName), b: 1 === a.isInsuranceUser },
-                      (a.isInsuranceUser, {}),
+                      {
+                        a: e.t(a.familyName),
+                        b:
+                          a.isInsuranceUser ===
+                          e.unref(e.IsMedicalAuthPatient).YES,
+                      },
+                      (a.isInsuranceUser,
+                      e.unref(e.IsMedicalAuthPatient).YES,
+                      {}),
                       {
                         c: e.t(a.relationName),
                         d: e.t(e.unref(e.GenderDesc)[a.sex]),
-                        e: e.t(f(a.birthDay)),
+                        e: e.t(I(a.birthDay)),
                         f: e.t(a.phone),
                         g: e.o(
                           (t) =>
@@ -102,7 +112,7 @@ const a = () => '../../components/Modal/index.js',
                                           keyID: o,
                                           orgID: i,
                                         }),
-                                        v();
+                                        f();
                                     } finally {
                                       e.index.hideLoading();
                                     }
@@ -127,9 +137,14 @@ const a = () => '../../components/Modal/index.js',
                             title: '您的就诊人数量已满，建议清理不常用就诊人',
                             icon: 'none',
                           })
-                        : o.value !== e.AuthStatus.NO_AUTH
-                          ? (i.value === e.AuthType.MINI_PROGRAM &&
-                              e.wxPrescriptionTransferAuth(),
+                        : (o.value === e.AuthStatus.NO_AUTH &&
+                            e.appNavigator.navigateTo(
+                              e.appNavigator.pagesMap['patient-detail']
+                            ),
+                          o.value === e.AuthStatus.NEED_AUTH &&
+                            ((g.value = e.AutoJumpEnum.AddPatient),
+                            i.value === e.AuthType.MINI_PROGRAM &&
+                              e.wxUserInfoAuth(),
                             i.value === e.AuthType.SCAN_CODE &&
                               (await d(),
                               p.value &&
@@ -141,17 +156,14 @@ const a = () => '../../components/Modal/index.js',
                                       idNumber: p.value.idNo,
                                     },
                                   }
-                                )))
-                          : e.appNavigator.navigateTo(
-                              e.appNavigator.pagesMap['patient-detail']
-                            );
+                                ))));
                     })()
                   ),
                 },
-            { g: e.sr(y, '1f37c0ab-0', { k: 'modalRef' }) }
+            { g: e.sr(y, '771b34f3-0', { k: 'modalRef' }) }
           )
       );
     },
   }),
-  n = e._export_sfc(t, [['__scopeId', 'data-v-1f37c0ab']]);
+  n = e._export_sfc(t, [['__scopeId', 'data-v-771b34f3']]);
 wx.createComponent(n);

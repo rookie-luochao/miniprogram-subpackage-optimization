@@ -11,77 +11,82 @@ const a = () => '../OneTreeModal/index.js',
       },
     },
     setup(a, { expose: t }) {
-      const o = e.inject(e.globalDataSymbol),
-        r = e.useAppConfigStore(),
-        { ORG_ID: n } = r.CONFIG,
-        u = e.useUserInfoStore(),
-        { userInfo: l } = e.storeToRefs(u),
+      const u = e.inject(e.globalDataSymbol),
+        o = e.useAppConfigStore(),
+        { ORG_ID: r } = o.CONFIG,
+        n = e.useUserInfoStore(),
+        { userInfo: l } = e.storeToRefs(n),
         i = e.useMedicalInsuranceAuthStore(),
         {
           medicalAuthStatus: s,
           medicalAuthType: d,
-          prescriptionAuthInfo: p,
+          userAuthInfo: v,
         } = e.storeToRefs(i),
-        { medicalInfo: c, fetchMedicalInfo: v } = e.useMedicalInfo(),
-        { scanCodeData: g, scanCodeAuth: f } = e.useScanCodeAuth(),
-        m = a,
+        { medicalInfo: p, fetchMedicalUserInfo: c } = e.useMedicalInfo(),
+        { scanCodeData: g, scanCodeAuth: m } = e.useScanCodeAuth(),
+        f = a,
         I = e.ref(null),
         h = e.ref(null),
-        y = e.ref(''),
+        y = e.ref(null),
+        A = e.ref(''),
         D = e.ref(!1),
         N = async () => {
           var a, t;
-          const o = m.subOrgParams.orgCode,
-            r = m.subOrgParams.orgID;
-          if (o && r)
+          const u = f.subOrgParams.orgCode,
+            o = f.subOrgParams.orgID;
+          if (u && o)
             try {
               e.index.showLoading({ title: '加载中…', mask: !0 });
-              const { data: u } = await e.requestGetErpOpen({
-                orgClientCode: o,
+              const { data: n } = await e.requestGetErpOpen({
+                orgClientCode: u,
               });
-              if (((D.value = u), !u)) return;
+              if (((D.value = n), !n)) return;
               const { data: i } = await e.requestSelectOrgPersonFamily({
-                orgID: n,
+                orgID: r,
                 orgPersonUserID: null == (a = l.value) ? void 0 : a.keyID,
               });
-              if (!(null == i ? void 0 : i.length)) return void (y.value = '');
+              if (!(null == i ? void 0 : i.length)) return void (A.value = '');
               const s = i[0].keyID,
                 d = i[0].familyName,
-                { data: p } = await e.requestGetPatientQrCode({
-                  orgID: n,
-                  orgClientID: r,
+                { data: v } = await e.requestGetPatientQrCode({
+                  orgID: r,
+                  orgClientID: o,
                   patientAccountID: null == (t = l.value) ? void 0 : t.keyID,
                   patientID: s,
                 });
-              y.value = p;
-              const c = async () => {
+              A.value = v;
+              const p = async () => {
                 var a;
                 try {
                   const t = await e.requestGetErpInquiryOrder({ patientID: s });
                   if (t.data)
                     return void (
-                      null == (a = h.value) ||
+                      null == (a = y.value) ||
                       a.openModal({
                         orderDetail: { ...t.data, patientName: d },
-                        subOrgInfo: { ...m.subOrgInfo, ...m.subOrgParams },
+                        subOrgInfo: { ...f.subOrgInfo, ...f.subOrgParams },
                       })
                     );
-                  I.value = setTimeout(c, 3e3);
+                  h.value = setTimeout(p, 3e3);
                 } catch (t) {
-                  I.value && clearTimeout(I.value);
+                  h.value && clearTimeout(h.value);
                 }
               };
-              c();
+              p();
             } finally {
               e.index.hideLoading();
             }
         },
         O = async () => {
-          s.value !== e.AuthStatus.NO_AUTH
-            ? (d.value === e.AuthType.MINI_PROGRAM &&
-                e.wxPrescriptionTransferAuth(),
+          s.value === e.AuthStatus.NO_AUTH &&
+            e.appNavigator.navigateTo(
+              e.appNavigator.pagesMap['patient-detail']
+            ),
+            s.value === e.AuthStatus.NEED_AUTH &&
+              ((I.value = e.AutoJumpEnum.AddPatient),
+              d.value === e.AuthType.MINI_PROGRAM && e.wxUserInfoAuth(),
               d.value === e.AuthType.SCAN_CODE &&
-                (await f(),
+                (await m(),
                 g.value &&
                   e.appNavigator.navigateTo(
                     e.appNavigator.pagesMap['patient-detail'],
@@ -91,47 +96,45 @@ const a = () => '../OneTreeModal/index.js',
                         idNumber: g.value.idNo,
                       },
                     }
-                  )))
-            : e.appNavigator.navigateTo(
-                e.appNavigator.pagesMap['patient-detail']
-              );
+                  )));
         },
         b = async () => {
           var a;
-          if (p.value.authNo)
+          if (I.value === e.AutoJumpEnum.AddPatient) {
+            if (!v.value.authNo) return;
             try {
-              await v(),
-                (null == (a = c.value) ? void 0 : a.user_name) &&
-                  c.value.user_card_no &&
-                  (i.resetPrescriptionAuthInfo(),
+              await c(),
+                (null == (a = p.value) ? void 0 : a.user_name) &&
+                  p.value.user_card_no &&
+                  ((I.value = null),
                   e.appNavigator.navigateTo(
                     e.appNavigator.pagesMap['patient-detail'],
                     {
                       query: {
-                        familyName: c.value.user_name,
-                        idNumber: c.value.user_card_no,
+                        familyName: p.value.user_name,
+                        idNumber: p.value.user_card_no,
                       },
                     }
                   ));
             } catch (t) {}
+          }
         },
-        w = () => {
-          null == o || o.updateGlobalData({ onShowFlag: !1 }),
-            e.index.previewImage({ urls: [y.value], current: 0 });
+        _ = () => {
+          e.index.previewImage({ urls: [A.value], current: 0 });
         };
       return (
         t({
           isErpOpen: D,
           getOneTreeBusiness: N,
           pageOnShow: async () => {
-            if (null == o ? void 0 : o.globalData.value.onShowFlag)
-              return await N(), void b();
-            null == o || o.updateGlobalData({ onShowFlag: !0 });
+            (null == u ? void 0 : u.globalData.value.onShowFlag)
+              ? (await N(), D.value && !A.value && b())
+              : null == u || u.updateGlobalData({ onShowFlag: !0 });
           },
           pageOnHide: () => {
-            I.value &&
-              (null == o ? void 0 : o.globalData.value.onShowFlag) &&
-              clearTimeout(I.value);
+            (null == u ? void 0 : u.globalData.value.onShowFlag) &&
+              h.value &&
+              clearTimeout(h.value);
           },
         }),
         (a, t) =>
@@ -139,19 +142,19 @@ const a = () => '../OneTreeModal/index.js',
             { a: D.value },
             D.value
               ? e.e(
-                  { b: y.value },
-                  y.value
-                    ? { c: y.value, d: e.o(w) }
+                  { b: A.value },
+                  A.value
+                    ? { c: A.value, d: e.o(_) }
                     : {
                         e: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24071815445366666680201240.png',
                         f: e.o(O),
                       }
                 )
               : {},
-            { g: e.sr(h, '3c9483f4-0', { k: 'oneTreeModalRef' }) }
+            { g: e.sr(y, '20b414e9-0', { k: 'oneTreeModalRef' }) }
           )
       );
     },
   }),
-  o = e._export_sfc(t, [['__scopeId', 'data-v-3c9483f4']]);
-wx.createComponent(o);
+  u = e._export_sfc(t, [['__scopeId', 'data-v-20b414e9']]);
+wx.createComponent(u);

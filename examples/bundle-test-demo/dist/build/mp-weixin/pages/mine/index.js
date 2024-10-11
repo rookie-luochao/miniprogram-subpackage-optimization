@@ -2,19 +2,22 @@
 const e = require('../../common/vendor.js');
 Math || n();
 const n = () => '../../node-modules/@clinic/core/src/pages/mine/index.js',
-  o = e.defineComponent({
+  c = e.defineComponent({
     __name: 'index',
     setup(n) {
-      const o = e.ref(null);
+      const c = e.ref(null);
       return (
         e.onShow(async () => {
           e.nextTick$1(() => {
             var e;
-            null == (e = o.value) || e.pageOnShow();
+            null == (e = c.value) || e.pageOnShow();
           });
         }),
-        (n, c) => ({ a: e.sr(o, '33f3c761-0', { k: 'mineRef' }) })
+        (n, s) => ({
+          a: e.sr(c, '8d82579c-0', { k: 'mineRef' }),
+          b: e.p({ 'is-customer-service-center': !1 }),
+        })
       );
     },
   });
-wx.createPage(o);
+wx.createPage(c);

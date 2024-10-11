@@ -13,7 +13,7 @@ const n = () => '../../node-modules/@clinic/core/src/pages/add-drug/index.js',
             null == (e = a.value) || e.pageOnLoad(n);
           });
         }),
-        (n, o) => ({ a: e.sr(a, '7a96f8cc-0', { k: 'addDrugRef' }) })
+        (n, o) => ({ a: e.sr(a, '5f1abfeb-0', { k: 'addDrugRef' }) })
       );
     },
   });

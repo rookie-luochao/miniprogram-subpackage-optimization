@@ -14,7 +14,7 @@ const n = () =>
             null == (e = t.value) || e.pageOnLoad(n);
           });
         }),
-        (n, a) => ({ a: e.sr(t, '0cfb94af-0', { k: 'patientDetailRef' }) })
+        (n, a) => ({ a: e.sr(t, '4b952180-0', { k: 'patientDetailRef' }) })
       );
     },
   });

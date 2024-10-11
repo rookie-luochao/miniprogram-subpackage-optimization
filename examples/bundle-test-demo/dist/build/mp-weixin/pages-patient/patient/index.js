@@ -13,7 +13,7 @@ const n = () => '../../node-modules/@clinic/core/src/pages/patient/index.js',
             null == (e = t.value) || e.pageOnShow();
           });
         }),
-        (n, o) => ({ a: e.sr(t, 'fd8e08f6-0', { k: 'patientRef' }) })
+        (n, o) => ({ a: e.sr(t, '2a531bd8-0', { k: 'patientRef' }) })
       );
     },
   });

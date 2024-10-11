@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "问诊订单",
+  "navigationBarTitleText": "订单详情",
   "navigationStyle": "custom",
   "usingComponents": {
     "inquiry-order-detail": "../../node-modules/@clinic/core/src/pages/inquiry-order-detail/index"

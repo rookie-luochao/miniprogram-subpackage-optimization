@@ -63,7 +63,7 @@ const a = () => '../../components/Modal/index.js',
           },
         }),
         (a, o) => {
-          var l, p, c, d, v, f, m, h, g, b, I;
+          var l, p, c, d, v, m, f, h, g, I, y;
           return e.e(
             {
               a: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24071710562797921040201240.png',
@@ -89,7 +89,7 @@ const a = () => '../../components/Modal/index.js',
             { i: a.isFollowUpInfoRequired || n.value },
             a.isFollowUpInfoRequired || n.value
               ? {
-                  j: a.isFollowUpInfoRequired ? '10px' : '16px',
+                  j: a.isFollowUpInfoRequired ? '18px' : '16px',
                   k: e.t(
                     e.unref(e.formatValue)(
                       null == (c = i.value) ? void 0 : c.treatedHospital
@@ -106,7 +106,7 @@ const a = () => '../../components/Modal/index.js',
                         e.unref(e.DEFAULT_TIME)
                         ? e
                             .unref(e.dayjs)(
-                              null == (f = i.value) ? void 0 : f.clinicTime
+                              null == (m = i.value) ? void 0 : m.clinicTime
                             )
                             .format('YYYY-MM-DD')
                         : ''
@@ -114,7 +114,7 @@ const a = () => '../../components/Modal/index.js',
                   ),
                   n: e.t(
                     e.unref(e.formatValue)(
-                      null == (m = i.value) ? void 0 : m.diagnosis
+                      null == (f = i.value) ? void 0 : f.diagnosis
                     )
                   ),
                 }
@@ -131,15 +131,15 @@ const a = () => '../../components/Modal/index.js',
             },
             (
               null ==
-              (I =
-                null == (b = i.value) ? void 0 : b.orgPatientFilesMedicineList)
+              (y =
+                null == (I = i.value) ? void 0 : I.orgPatientFilesMedicineList)
                 ? void 0
-                : I.length
+                : y.length
             )
               ? {
                   p: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24071711020588223670201233.png',
                   q: e.f(i.value.orgPatientFilesMedicineList, (a, o, i) => ({
-                    a: 'ffa95bac-1-' + i,
+                    a: '936549aa-1-' + i,
                     b: e.p({
                       'drug-info': a,
                       'is-show-operate': !1,
@@ -152,12 +152,12 @@ const a = () => '../../components/Modal/index.js',
             {
               r: e.o(s),
               s: e.o(u),
-              t: e.sr(r, 'ffa95bac-2', { k: 'modalRef' }),
+              t: e.sr(r, '936549aa-2', { k: 'modalRef' }),
             }
           );
         }
       );
     },
   }),
-  n = e._export_sfc(l, [['__scopeId', 'data-v-ffa95bac']]);
+  n = e._export_sfc(l, [['__scopeId', 'data-v-936549aa']]);
 wx.createComponent(n);

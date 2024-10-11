@@ -1,79 +1,146 @@
 'use strict';
 const e = require('../../../../../../common/vendor.js');
-Math || (a + t + n)();
-const t = () => './components/message-custom/index.js',
-  a = () => './components/message-system/index.js',
+if (!Array) {
+  e.resolveComponent('uni-load-more')();
+}
+Math ||
+  (
+    t +
+    a +
+    n +
+    (() =>
+      '../../../node-modules/@dcloudio/uni-ui/lib/uni-load-more/uni-load-more.js')
+  )();
+const a = () => './components/message-custom/index.js',
+  t = () => './components/message-system/index.js',
   n = () => './components/message-text/index.js',
-  i = e.defineComponent({
+  u = e.defineComponent({
     __name: 'index',
-    props: { isShowMedicalDocuments: { type: Boolean } },
-    setup(t, { expose: a }) {
-      const n = e.getCurrentInstance(),
-        i = e.ref(!1),
-        u = e.ref(''),
-        s = () => {
-          var e;
-          (null == (e = A.value) ? void 0 : e.length) > 0 &&
-            ((u.value = 'chat-item-end-dom'),
-            setTimeout(() => (u.value = ''), 50));
+    props: {
+      isPrescriptionAuth: { type: Boolean, default: !0 },
+      isShowMedicalDocuments: { type: Boolean, default: !1 },
+    },
+    setup(a, { expose: t }) {
+      const n = a,
+        {
+          handleToTransfer: u,
+          handleToRefund: i,
+          handleAutoJump: o,
+        } = e.useOrderAction(n.isPrescriptionAuth),
+        l = e.ref(null),
+        s = e.ref(null),
+        r = e.ref(''),
+        c = e.ref(!0),
+        d = e.ref(null),
+        v = e.getCurrentInstance(),
+        m = (e) => {
+          (f.value = e.height), y();
         },
-        o = e.ref(0),
-        l = e.computed(() =>
-          i.value
+        p = e.ref(),
+        y = () => {
+          var a;
+          (null == (a = j.value) ? void 0 : a.length) > 0 &&
+            ((p.value = 0),
+            e.nextTick$1(() => {
+              p.value = void 0;
+            }));
+        },
+        g = e.ref(!1),
+        f = e.ref(0),
+        I = e.computed(() =>
+          g.value
             ? { paddingBottom: '0px' }
-            : o.value > 0
-              ? { paddingBottom: `${o.value}px`, backgroundColor: '#ffffff' }
+            : f.value > 0
+              ? { paddingBottom: `${f.value}px`, backgroundColor: '#ffffff' }
               : {
-                  paddingBottom: `calc(${o.value}px + env(safe-area-inset-bottom))`,
+                  paddingBottom: `calc(${f.value}px + env(safe-area-inset-bottom))`,
                   backgroundColor: '#ffffff',
                 }
         ),
-        r = (e) => {
-          (o.value = e.height), setTimeout(() => s(), 0);
-        },
-        c = () => {
-          setTimeout(() => s(), 0);
-        },
-        v = () => {
-          setTimeout(() => s(), 100);
-        },
-        d = () => {
-          $.value || setTimeout(() => s(), 0);
-        },
-        m = () => {
-          var t, a;
-          if (1 === (null == (t = I.value) ? void 0 : t.referral))
-            return '已转诊';
-          const n = null == (a = I.value) ? void 0 : a.inquiryStatus;
-          return e.InquiryStatusDesc[n];
-        },
-        p = (e) => {
-          const t = e.payload.data;
-          if (!t) return;
-          const a = 'hint' === JSON.parse(t).customType;
-          return 'TIMCustomElem' === e.type && a;
-        },
-        g = (e) => 'TIMCustomElem' === e.type,
-        y = (e) => 'TIMTextElem' === e.type,
-        I = e.ref(null),
-        f = e.ref(null),
         h = () => {
-          var e, t;
-          const a = null == (e = T.value) ? void 0 : e.conversationID,
-            n = null == (t = T.value) ? void 0 : t.type;
-          return a ? a.replace(n, '') : '';
+          y();
         },
-        { handleUploadImage: S } = e.useUploadImage(),
-        q = async (t) => {
+        S = () => {
+          y();
+        },
+        q = () => {
+          y();
+        },
+        E = e.computed(() => {
+          var a, t, n;
+          const u = null == (a = x.value) ? void 0 : a.payStatus,
+            i = null == (t = x.value) ? void 0 : t.inquiryStatus;
+          if (1 === (null == (n = x.value) ? void 0 : n.referral))
+            return '已转诊';
+          if (u === e.PaymentStatusEnum.WaitPay) return '待支付';
+          const o = [
+            e.PaymentStatusEnum.PaySuccess,
+            e.PaymentStatusEnum.NoNeed,
+          ];
+          return i === e.InquiryStatusEnum.DealingWaitAccept && o.includes(u)
+            ? '待接诊'
+            : e.InquiryStatusDesc[i] || '--';
+        }),
+        D = (e) => {
+          const a = e.payload.data;
+          if (!a) return;
+          const t = 'hint' === JSON.parse(a).customType;
+          return 'TIMCustomElem' === e.type && t;
+        },
+        M = (e) => 'TIMCustomElem' === e.type,
+        T = (e) => 'TIMTextElem' === e.type,
+        x = e.ref(null),
+        w = async () => {
+          const { data: a } = await e.requestGetInquiryOrderDetail({
+            inquiryOrderID: r.value,
+          });
+          x.value = a;
+          const t = a.inquiryStatus;
+          [
+            e.InquiryStatusEnum.DealingAccept,
+            e.InquiryStatusEnum.DealingWaitAccept,
+          ].includes(t) || (g.value = !0);
+        },
+        C = e.ref(null),
+        b = async () => {
           var a;
-          const n = await S(t);
+          const { data: t } = await e.requestGetDoctorInfoDetail({
+            orgStaffID: null == (a = x.value) ? void 0 : a.doctorStaffID,
+          });
+          C.value = t;
+        },
+        A = e.ref(0),
+        O = async () => {
+          var a, t;
+          if (
+            (null == (a = x.value) ? void 0 : a.inquiryStatus) ===
+            e.InquiryStatusEnum.DealingWaitAccept
+          ) {
+            const { data: a } = await e.requestGetHlpDoctorOrderSize({
+              doctorID: null == (t = x.value) ? void 0 : t.doctorImID,
+              inquiryOrderID: r.value,
+            });
+            (0 === A.value || a < A.value) && (A.value = a),
+              (d.value = setTimeout(() => O(), 5e3));
+          }
+        },
+        L = () => {
+          var e, a;
+          const t = null == (e = U.value) ? void 0 : e.conversationID,
+            n = null == (a = U.value) ? void 0 : a.type;
+          return t ? t.replace(n, '') : '';
+        },
+        { handleUploadImage: $ } = e.useUploadImage(),
+        N = async (a) => {
+          var t;
+          const n = await $(a);
           if (!n) return;
-          const i = null == (a = T.value) ? void 0 : a.type;
-          if (!i) return;
-          const u = h(),
+          const u = null == (t = U.value) ? void 0 : t.type;
+          if (!u) return;
+          const i = L(),
             o = e.index.$TUIKit.createCustomMessage({
-              to: u,
-              conversationType: i,
+              to: i,
+              conversationType: u,
               payload: {
                 data: JSON.stringify({
                   customType: 'image',
@@ -87,158 +154,158 @@ const t = () => './components/message-custom/index.js',
               },
             });
           await e.index.$TUIKit.sendMessage(o),
-            (A.value = e.filterImMessage([...A.value, o])),
-            setTimeout(() => s(), 0);
+            (j.value = e.filterImMessage([...j.value, o])),
+            y();
         },
-        E = e.ref(''),
-        D = async () => {
-          var t;
-          const a = E.value.trim();
-          if (!a)
+        H = e.ref(''),
+        K = async () => {
+          var a;
+          const t = H.value.trim();
+          if (!t)
             return void e.index.showToast({
               title: '请输入聊天内容',
               icon: 'none',
             });
-          const n = null == (t = T.value) ? void 0 : t.type;
+          const n = null == (a = U.value) ? void 0 : a.type;
           if (n)
             try {
-              const t = h(),
-                i = e.index.$TUIKit.createTextMessage({
-                  to: t,
+              const a = L(),
+                u = e.index.$TUIKit.createTextMessage({
+                  to: a,
                   conversationType: n,
-                  payload: { text: a },
+                  payload: { text: t },
                 });
-              await e.index.$TUIKit.sendMessage(i),
-                (A.value = e.filterImMessage([...A.value, i])),
-                (E.value = ''),
-                setTimeout(() => s(), 0);
-            } catch (i) {
-              console.error('消息发送失败：', i),
+              await e.index.$TUIKit.sendMessage(u),
+                (j.value = e.filterImMessage([...j.value, u])),
+                (H.value = ''),
+                y();
+            } catch (u) {
+              console.error('消息发送失败：', u),
                 e.index.showToast({
                   title: '消息发送失败，请重试',
                   icon: 'none',
                 });
             }
         },
-        T = e.ref(null),
-        M = e.ref(!1),
-        x = e.ref(!0),
-        w = async () => {
-          try {
-            (M.value = !0), C.value ? await H() : await U();
-          } catch (e) {
-            console.log(e);
-          }
+        U = e.ref(null),
+        R = async () => {
+          var a;
+          if (e.index.$TUIKit.isReady())
+            try {
+              const t = await e.index.$TUIKit.getConversationProfile(
+                'C2C' + (null == (a = x.value) ? void 0 : a.doctorImID)
+              );
+              (U.value = t.data.conversation), await J();
+            } catch (t) {
+              console.log(t);
+            }
         },
-        $ = e.ref(!0),
-        C = e.ref(!1),
-        b = e.ref(''),
-        A = e.ref([]),
-        U = async () => {
-          var t, a, n;
-          const { data: i } = await e.index.$TUIKit.getMessageList({
-            conversationID: null == (t = T.value) ? void 0 : t.conversationID,
-            nextReqMessageID: b.value,
+        P = e.ref(!1),
+        _ = e.ref(e.LoadMoreStatus.More),
+        F = async () => {
+          if (_.value === e.LoadMoreStatus.More)
+            try {
+              (_.value = e.LoadMoreStatus.Loading),
+                P.value ? await z() : await J();
+            } catch (a) {
+              console.log(a);
+            }
+        },
+        k = e.ref(''),
+        j = e.ref([]),
+        J = async () => {
+          var a, t, n;
+          const { data: u } = await e.index.$TUIKit.getMessageList({
+            conversationID: null == (a = U.value) ? void 0 : a.conversationID,
+            nextReqMessageID: k.value,
           });
-          M.value = !1;
-          let o = '';
-          const l = e.filterImMessage(i.messageList);
-          (null == l ? void 0 : l.length) && (o = `id-${l[l.length - 1].ID}`),
-            (C.value = i.isCompleted),
-            (b.value = i.nextReqMessageID),
-            (A.value = e.filterImMessage([...i.messageList, ...A.value])),
-            i.isCompleted &&
-              (null == (a = i.messageList) ? void 0 : a.length) &&
-              ((O.value = `${i.messageList[0].sequence}_${i.messageList[0].random}_${i.messageList[0].time}`),
-              (F.value = i.messageList[0].time)),
-            (null == (n = A.value) ? void 0 : n.length)
-              ? $.value
-                ? (($.value = !1), setTimeout(() => s(), 100))
-                : o && (u.value = o)
-              : await H();
+          (P.value = u.isCompleted),
+            (k.value = u.nextReqMessageID),
+            (_.value = e.LoadMoreStatus.More),
+            (j.value = e.filterImMessage([...u.messageList, ...j.value])),
+            u.isCompleted &&
+              (null == (t = u.messageList) ? void 0 : t.length) &&
+              ((B.value = `${u.messageList[0].sequence}_${u.messageList[0].random}_${u.messageList[0].time}`),
+              (G.value = u.messageList[0].time)),
+            (null == (n = j.value) ? void 0 : n.length) || (await z());
         },
-        O = e.ref(''),
-        F = e.ref(0),
-        K = e.ref(!1),
-        H = async () => {
-          var t, a;
+        B = e.ref(''),
+        G = e.ref(0),
+        W = e.ref(!1),
+        z = async () => {
+          var a, t;
           try {
             const { data: n } = await e.requestGetRecordsForChat({
-              toAccountID: null == (t = I.value) ? void 0 : t.doctorImID,
-              accountID: null == (a = I.value) ? void 0 : a.patientImID,
-              msgKey: O.value,
-              msgTime: F.value,
+              toAccountID: null == (a = x.value) ? void 0 : a.doctorImID,
+              accountID: null == (t = x.value) ? void 0 : t.patientImID,
+              msgKey: B.value,
+              msgTime: G.value,
             });
-            M.value = !1;
-            let i = n.messageList,
-              o = '';
-            if (null == i ? void 0 : i.length) {
-              i =
-                null == i
+            _.value = e.LoadMoreStatus.More;
+            let u = n.messageList;
+            (null == u ? void 0 : u.length) &&
+              ((u =
+                null == u
                   ? void 0
-                  : i.map((e) => {
-                      var t;
+                  : u.map((e) => {
+                      var a;
                       return e.from ===
-                        (null == (t = I.value) ? void 0 : t.doctorImID)
+                        (null == (a = x.value) ? void 0 : a.doctorImID)
                         ? { ...e, ID: e.id, flow: 'in' }
                         : { ...e, ID: e.id, flow: 'out' };
-                    });
-              const t = e.filterImMessage(i);
-              (null == t ? void 0 : t.length) &&
-                (o = `id-${t[t.length - 1].ID}`),
-                (A.value = e.filterImMessage([...i, ...A.value])),
-                (O.value = `${i[0].sequence}_${i[0].random}_${i[0].time}`),
-                (F.value = i[0].time);
-            }
-            (K.value = n.completed),
-              n.completed &&
-                e.nextTick$1(() => {
-                  x.value = !1;
-                }),
-              $.value
-                ? (($.value = !1), setTimeout(() => s(), 100))
-                : o && (u.value = o);
+                    })),
+              (j.value = e.filterImMessage([...u, ...j.value])),
+              (B.value = `${u[0].sequence}_${u[0].random}_${u[0].time}`),
+              (G.value = u[0].time)),
+              (W.value = n.completed),
+              n.completed && (_.value = e.LoadMoreStatus.NoMore);
           } catch (n) {
             console.log(n);
           }
         },
-        L = async (t) => {
-          var a, n, i;
-          const u = JSON.parse(JSON.stringify(t.data)),
-            o = u.filter((e) => {
-              var t;
+        V = async (a) => {
+          var t, n, u, i;
+          const o = JSON.parse(JSON.stringify(a.data)),
+            l = o.filter((e) => {
+              var a;
               return (
                 e.conversationID ===
-                (null == (t = T.value) ? void 0 : t.conversationID)
+                (null == (a = U.value) ? void 0 : a.conversationID)
               );
             });
-          A.value = e.filterImMessage([...A.value, ...o]);
-          const l = JSON.parse(
+          j.value = e.filterImMessage([...j.value, ...l]);
+          const s = JSON.parse(
             null !=
-              (i =
-                null == (n = null == (a = u[0]) ? void 0 : a.payload)
+              (u =
+                null == (n = null == (t = o[0]) ? void 0 : t.payload)
                   ? void 0
                   : n.data)
-              ? i
+              ? u
               : '{}'
           );
-          if ((console.log('data:接收消息 ', l), 'transfer' === l.childType)) {
-            const { inquiryOrderID: t } = l.data;
+          if (
+            (console.log('data:接收消息 ', s),
+            'transfer' === s.childType &&
+              (null == (i = x.value) ? void 0 : i.payStatus) ===
+                e.PaymentStatusEnum.NoNeed)
+          ) {
+            const { inquiryOrderID: a } = s.data;
             return void setTimeout(() => {
               e.appNavigator.redirectTo(e.appNavigator.pagesMap.chat, {
-                query: { orderID: t },
+                query: { orderID: a },
               });
             }, 2e3);
           }
           const r = {
             [e.InquiryMsgStatusEnum.Finish]: e.InquiryStatusEnum.EndFinish,
             [e.InquiryMsgStatusEnum.CancelInquiryHint]:
-              e.InquiryStatusEnum.EndFinish,
-            [e.InquiryMsgStatusEnum.FinishHint]: e.InquiryStatusEnum.EndFinish,
+              e.InquiryStatusEnum.EndDoctorCancel,
+            [e.InquiryMsgStatusEnum.FinishHint]:
+              e.InquiryStatusEnum.EndOverTimeCancel,
             [e.InquiryMsgStatusEnum.ProficientRefundInquiry]:
-              e.InquiryStatusEnum.EndFinish,
+              e.InquiryStatusEnum.EndDoctorRefund,
             [e.InquiryMsgStatusEnum.AcceptOverTimeHint]:
-              e.InquiryStatusEnum.EndFinish,
+              e.InquiryStatusEnum.EndOverTimeCancel,
             [e.InquiryMsgStatusEnum.AutoFinishHint]:
               e.InquiryStatusEnum.EndFinish,
             [e.InquiryMsgStatusEnum.AcceptInquiryOrderHint]:
@@ -246,7 +313,7 @@ const t = () => './components/message-custom/index.js',
             [e.InquiryMsgStatusEnum.RpOrderStart]:
               e.InquiryStatusEnum.DealingAccept,
           };
-          I.value && r[l.childType] && (I.value.inquiryStatus = r[l.childType]);
+          x.value && r[s.childType] && (x.value.inquiryStatus = r[s.childType]);
           new Set([
             e.InquiryMsgStatusEnum.Finish,
             e.InquiryMsgStatusEnum.CancelInquiryHint,
@@ -254,178 +321,175 @@ const t = () => './components/message-custom/index.js',
             e.InquiryMsgStatusEnum.ProficientRefundInquiry,
             e.InquiryMsgStatusEnum.AcceptOverTimeHint,
             e.InquiryMsgStatusEnum.AutoFinishHint,
-          ]).has(l.childType) && (K.value = !0),
-            setTimeout(() => {
-              s();
-            }, 0);
-        },
-        N = e.ref(''),
-        _ = e.ref(!0);
+          ]).has(s.childType) && (g.value = !0),
+            y();
+        };
       return (
-        a({
-          pageOnLoad: async (t) => {
-            N.value = t.orderID;
+        t({
+          pageOnLoad: async (a) => {
+            r.value = a.orderID;
             try {
-              (_.value = !0),
+              (c.value = !0),
                 e.index.showLoading({ title: '加载中…', mask: !0 }),
-                await (async () => {
-                  const { data: t } = await e.requestGetInquiryOrderDetail({
-                    inquiryOrderID: N.value,
-                  });
-                  I.value = t;
-                  const a = t.inquiryStatus;
-                  [
-                    e.InquiryStatusEnum.DealingAccept,
-                    e.InquiryStatusEnum.DealingWaitAccept,
-                  ].includes(a) || (i.value = !0);
-                })(),
-                await (async () => {
-                  var t;
-                  const { data: a } = await e.requestGetDoctorInfoDetail({
-                    orgStaffID:
-                      null == (t = I.value) ? void 0 : t.doctorStaffID,
-                  });
-                  f.value = a;
-                })(),
-                await (async () => {
-                  var t;
-                  if (e.index.$TUIKit.isReady())
-                    try {
-                      const a = await e.index.$TUIKit.getConversationProfile(
-                        'C2C' + (null == (t = I.value) ? void 0 : t.doctorImID)
-                      );
-                      (T.value = a.data.conversation), await U();
-                    } catch (a) {
-                      console.log(a);
-                    }
-                })();
+                await w(),
+                await b(),
+                await O(),
+                await R();
             } finally {
-              (_.value = !1), e.index.hideLoading();
+              (c.value = !1), e.index.hideLoading();
             }
           },
-          pageOnShow: () => {
-            e.index.onKeyboardHeightChange(r),
-              e.index.$TUIKit.on(e.index.$TUIKitEvent.MESSAGE_RECEIVED, L, n);
+          pageOnShow: async () => {
+            e.index.onKeyboardHeightChange && e.index.onKeyboardHeightChange(m),
+              e.index.$TUIKit.on(e.index.$TUIKitEvent.MESSAGE_RECEIVED, V, v),
+              o();
           },
           pageOnHide: () => {
-            e.index.offKeyboardHeightChange(r),
-              e.index.$TUIKit.off(e.index.$TUIKitEvent.MESSAGE_RECEIVED, L);
+            e.index.offKeyboardHeightChange &&
+              e.index.offKeyboardHeightChange(m),
+              (f.value = 0),
+              d.value && clearTimeout(d.value);
           },
         }),
-        (t, a) => {
-          var n, s, o, r, h, S, T, $, C, b, U, O;
+        (a, t) => {
+          var n, o, r, d, v, m, y, f, w, b, O, L;
           return e.e(
-            { a: null == (n = f.value) ? void 0 : n.photoUrl },
-            (null == (s = f.value) ? void 0 : s.photoUrl)
-              ? { b: null == (o = f.value) ? void 0 : o.photoUrl }
+            { a: null == (n = C.value) ? void 0 : n.photoUrl },
+            (null == (o = C.value) ? void 0 : o.photoUrl)
+              ? { b: null == (r = C.value) ? void 0 : r.photoUrl }
               : {},
             {
               c: e.t(
                 e.unref(e.formatValue)(
-                  null == (r = f.value) ? void 0 : r.doctorName
+                  null == (d = C.value) ? void 0 : d.doctorName
                 )
               ),
-              d: null == (h = f.value) ? void 0 : h.doctorName,
+              d: null == (v = C.value) ? void 0 : v.doctorName,
             },
-            (null == (S = f.value) || S.doctorName, {}),
+            (null == (m = C.value) || m.doctorName, {}),
             {
-              e: e.t(null == (T = f.value) ? void 0 : T.sectionName),
-              f: e.t(null == ($ = f.value) ? void 0 : $.titleName),
-              g: !_.value,
+              e: e.t(null == (y = C.value) ? void 0 : y.sectionName),
+              f: e.t(null == (f = C.value) ? void 0 : f.titleName),
+              g: !c.value,
             },
-            _.value
+            c.value
               ? {}
               : e.e(
                   {
                     h:
-                      (null == (C = I.value) ? void 0 : C.inquiryStatus) ===
+                      (null == (w = x.value) ? void 0 : w.inquiryStatus) ===
                       e.unref(e.InquiryStatusEnum).DealingWaitAccept,
                   },
-                  (null == (b = I.value) ? void 0 : b.inquiryStatus) ===
+                  (null == (b = x.value) ? void 0 : b.inquiryStatus) ===
                     e.unref(e.InquiryStatusEnum).DealingWaitAccept
                     ? {
                         i: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24080511392455944240201233.png',
-                        j: e.t(m()),
+                        j: e.t(E.value),
+                        k: e.t(A.value),
                       }
-                    : (null == (U = I.value) ? void 0 : U.inquiryStatus) ===
+                    : (null == (O = x.value) ? void 0 : O.inquiryStatus) ===
                         e.unref(e.InquiryStatusEnum).DealingAccept
-                      ? { l: e.t(m()) }
-                      : { m: e.t(m()) },
+                      ? { m: e.t(E.value) }
+                      : { n: e.t(E.value) },
                   {
-                    k:
-                      (null == (O = I.value) ? void 0 : O.inquiryStatus) ===
+                    l:
+                      (null == (L = x.value) ? void 0 : L.inquiryStatus) ===
                       e.unref(e.InquiryStatusEnum).DealingAccept,
                   }
                 ),
             {
-              n: e.f(A.value, (t, a, n) =>
+              o: e.f(j.value, (a, t, n) =>
                 e.e(
-                  { a: p(t) },
-                  p(t)
+                  { a: a.showTime },
+                  a.showTime ? { b: e.t(a.timeString) } : {},
+                  { c: D(a) },
+                  D(a)
                     ? {
-                        b: '1185174b-0-' + n,
-                        c: e.p({ message: t, 'is-patient': 'out' === t.flow }),
+                        d: '080cd11b-0-' + n,
+                        e: e.p({ message: a, 'is-patient': 'out' === a.flow }),
                       }
                     : e.e(
-                        { d: g(t) },
-                        g(t)
-                          ? { e: '1185174b-1-' + n, f: e.p({ message: t }) }
-                          : {},
-                        { g: y(t) },
-                        y(t)
+                        { f: M(a) },
+                        M(a)
                           ? {
-                              h: '1185174b-2-' + n,
+                              g: e.sr(s, '080cd11b-1-' + n, {
+                                k: 'customMessageRef',
+                                f: 1,
+                              }),
+                              h: '080cd11b-1-' + n,
                               i: e.p({
-                                message: t,
-                                'is-patient': 'out' === t.flow,
+                                message: a,
+                                'order-detail': x.value,
+                                'handle-to-transfer': e.unref(u),
+                                'handle-to-refund': e.unref(i),
+                              }),
+                            }
+                          : {},
+                        { j: T(a) },
+                        T(a)
+                          ? {
+                              k: e.sr(l, '080cd11b-2-' + n, {
+                                k: 'textMessageRef',
+                                f: 1,
+                              }),
+                              l: '080cd11b-2-' + n,
+                              m: e.p({
+                                message: a,
+                                'is-patient': 'out' === a.flow,
                               }),
                             }
                           : {},
                         {
-                          j: e.n(
-                            'out' === t.flow
+                          n: e.n(
+                            'out' === a.flow
                               ? 'message-item-patient'
                               : 'message-item-doctor'
                           ),
                         }
                       ),
-                  { k: 'id-' + t.ID, l: t.ID }
+                  { o: 'id-' + a.ID, p: a.ID }
                 )
               ),
-              o: i.value && !_.value,
+              p: g.value && !c.value,
             },
-            (i.value && _.value, {}),
-            { p: M.value, q: x.value, r: u.value, s: e.o(w), t: !i.value },
-            i.value
+            (g.value && c.value, {}),
+            {
+              q: e.p({ 'icon-size': 18, status: _.value }),
+              r: _.value ? '' : 'none',
+              s: p.value,
+              t: e.o(F),
+              v: !g.value,
+            },
+            g.value
               ? {}
               : e.e(
                   {
-                    v: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24080514105505561090201240.png',
-                    w: e.o((e) => q('album')),
-                    x: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24080514115898678620201233.png',
-                    y: e.o((e) => q('camera')),
-                    z: t.isShowMedicalDocuments,
+                    w: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24080514105505561090201240.png',
+                    x: e.o((e) => N('album')),
+                    y: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24080514115898678620201233.png',
+                    z: e.o((e) => N('camera')),
+                    A: a.isShowMedicalDocuments,
                   },
-                  t.isShowMedicalDocuments
+                  a.isShowMedicalDocuments
                     ? {
-                        A: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24080514114234420950201240.png',
+                        B: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24080514114234420950201240.png',
                       }
                     : {},
                   {
-                    B: e.o(d),
-                    C: e.o(c),
-                    D: e.o(v),
-                    E: e.o(D),
-                    F: E.value,
-                    G: e.o((e) => (E.value = e.detail.value)),
-                    H: e.o(D),
+                    C: e.o(q),
+                    D: e.o(h),
+                    E: e.o(S),
+                    F: e.o(K),
+                    G: H.value,
+                    H: e.o((e) => (H.value = e.detail.value)),
+                    I: e.o(K),
                   }
                 ),
-            { I: e.s(l.value) }
+            { J: e.s(I.value) }
           );
         }
       );
     },
   }),
-  u = e._export_sfc(i, [['__scopeId', 'data-v-1185174b']]);
-wx.createComponent(u);
+  i = e._export_sfc(u, [['__scopeId', 'data-v-080cd11b']]);
+wx.createComponent(i);

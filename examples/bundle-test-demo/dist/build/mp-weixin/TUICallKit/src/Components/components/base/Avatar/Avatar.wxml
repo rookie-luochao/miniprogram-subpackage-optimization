@@ -1,1 +1,1 @@
-<view class="{{d}}" style="{{e}}"><t-k-image wx:if="{{a}}" binderror="{{b}}" u-i="3c571b8b-0" bind:__l="__l" u-p="{{c}}"/><slot wx:else/></view>
+<view class="{{d}}" style="{{e}}"><t-k-image wx:if="{{a}}" binderror="{{b}}" u-i="2f68359a-0" bind:__l="__l" u-p="{{c}}"/><slot wx:else/></view>

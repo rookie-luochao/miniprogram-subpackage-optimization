@@ -13,7 +13,7 @@ const n = () => '../../node-modules/@clinic/core/src/pages/web-view/index.js',
             null == (e = o.value) || e.pageOnLoad(n);
           });
         }),
-        (n, c) => ({ a: e.sr(o, 'f21c4568-0', { k: 'webViewRef' }) })
+        (n, r) => ({ a: e.sr(o, '2358199d-0', { k: 'webViewRef' }) })
       );
     },
   });

@@ -54,7 +54,7 @@ const a = () => '../../base/Message/Message.js',
             e.show({ message: l.value, duration: u.value, offset: 0 });
         }),
         (o, t) => ({
-          a: e.sr(p, '8c538f86-0', { k: 'message' }),
+          a: e.sr(p, '76ecb1cc-0', { k: 'message' }),
           b: e.n(e.unref(v)),
           c: e.p({ showIcon: !1, customStyle: e.unref(j) }),
         })

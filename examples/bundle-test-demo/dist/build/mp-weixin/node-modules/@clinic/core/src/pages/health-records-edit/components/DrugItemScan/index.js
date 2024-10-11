@@ -10,8 +10,8 @@ const e = require('../../../../../../../../common/vendor.js'),
       patientInfo: {},
     },
     emits: ['deleteDrug', 'changeDrugNum'],
-    setup(r, { emit: o }) {
-      const n = r,
+    setup(r, { emit: n }) {
+      const o = r,
         t = e.ref(!1),
         u = e.computed(() =>
           t.value
@@ -19,28 +19,29 @@ const e = require('../../../../../../../../common/vendor.js'),
             : 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24071717280659920250201240.png'
         ),
         a = e.computed(() => {
-          const r = n.drugInfo.nhsaType;
+          const r = o.drugInfo.nhsaType;
           return e.DrugTypeDesc[r];
         }),
         g = () => {
+          var r;
           e.appNavigator.navigateTo(e.appNavigator.pagesMap['add-drug'], {
             query: {
               isScanToAdd: !0,
-              isDrugLimit: n.isDrugLimit,
-              barCode: n.drugInfo.barCode,
-              drugList: JSON.stringify(n.drugList),
-              patientInfo: JSON.stringify(n.patientInfo),
+              isDrugLimit: o.isDrugLimit,
+              barCode: o.drugInfo.barCode,
+              drugList: JSON.stringify(null != (r = o.drugList) ? r : []),
+              patientInfo: JSON.stringify(o.patientInfo),
             },
           });
         },
-        i = o,
+        i = n,
         d = () => {
-          i('deleteDrug', { index: n.drugIndex });
+          i('deleteDrug', { index: o.drugIndex });
         },
         p = (e) => {
-          i('changeDrugNum', { operationType: e, drugInfo: n.drugInfo });
+          i('changeDrugNum', { operationType: e, drugInfo: o.drugInfo });
         };
-      return (r, o) =>
+      return (r, n) =>
         e.e(
           { a: e.t(r.drugInfo.barCode || '暂无'), b: r.drugInfo.isMatching },
           r.drugInfo.isMatching
@@ -105,5 +106,5 @@ const e = require('../../../../../../../../common/vendor.js'),
         );
     },
   }),
-  o = e._export_sfc(r, [['__scopeId', 'data-v-3ddbb9a4']]);
-wx.createComponent(o);
+  n = e._export_sfc(r, [['__scopeId', 'data-v-a5da899d']]);
+wx.createComponent(n);
