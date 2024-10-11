@@ -2,9 +2,9 @@ import chalk from 'chalk';
 import { remove } from 'fs-extra';
 import globby, { sync as globbySync } from 'globby';
 import { readFileSync, readdir, statSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { basename, join } from 'node:path';
 
-export async function getNeedPakcageDirNames(
+export async function getNeedPackageDirNames(
   dirName: string,
   targetDirTag: string
 ) {
@@ -59,69 +59,135 @@ export function replacePackageFiles(
 }
 
 export async function deletePackageNodeModulesPageDir(dirName: string) {
-  const needPackagePageNames = await getNeedPackagePageNames();
+  let needPackagePagesNames = await getChildrenDirNamesByFilePath(dirName);
 
-  async function getNeedPackagePageNames() {
-    return new Promise<string[]>((resolve) => {
-      readdir(dirName, (err, files) => {
-        if (err) {
-          console.error(
-            chalk.redBright(
-              `Error read package pages directory ${dirName}:`,
-              err
-            )
-          );
-          return;
-        }
-
-        const dirNames = files.filter((file) => {
-          const fullPath = join(dirName, file);
-
-          return statSync(fullPath).isDirectory();
-        });
-
-        resolve(dirNames);
-      });
-    });
-  }
-
-  const pageDirNames = await globby(`${dirName}/**/pages`, {
+  // 匹配 package/node-modules 里面的 pages 路径
+  const packageNodeModulesPagesPaths = await globby(`${dirName}/**/pages`, {
     onlyDirectories: true, // 只匹配目录
   });
+  const packageNodeModulesPagesPath = packageNodeModulesPagesPaths?.[0];
 
-  pageDirNames.forEach((pageDirName) => {
-    readdir(pageDirName, (err, files) => {
-      if (err) {
+  if (packageNodeModulesPagesPath) {
+    return;
+  }
+
+  const packageNodeModulesPagesDirNames = await getChildrenDirNamesByFilePath(
+    packageNodeModulesPagesPath
+  );
+  const needPageDirNames = packageNodeModulesPagesDirNames.filter((dirName) => {
+    return needPackagePagesNames.includes(basename(dirName));
+  });
+
+  // 收集 package/node-modules pages 的公共依赖
+  if (needPageDirNames.length > 0) {
+    const needCommonPageDirNames: string[] = [];
+    needPageDirNames.forEach((pageDirName) => {
+      try {
+        const content = readFileSync(
+          join(packageNodeModulesPagesPath, pageDirName, './index.json'),
+          'utf8'
+        );
+        const usingComponents = (
+          JSON.parse(content) as Record<string, Record<string, string>>
+        ).usingComponents;
+
+        Object.keys(usingComponents).forEach((key) => {
+          const path = formatPath(usingComponents[key]);
+
+          if (
+            path.startsWith('components') ||
+            path.startsWith('node-modules')
+          ) {
+            return;
+          }
+
+          const commonPageDirName = path.split('/')[0];
+
+          if (!needCommonPageDirNames.includes(commonPageDirName)) {
+            needCommonPageDirNames.push(commonPageDirName);
+          }
+        });
+      } catch (err) {
         console.error(
           chalk.redBright(
-            `Error read package node-modules pages directory ${pageDirName}: `,
-            err?.message
+            'Failed to read package node-modules pages file: ',
+            err
           )
+        );
+      }
+    });
+
+    if (needCommonPageDirNames.length > 0) {
+      needPackagePagesNames = needPackagePagesNames.concat(
+        needCommonPageDirNames
+      );
+    }
+  }
+
+  readdir(packageNodeModulesPagesPath, (err, files) => {
+    if (err) {
+      console.error(
+        chalk.redBright(
+          `Error read package node-modules pages directory ${packageNodeModulesPagesPath}: `,
+          err?.message
+        )
+      );
+      return;
+    }
+
+    const dirNames = files.filter((file) => {
+      const fullPath = join(packageNodeModulesPagesPath, file);
+
+      return statSync(fullPath).isDirectory();
+    });
+
+    for (const dirName of dirNames) {
+      if (!needPackagePagesNames.includes(dirName)) {
+        remove(join(packageNodeModulesPagesPath, dirName), (err) => {
+          if (err) {
+            console.error(
+              chalk.redBright(
+                `Error remove package node-modules pages directory: ${err?.message}`
+              )
+            );
+          }
+        });
+      }
+    }
+  });
+}
+
+async function getChildrenDirNamesByFilePath(dirName: string) {
+  return new Promise<string[]>((resolve) => {
+    readdir(dirName, (err, files) => {
+      if (err) {
+        console.error(
+          chalk.redBright(`Error read package pages directory ${dirName}:`, err)
         );
         return;
       }
 
       const dirNames = files.filter((file) => {
-        const fullPath = join(pageDirName, file);
+        const fullPath = join(dirName, file);
 
         return statSync(fullPath).isDirectory();
       });
 
-      for (const dirName of dirNames) {
-        if (!needPackagePageNames.includes(dirName)) {
-          remove(join(pageDirName, dirName), (err) => {
-            if (err) {
-              console.error(
-                chalk.redBright(
-                  `Error remove package node-modules pages directory: ${err?.message}`
-                )
-              );
-            }
-          });
-        }
-      }
+      resolve(dirNames);
     });
   });
+}
+
+function formatPath(pathName: string) {
+  while (pathName.startsWith('../')) {
+    pathName = pathName.slice(3);
+  }
+
+  while (pathName.startsWith('./')) {
+    pathName = pathName.slice(2);
+  }
+
+  return pathName;
 }
 
 export function deleteOriginNodeModules(dirName: string) {

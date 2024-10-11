@@ -7,7 +7,7 @@ import { join } from 'node:path';
 import {
   deleteOriginNodeModules,
   deletePackageNodeModulesPageDir,
-  getNeedPakcageDirNames,
+  getNeedPackageDirNames,
   replacePackageFiles,
 } from './util';
 
@@ -42,13 +42,14 @@ export default async function miniprogramSubpackageOptimization(
     process.exit(1);
   }
 
-  const packageDirNames: string[] = await getNeedPakcageDirNames(
+  const packageDirNames: string[] = await getNeedPackageDirNames(
     join(cwdPath, projectDistPath),
     targetDirTag
   );
 
   modifyPackageFiles();
 
+  // 调整 package 目录文件对 node-modules 的引用
   function modifyPackageFiles() {
     for (const packageDirName of packageDirNames) {
       replacePackageFiles(
@@ -60,6 +61,7 @@ export default async function miniprogramSubpackageOptimization(
 
   modifyNodeModulesFiles();
 
+  // 调整 node-modules 目录文件对 vendor.js 的引用
   function modifyNodeModulesFiles() {
     const files = globbySync(`${projectDistPath}/${originDirName}/**/*.js`);
 
@@ -90,6 +92,7 @@ export default async function miniprogramSubpackageOptimization(
 
   copyNodeModulesToPackage(packageDirNames, nodeModulesDirPath);
 
+  // 拷贝 node-modules 到 package
   function copyNodeModulesToPackage(
     dirNames: string[],
     nodeModulesDirPath: string
@@ -114,6 +117,7 @@ export default async function miniprogramSubpackageOptimization(
 
   deletePackageNodeModulesPageDirs();
 
+  // 删除 package/node-modules 多余的文件
   function deletePackageNodeModulesPageDirs() {
     for (const packageDirName of packageDirNames) {
       void deletePackageNodeModulesPageDir(
