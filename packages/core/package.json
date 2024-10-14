@@ -34,7 +34,7 @@
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^20.14.12",
     "vite": "^5.3.5",
-    "vite-plugin-dts": "^4.2.1",
+    "vite-plugin-dts": "^4.2.4",
     "vitest": "^2.0.4"
   }
 }
