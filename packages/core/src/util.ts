@@ -67,7 +67,7 @@ export async function deletePackageNodeModulesPageDir(dirName: string) {
   });
   const packageNodeModulesPagesPath = packageNodeModulesPagesPaths?.[0];
 
-  if (packageNodeModulesPagesPath) {
+  if (!packageNodeModulesPagesPath) {
     return;
   }
 
