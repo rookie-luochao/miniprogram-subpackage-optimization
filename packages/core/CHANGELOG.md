@@ -1,5 +1,11 @@
 # miniprogram-subpackage-optimization
 
+## 0.2.1
+
+### Patch Changes
+
+- [`6677636`](https://github.com/rookie-luochao/miniprogram-subpackage-optimization/commit/6677636c785988a6faa3e67afda27c82173daef9) Thanks [@rookie-luochao](https://github.com/rookie-luochao)! - fix: fix delete package node-modules pages error
+
 ## 0.2.0
 
 ### Minor Changes
