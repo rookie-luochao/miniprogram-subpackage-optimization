@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "商品推荐",
+  "usingComponents": {
+    "product-recommend": "../../node-modules/@clinic/core/src/pages/product-recommend/index"
+  }
+}

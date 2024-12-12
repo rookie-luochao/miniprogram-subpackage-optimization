@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "隐私协议",
+  "usingComponents": {
+    "privacy-policy": "../../node-modules/@clinic/core/src/pages/agreement-privacy-policy/index"
+  }
+}

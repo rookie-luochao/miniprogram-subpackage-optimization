@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "添加收货地址",
+  "usingComponents": {
+    "address-detail": "../../node-modules/@clinic/core/src/pages/address-detail/index"
+  }
+}

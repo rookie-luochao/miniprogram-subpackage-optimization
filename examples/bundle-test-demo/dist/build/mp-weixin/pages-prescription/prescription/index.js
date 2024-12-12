@@ -3,19 +3,39 @@ const e = require('../../common/vendor.js');
 Math || n();
 const n = () =>
     '../../node-modules/@clinic/core/src/pages/prescription/index.js',
-  o = e.defineComponent({
+  a = e.defineComponent({
     __name: 'index',
     setup(n) {
-      const o = e.ref(null);
+      const a = e.ref(null);
       return (
+        e.onLoad((n) => {
+          e.nextTick$1(() => {
+            var e;
+            null == (e = a.value) || e.pageOnLoad(n);
+          });
+        }),
         e.onShow(() => {
           e.nextTick$1(() => {
             var e;
-            null == (e = o.value) || e.pageOnShow();
+            null == (e = a.value) || e.pageOnShow();
           });
         }),
-        (n, r) => ({ a: e.sr(o, '1299a988-0', { k: 'prescriptionRef' }) })
+        e.onHide(() => {
+          e.nextTick$1(() => {
+            var e;
+            null == (e = a.value) || e.pageOnHide();
+          });
+        }),
+        e.onUnload(() => {
+          var e;
+          null == (e = a.value) || e.pageOnHide();
+        }),
+        e.onReachBottom(() => {
+          var e;
+          null == (e = a.value) || e.pageOnReachBottom();
+        }),
+        (n, o) => ({ a: e.sr(a, '64ca2fc6-0', { k: 'prescriptionRef' }) })
       );
     },
   });
-wx.createPage(o);
+wx.createPage(a);

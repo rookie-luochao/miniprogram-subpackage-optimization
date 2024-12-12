@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "物流轨迹",
+  "usingComponents": {
+    "product-order-logistics": "../../node-modules/@clinic/core/src/pages/product-order-logistics/index"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "评价中心",
+  "usingComponents": {
+    "evaluate": "../../node-modules/@clinic/core/src/pages/evaluate/index"
+  }
+}

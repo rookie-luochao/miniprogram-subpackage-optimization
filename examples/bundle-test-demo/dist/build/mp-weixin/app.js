@@ -7,8 +7,8 @@ Math;
 const o = e.defineComponent({
   __name: 'App',
   setup: (p) => (
-    e.onLaunch(() => {
-      e.handleAppLaunch(n.TCSDK);
+    e.onLaunch((p) => {
+      e.handleAppLaunch(p, n.TCSDK);
     }),
     e.onShow((n) => {
       e.handleAppShow(n);

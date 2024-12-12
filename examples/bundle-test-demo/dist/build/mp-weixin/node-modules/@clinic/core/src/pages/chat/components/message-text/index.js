@@ -31,10 +31,10 @@ const e = require('../../../../../../../../common/vendor.js'),
               { g: s }
             )
           ),
-          b: e.n(t.isPatient ? 'message-text-patient' : ''),
+          b: e.n(t.isPatient ? 'message-text-patient' : 'message-text-doctor'),
         })
       );
     },
   }),
-  s = e._export_sfc(t, [['__scopeId', 'data-v-c2bbf302']]);
+  s = e._export_sfc(t, [['__scopeId', 'data-v-b56bf777']]);
 wx.createComponent(s);

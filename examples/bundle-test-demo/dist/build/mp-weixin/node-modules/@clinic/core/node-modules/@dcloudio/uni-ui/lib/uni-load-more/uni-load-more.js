@@ -2,7 +2,7 @@
 const e = require('../../../../../../../../common/vendor.js');
 let n;
 setTimeout(() => {
-  n = e.index.getSystemInfoSync().platform;
+  n = e.index.getDeviceInfo().platform;
 }, 16);
 const { t: o } = e.initVueI18n(e.messages),
   t = {

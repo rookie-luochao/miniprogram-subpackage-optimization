@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "usingComponents": {
+    "card": "../../components/Card/index",
+    "navbar": "../../components/Navbar/index",
+    "product-detail-card": "../../components/ProductDetailCard/index",
+    "custom-textarea": "../../components/Textarea/index"
+  }
+}

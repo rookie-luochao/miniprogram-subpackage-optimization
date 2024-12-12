@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "便民门诊",
+  "navigationBarTitleText": "云门诊",
   "usingComponents": {
     "web-view": "../../node-modules/@clinic/core/src/pages/web-view/index"
   }

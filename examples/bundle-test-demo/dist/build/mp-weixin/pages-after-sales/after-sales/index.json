@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "售后列表",
+  "usingComponents": {
+    "after-sales": "../../node-modules/@clinic/core/src/pages/after-sales/index"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "custom-image": "../../components/Image/index",
+    "nav-bar": "../../components/Navbar/index",
+    "num-popup": "./components/NumPopup/index"
+  }
+}

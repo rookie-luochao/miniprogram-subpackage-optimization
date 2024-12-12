@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "医生首页",
+  "usingComponents": {
+    "doctor-detail": "../../node-modules/@clinic/core/src/pages/doctor-detail/index"
+  }
+}

@@ -1,0 +1,1 @@
+<view class="{{['data-v-f0cd8d6a', b]}}"><float-window-mobile wx:if="{{a}}" class="data-v-f0cd8d6a" u-s="{{['d']}}" u-i="f0cd8d6a-0" bind:__l="__l"><slot/></float-window-mobile></view>

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "医生列表",
+  "usingComponents": {
+    "doctor": "../../node-modules/@clinic/core/src/pages/doctor/index"
+  }
+}

@@ -1,7 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "nut-popup": "../../../../../node-modules/nutui-uniapp/components/popup/popup",
-    "drug-item": "../../../add-drug/components/DrugItem/index"
-  }
-}

@@ -1,0 +1,1 @@
+<view class="select-tag data-v-602fe3b1"><text class="tag-title data-v-602fe3b1">{{a}}</text><view class="tag-list data-v-602fe3b1"><view wx:for="{{b}}" wx:for-item="item" wx:key="b" class="{{['tag-item', 'data-v-602fe3b1', item.c && 'tag-item--active']}}" bindtap="{{item.d}}"><text class="tag-text data-v-602fe3b1">{{item.a}}</text></view></view></view>

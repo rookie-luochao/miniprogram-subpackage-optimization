@@ -1,4 +1,9 @@
 {
   "component": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "nav-bar": "../../components/Navbar/index",
+    "picker": "../../components/Picker/index",
+    "range": "./components/Range/index",
+    "select-tag": "./components/SelectTag/index"
+  }
 }

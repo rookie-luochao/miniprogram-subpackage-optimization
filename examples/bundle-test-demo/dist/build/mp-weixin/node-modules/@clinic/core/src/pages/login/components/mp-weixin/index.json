@@ -1,6 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "nut-checkbox": "../../../../../node-modules/nutui-uniapp/components/checkbox/checkbox"
-  }
-}

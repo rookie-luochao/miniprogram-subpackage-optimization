@@ -1,24 +1,40 @@
 {
   "pages": [
     "pages/home/index",
+    "pages/message/index",
     "pages/mine/index",
     "pages/login/index",
-    "pages/settings/index",
-    "pages/inquiry-info/index",
-    "pages/add-drug/index",
-    "pages/dispatch-wait/index",
-    "pages/dispatch-success/index",
-    "pages/pay-detail/index",
-    "pages/pay-result/index",
-    "pages/refund-result/index",
-    "pages/chat/index",
     "pages/web-view/index",
-    "TUICallKit/src/Components/TUICallKit"
+    "TUICallKit-Wechat/src/Components/TUICallKit"
   ],
   "subPackages": [
     {
-      "root": "pages-inquiry-order",
-      "pages": ["inquiry-order/index", "inquiry-order-detail/index"]
+      "root": "pages-service-package",
+      "pages": ["service-package/index", "service-package-detail/index"]
+    },
+    {
+      "root": "pages-chat",
+      "pages": ["chat/index"]
+    },
+    {
+      "root": "pages-vocational",
+      "pages": ["vocational/index"]
+    },
+    {
+      "root": "pages-product-recommend",
+      "pages": ["product-recommend/index"]
+    },
+    {
+      "root": "pages-order-info-confirm",
+      "pages": ["order-info-confirm/index"]
+    },
+    {
+      "root": "pages-doctor",
+      "pages": ["doctor/index", "doctor-detail/index"]
+    },
+    {
+      "root": "pages-reservation",
+      "pages": ["reservation/index", "reservation-time/index"]
     },
     {
       "root": "pages-prescription",
@@ -30,26 +46,70 @@
     },
     {
       "root": "pages-health-records",
+      "pages": ["health-records/index"]
+    },
+    {
+      "root": "pages-pay",
+      "pages": ["pay-detail/index", "pay-result/index"],
+      "plugins": {
+        "AuthParamPlugin": {
+          "version": "1.3.0",
+          "provider": "wx62ae2102a9bd3a49",
+          "export": "AuthParamPlugin.js"
+        }
+      }
+    },
+    {
+      "root": "pages-inquiry-order",
+      "pages": ["inquiry-order/index", "inquiry-order-detail/index"]
+    },
+    {
+      "root": "pages-after-sales",
+      "pages": ["after-sales/index", "after-sales-detail/index"]
+    },
+    {
+      "root": "pages-product-order",
       "pages": [
-        "health-records/index",
-        "health-records-detail/index",
-        "health-records-edit/index"
+        "product-order/index",
+        "product-order-detail/index",
+        "product-order-logistics/index",
+        "product-order-after-sales/index"
+      ]
+    },
+    {
+      "root": "pages-address",
+      "pages": ["address/index", "address-detail/index"]
+    },
+    {
+      "root": "pages-evaluate",
+      "pages": ["evaluate/index", "evaluate-detail/index"]
+    },
+    {
+      "root": "pages-settings",
+      "pages": ["settings/index", "settings-nickname/index"]
+    },
+    {
+      "root": "pages-agreement",
+      "pages": [
+        "agreement-user/index",
+        "agreement-privacy-policy/index",
+        "agreement-informed-consent/index"
       ]
     }
   ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "便民门诊",
-    "navigationStyle": "default",
+    "navigationStyle": "custom",
     "navigationBarBackgroundColor": "#ffffff",
-    "backgroundColor": "#F8F8F8",
+    "backgroundColor": "#ffffff",
     "rpxCalcMaxDeviceWidth": 3840,
     "rpxCalcBaseDeviceWidth": 3840,
     "rpxCalcIncludeWidth": 750
   },
   "tabBar": {
     "color": "#666666",
-    "selectedColor": "#2787fc",
+    "selectedColor": "#C9746A",
     "backgroundColor": "#ffffff",
     "borderStyle": "black",
     "list": [
@@ -60,12 +120,57 @@
         "text": "首页"
       },
       {
+        "pagePath": "pages/message/index",
+        "iconPath": "./static/message.png",
+        "selectedIconPath": "./static/message_active.png",
+        "text": "消息"
+      },
+      {
         "pagePath": "pages/mine/index",
         "iconPath": "./static/mine.png",
         "selectedIconPath": "./static/mine_active.png",
         "text": "我的"
       }
     ]
+  },
+  "preloadRule": {
+    "pages/home/index": {
+      "network": "all",
+      "packages": ["pages-service-package"]
+    },
+    "pages/message/index": {
+      "network": "all",
+      "packages": ["pages-chat"]
+    },
+    "pages-service-package/service-package-detail/index": {
+      "network": "all",
+      "packages": ["pages-chat"]
+    },
+    "pages-reservation/reservation/index": {
+      "network": "all",
+      "packages": ["pages-chat"]
+    },
+    "pages-chat/chat/index": {
+      "network": "all",
+      "packages": [
+        "pages-vocational",
+        "pages-reservation",
+        "pages-health-records"
+      ]
+    },
+    "pages/mine/index": {
+      "network": "all",
+      "packages": [
+        "pages-product-order",
+        "pages-inquiry-order",
+        "pages-patient",
+        "pages-address",
+        "pages-prescription",
+        "pages-evaluate",
+        "pages-after-sales",
+        "pages-settings"
+      ]
+    }
   },
   "usingComponents": {}
 }

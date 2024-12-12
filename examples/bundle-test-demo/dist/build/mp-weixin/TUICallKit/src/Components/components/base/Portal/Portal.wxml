@@ -1,1 +1,0 @@
-<view><portal-mini wx:if="{{a}}" u-s="{{['d']}}" u-i="a0554b8c-0" bind:__l="__l" u-p="{{b}}"><slot/></portal-mini></view>

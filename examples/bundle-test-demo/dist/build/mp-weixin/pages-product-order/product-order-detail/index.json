@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "订单详情",
+  "usingComponents": {
+    "product-order-detail": "../../node-modules/@clinic/core/src/pages/product-order-detail/index"
+  }
+}

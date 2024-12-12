@@ -1,91 +1,132 @@
 'use strict';
-const e = require('../../../../../../common/vendor.js'),
-  t = e.defineComponent({
+const e = require('../../../../../../common/vendor.js');
+if (!Array) {
+  e.resolveComponent('uni-load-more')();
+}
+Math ||
+  (
+    t +
+    (() =>
+      '../../../node-modules/@dcloudio/uni-ui/lib/uni-load-more/uni-load-more.js') +
+    a
+  )();
+const a = () => '../../components/Empty/index.js',
+  t = () => '../../components/Navbar/index.js',
+  o = e.defineComponent({
     __name: 'index',
-    setup(t, { expose: a }) {
-      const r = e.useUserInfoStore(),
-        { userInfo: n } = e.storeToRefs(r),
-        i = e.ref([]),
-        s = async () => {
-          var t;
-          try {
-            e.index.showLoading({ title: '加载中…', mask: !0 });
-            const { data: a } = await e.requestGetRp({
-              userImId: null == (t = n.value) ? void 0 : t.keyID,
-              serviceCode: e.SERVICE_CODE,
-            });
-            i.value = a;
-          } finally {
-            e.index.hideLoading();
-          }
+    setup(a, { expose: t }) {
+      const o = e.reactive({ pages: 1, pageIndex: 1, total: 0 }),
+        i = e.ref(e.LoadMoreStatus.More),
+        n = e.ref([]),
+        s = async (a = !1) => {
+          if (!(o.pageIndex > o.pages))
+            try {
+              (i.value = e.LoadMoreStatus.Loading),
+                a || e.index.showLoading({ title: '加载中...', mask: !0 });
+              const { data: t } = await e.requestInquiryRecipeList({
+                  pageIndex: o.pageIndex,
+                  pageSize: 10,
+                  recipeStatus: e.RecipeStatus.Pass,
+                }),
+                { current: s, total: r, pages: p, records: d } = t;
+              (o.pageIndex = s + 1),
+                (o.total = r),
+                (o.pages = p),
+                (i.value =
+                  o.pageIndex > o.pages
+                    ? e.LoadMoreStatus.NoMore
+                    : e.LoadMoreStatus.More),
+                (n.value = a ? [...n.value, ...d] : d);
+            } catch (t) {
+              i.value = e.LoadMoreStatus.More;
+            } finally {
+              e.index.hideLoading();
+            }
         },
-        o = (t) => {
-          const a = t.rpUploadStatus;
-          if (e.dayjs(t.expirationTime).valueOf() <= e.dayjs().valueOf())
-            return [];
-          const r = [];
-          return (
-            [
-              e.PrescriptionStatusEnum.ToProcess,
-              e.PrescriptionStatusEnum.Success,
-              e.PrescriptionStatusEnum.Processing,
-            ].includes(a) && r.push('status-primary'),
-            a === e.PrescriptionStatusEnum.Fail && r.push('status-fail'),
-            r
-          );
-        },
-        u = (t) => {
-          if (e.dayjs(t.expirationTime).valueOf() <= e.dayjs().valueOf())
-            return '已失效';
-          const a = t.rpUploadStatus;
-          return e.PrescriptionStatusDesc[a] || '--';
+        r = (a) =>
+          e.calculateTimeDifference(e.dayjs(), e.dayjs(a.expirationTime))
+            .diffValue <= 0,
+        p = (a) =>
+          a.recipeStatus == e.RecipeStatus.Pass && r(a)
+            ? '已过期'
+            : e.RecipeStatusDesc[a.recipeStatus],
+        d = () => {
+          s(!0);
         };
       return (
-        a({
+        t({
           pageOnShow: () => {
-            s();
+            console.log('pageOnShow');
           },
+          pageOnLoad: (e) => {
+            console.log('pageOnload', e), s();
+          },
+          pageOnHide: () => {
+            console.log('pageOnHide');
+          },
+          pageOnReachBottom: d,
         }),
-        (t, a) =>
+        (a, t) =>
           e.e(
-            { a: i.value.length },
-            i.value.length
+            {
+              a: e.sr('navbarRef', 'dd370abc-0'),
+              b: e.p({ title: '我的处方' }),
+              c: n.value.length > 0,
+            },
+            n.value.length > 0
               ? {
-                  b: e.f(i.value, (t, a, r) => ({
-                    a: e.t(t.clientOrgName),
-                    b: e.t(u(t)),
-                    c: e.n(o(t)),
-                    d: e.t(t.patientName),
-                    e: e.t(e.unref(e.GenderDesc)[t.patientSex]),
-                    f: e.t(
-                      e.unref(e.formatPatientAge)(t.patientAge, t.patientMonth)
-                    ),
-                    g: e.t(t.primaryDiagnosis),
-                    h: e.t(t.inquiryOrderTime),
-                    i: t.keyID,
-                    j: e.o(
-                      (a) =>
-                        ((t) => {
-                          e.appNavigator.navigateTo(
+                  d: e.f(n.value, (a, t, o) => {
+                    return {
+                      a: e.t(e.unref(e.formatValue)(a.primaryDiagnosis)),
+                      b: e.t(
+                        ((i = a),
+                        e.formatValue(
+                          [
+                            ...(null != (n = i.recipeChineseMedicineVOList)
+                              ? n
+                              : []),
+                            ...(null != (s = i.recipeMedicineList) ? s : []),
+                          ]
+                            .map((e) => e.medicineName)
+                            .join('、')
+                        ))
+                      ),
+                      c: e.t(a.patientName),
+                      d: e.t(a.pharmacistAuditTime),
+                      e: e.t(p(a)),
+                      f:
+                        a.recipeStatus == e.unref(e.RecipeStatus).Pass && r(a)
+                          ? 1
+                          : '',
+                      g: e.o((t) => {
+                        return (
+                          (o = a.id),
+                          void e.appNavigator.navigateTo(
                             e.appNavigator.pagesMap['prescription-detail'],
-                            {
-                              query: {
-                                rpID: t.keyID,
-                                inquiryOrderID: t.inquiryOrderID,
-                              },
-                            }
-                          );
-                        })(t),
-                      t.keyID
-                    ),
-                  })),
+                            { query: { recipeId: o } }
+                          )
+                        );
+                        var o;
+                      }, a.id),
+                      h: a.id,
+                    };
+                    var i, n, s;
+                  }),
+                  e: e.p({ status: i.value }),
+                  f: e.o(d),
                 }
               : {
-                  c: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24082717531384828430201233.png',
+                  g: e.p({
+                    top: 118,
+                    'empty-icon':
+                      'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24110619283468599300201240.png',
+                    title: '暂无处方',
+                    'sub-title': '医生开药后处方在此查询',
+                  }),
                 }
           )
       );
     },
   }),
-  a = e._export_sfc(t, [['__scopeId', 'data-v-d13c9a2b']]);
-wx.createComponent(a);
+  i = e._export_sfc(o, [['__scopeId', 'data-v-dd370abc']]);
+wx.createComponent(i);

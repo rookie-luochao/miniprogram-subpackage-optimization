@@ -2,19 +2,35 @@
 const e = require('../../common/vendor.js');
 Math || n();
 const n = () => '../../node-modules/@clinic/core/src/pages/patient/index.js',
-  t = e.defineComponent({
+  a = e.defineComponent({
     __name: 'index',
     setup(n) {
-      const t = e.ref(null);
+      const a = e.ref(null);
       return (
+        e.onLoad((n) => {
+          e.nextTick$1(() => {
+            var e;
+            null == (e = a.value) || e.pageOnLoad(n);
+          });
+        }),
         e.onShow(() => {
           e.nextTick$1(() => {
             var e;
-            null == (e = t.value) || e.pageOnShow();
+            null == (e = a.value) || e.pageOnShow();
           });
         }),
-        (n, o) => ({ a: e.sr(t, '2a531bd8-0', { k: 'patientRef' }) })
+        e.onHide(() => {
+          e.nextTick$1(() => {
+            var e;
+            null == (e = a.value) || e.pageOnHide();
+          });
+        }),
+        e.onUnload(() => {
+          var e;
+          null == (e = a.value) || e.pageOnHide();
+        }),
+        (n, o) => ({ a: e.sr(a, 'f35fe45c-0', { k: 'patientRef' }) })
       );
     },
   });
-wx.createPage(t);
+wx.createPage(a);

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "用户协议",
+  "usingComponents": {
+    "user-agreement": "../../node-modules/@clinic/core/src/pages/agreement-user/index"
+  }
+}

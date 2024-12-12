@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "派单中",
-  "usingComponents": {
-    "dispatch-wait": "../../node-modules/@clinic/core/src/pages/dispatch-wait/index"
-  }
-}

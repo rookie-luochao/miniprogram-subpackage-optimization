@@ -1,169 +1,105 @@
 'use strict';
 const e = require('../../../../../../common/vendor.js');
-Math || a();
-const a = () => '../../components/Modal/index.js',
-  t = e.defineComponent({
+Math || (a + t)();
+const t = () => '../../components/Empty/index.js',
+  a = () => '../../components/Navbar/index.js',
+  n =
+    'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24102515562443956060201240.png',
+  o = e.defineComponent({
     __name: 'index',
-    setup(a, { expose: t }) {
-      const n = e.useMedicalInsuranceAuthStore(),
-        {
-          medicalAuthStatus: o,
-          medicalAuthType: i,
-          userAuthInfo: u,
-        } = e.storeToRefs(n),
-        r = e.useAppConfigStore(),
-        { ORG_ID: s } = r.CONFIG,
-        l = e.useUserInfoStore(),
-        { userInfo: c } = e.storeToRefs(l),
-        { scanCodeData: p, scanCodeAuth: d } = e.useScanCodeAuth(),
-        { medicalInfo: m, fetchMedicalUserInfo: v } = e.useMedicalInfo(),
-        g = e.ref(null),
-        h = e.ref([]),
-        f = async () => {
-          var a;
+    setup(t, { expose: a }) {
+      const o = e.ref([]),
+        i = async () => {
           try {
             e.index.showLoading({ title: '加载中…', mask: !0 });
-            const { data: t } = await e.requestSelectOrgPersonFamily({
-              orgID: s,
-              orgPersonUserID: null == (a = c.value) ? void 0 : a.keyID,
-            });
-            h.value = t;
+            const { data: t } = await e.requestPatientList();
+            o.value = t;
           } finally {
             e.index.hideLoading();
           }
         },
-        I = (a) => {
-          const { age: t, month: n } = e.calculateAge(a);
-          return e.formatPatientAge(t, n);
+        p = (t) => {
+          const { age: a, month: n } = e.calculateAge(t);
+          return e.formatPatientAge(a, n);
         },
-        y = e.ref(null);
+        c = () => {
+          o.value.length >= 20
+            ? e.index.showToast({
+                title: '您的就诊人数量已满，建议清理不常用就诊人',
+                icon: 'none',
+              })
+            : e.appNavigator.navigateTo(
+                e.appNavigator.pagesMap['patient-detail'],
+                { query: { navigationBarTitle: '添加就诊人' } }
+              );
+        };
       return (
-        t({
-          pageOnShow: async () => {
-            var a;
-            if ((await f(), g.value === e.AutoJumpEnum.AddPatient)) {
-              if (!u.value.authNo) return;
-              try {
-                await v(),
-                  (null == (a = m.value) ? void 0 : a.user_name) &&
-                    m.value.user_card_no &&
-                    ((g.value = null),
-                    e.appNavigator.navigateTo(
-                      e.appNavigator.pagesMap['patient-detail'],
-                      {
-                        query: {
-                          familyName: m.value.user_name,
-                          idNumber: m.value.user_card_no,
-                        },
-                      }
-                    ));
-              } catch (t) {}
-            }
+        a({
+          pageOnShow: () => {
+            console.log('pageOnShow'), i();
+          },
+          pageOnLoad: (e) => {
+            console.log('pageOnload', e);
+          },
+          pageOnHide: () => {
+            console.log('pageOnHide');
           },
         }),
-        (a, t) =>
+        (t, a) =>
           e.e(
-            { a: h.value.length },
-            h.value.length
+            {
+              a: e.sr('navbarRef', '759d0437-0'),
+              b: e.p({ title: '就诊人管理' }),
+              c: o.value.length,
+            },
+            o.value.length
               ? {
-                  b: e.f(h.value, (a, t, n) =>
-                    e.e(
-                      {
-                        a: e.t(a.familyName),
-                        b:
-                          a.isInsuranceUser ===
-                          e.unref(e.IsMedicalAuthPatient).YES,
-                      },
-                      (a.isInsuranceUser,
-                      e.unref(e.IsMedicalAuthPatient).YES,
-                      {}),
-                      {
-                        c: e.t(a.relationName),
-                        d: e.t(e.unref(e.GenderDesc)[a.sex]),
-                        e: e.t(I(a.birthDay)),
-                        f: e.t(a.phone),
-                        g: e.o(
-                          (t) =>
-                            ((a) => {
-                              const { keyID: t, orgID: n } = a;
-                              e.appNavigator.navigateTo(
-                                e.appNavigator.pagesMap['patient-detail'],
-                                { query: { keyID: t, orgID: n } }
-                              );
-                            })(a),
-                          a.keyID
-                        ),
-                        h: e.o(
-                          (t) =>
-                            ((a) => {
-                              var t;
-                              const { familyName: n, keyID: o, orgID: i } = a;
-                              null == (t = y.value) ||
-                                t.openModal({
-                                  content: `是否删除就诊人【${n}】?`,
-                                  confirmText: '删除',
-                                  onConfirm: async () => {
-                                    try {
-                                      e.index.showLoading({
-                                        title: '删除中…',
-                                        mask: !0,
-                                      }),
-                                        await e.requestDelPersonFamilyInfo({
-                                          keyID: o,
-                                          orgID: i,
-                                        }),
-                                        f();
-                                    } finally {
-                                      e.index.hideLoading();
-                                    }
-                                  },
-                                });
-                            })(a),
-                          a.keyID
-                        ),
-                        i: a.keyID,
-                      }
-                    )
-                  ),
-                  c: 'https://com-shuibei-peach-tmc-cs.100cbc.com/content/0/23083010554013403430201253.png',
-                  d: 'https://com-shuibei-peach-tmc-cs.100cbc.com/content/0/23083010560468517010201253.png',
+                  d: n,
+                  e: n,
+                  f: e.t(o.value.length),
+                  g: e.t(20),
+                  h: e.f(o.value, (t, a, n) => ({
+                    a: e.t(t.patientName),
+                    b: e.t(e.unref(e.RealStatusDesc)[t.isRealName]),
+                    c: t.isRealName === e.unref(e.RealStatus).NotReal ? 1 : '',
+                    d: e.t(t.relation),
+                    e: e.t(e.unref(e.GenderDesc)[t.gender]),
+                    f: e.t(p(t.birth)),
+                    g: e.t(e.unref(e.encryptPhone)(t.phone)),
+                    h: t.patientInfoId,
+                    i: e.o((a) => {
+                      return (
+                        (n = t),
+                        void e.appNavigator.navigateTo(
+                          e.appNavigator.pagesMap['patient-detail'],
+                          {
+                            query: {
+                              navigationBarTitle: '编辑就诊人',
+                              patientInfo: encodeURIComponent(
+                                JSON.stringify(n)
+                              ),
+                            },
+                          }
+                        )
+                      );
+                      var n;
+                    }, t.patientInfoId),
+                  })),
+                  i: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24103115533451712730201233.png',
                 }
               : {
-                  e: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24082717521284868440201240.png',
-                  f: e.o((a) =>
-                    (async () => {
-                      h.value.length >= 10
-                        ? e.index.showToast({
-                            title: '您的就诊人数量已满，建议清理不常用就诊人',
-                            icon: 'none',
-                          })
-                        : (o.value === e.AuthStatus.NO_AUTH &&
-                            e.appNavigator.navigateTo(
-                              e.appNavigator.pagesMap['patient-detail']
-                            ),
-                          o.value === e.AuthStatus.NEED_AUTH &&
-                            ((g.value = e.AutoJumpEnum.AddPatient),
-                            i.value === e.AuthType.MINI_PROGRAM &&
-                              e.wxUserInfoAuth(),
-                            i.value === e.AuthType.SCAN_CODE &&
-                              (await d(),
-                              p.value &&
-                                e.appNavigator.navigateTo(
-                                  e.appNavigator.pagesMap['patient-detail'],
-                                  {
-                                    query: {
-                                      familyName: p.value.userName,
-                                      idNumber: p.value.idNo,
-                                    },
-                                  }
-                                ))));
-                    })()
-                  ),
+                  j: e.p({
+                    top: 118,
+                    'empty-icon':
+                      'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24110516003909491680201240.png',
+                    title: '暂无就诊人',
+                    'sub-title': '点击下方按钮添加就诊人',
+                  }),
                 },
-            { g: e.sr(y, '771b34f3-0', { k: 'modalRef' }) }
+            { k: e.o(c) }
           )
       );
     },
   }),
-  n = e._export_sfc(t, [['__scopeId', 'data-v-771b34f3']]);
-wx.createComponent(n);
+  i = e._export_sfc(o, [['__scopeId', 'data-v-759d0437']]);
+wx.createComponent(i);

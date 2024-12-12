@@ -1,9 +1,9 @@
 'use strict';
 const o = require('../../../../../../../common/vendor.js');
-Math || (n + s + e)();
-const e = () => '../transition/transition.js',
+Math || (n + e + s)();
+const e = () => '../icon/icon.js',
   n = () => '../overlay/overlay.js',
-  s = () => '../icon/icon.js',
+  s = () => '../transition/transition.js',
   l = `${o.PREFIX}-popup`,
   r = o.defineComponent({
     name: l,
@@ -17,57 +17,57 @@ const e = () => '../transition/transition.js',
       const s = e,
         l = n,
         {
-          onClickOverlay: r,
-          showSlot: t,
-          onClickCloseIcon: i,
-          closed: a,
+          classes: r,
+          popStyle: t,
+          innerIndex: i,
+          showSlot: a,
           transitionName: c,
-          onOpened: u,
-          onClosed: p,
-          classes: d,
-          popStyle: y,
-          onClick: f,
-        } = o.usePopup(s, l);
+          onClick: u,
+          onClickCloseIcon: p,
+          onClickOverlay: y,
+          onOpened: d,
+          onClosed: v,
+        } = o.usePopup(s, l),
+        m = o.computed(() => Number(s.duration));
       return (e, n) =>
         o.e(
-          { a: e.overlay },
-          e.overlay
+          { a: s.overlay },
+          s.overlay
             ? {
-                b: o.o(o.unref(r)),
+                b: o.o(o.unref(y)),
                 c: o.p({
-                  visible: e.visible,
-                  'close-on-click-overlay': e.closeOnClickOverlay,
-                  'z-index': e.zIndex,
-                  'lock-scroll': e.lockScroll,
-                  duration: e.duration,
-                  'overlay-class': e.overlayClass,
-                  'overlay-style': e.overlayStyle,
-                  'destroy-on-close': e.destroyOnClose,
-                  ...e.$attrs,
+                  'overlay-class': s.overlayClass,
+                  'overlay-style': s.overlayStyle,
+                  visible: s.visible,
+                  'z-index': o.unref(i),
+                  duration: m.value,
+                  'lock-scroll': s.lockScroll,
+                  'close-on-click-overlay': s.closeOnClickOverlay,
+                  'destroy-on-close': s.destroyOnClose,
                 }),
               }
             : {},
-          { d: o.unref(t) },
-          (o.unref(t), {}),
-          { e: o.unref(a) },
-          o.unref(a)
+          { d: o.unref(a) },
+          (o.unref(a), {}),
+          { e: s.closeable },
+          s.closeable
             ? {
                 f: o.p({ name: 'close', height: '12px' }),
-                g: o.n(`nut-popup__close-icon--${e.closeIconPosition}`),
-                h: o.o((...e) => o.unref(i) && o.unref(i)(...e)),
+                g: o.n(`nut-popup__close-icon--${s.closeIconPosition}`),
+                h: o.o((...e) => o.unref(p) && o.unref(p)(...e)),
               }
             : {},
           {
-            i: o.o(o.unref(u)),
-            j: o.o(o.unref(p)),
-            k: o.o(o.unref(f)),
+            i: o.o(o.unref(d)),
+            j: o.o(o.unref(v)),
+            k: o.o(o.unref(u)),
             l: o.p({
+              'custom-class': o.unref(r),
+              'custom-style': o.unref(t),
               name: o.unref(c),
-              'custom-class': o.unref(d),
-              show: e.visible,
-              'destroy-on-close': e.destroyOnClose,
-              'custom-style': o.unref(y),
-              duration: Number(e.duration),
+              show: s.visible,
+              duration: m.value,
+              'destroy-on-close': s.destroyOnClose,
             }),
           }
         );

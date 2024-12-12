@@ -3,19 +3,35 @@ const e = require('../../common/vendor.js');
 Math || n();
 const n = () =>
     '../../node-modules/@clinic/core/src/pages/health-records/index.js',
-  o = e.defineComponent({
+  a = e.defineComponent({
     __name: 'index',
     setup(n) {
-      const o = e.ref(null);
+      const a = e.ref(null);
       return (
+        e.onLoad((n) => {
+          e.nextTick$1(() => {
+            var e;
+            null == (e = a.value) || e.pageOnLoad(n);
+          });
+        }),
         e.onShow(() => {
           e.nextTick$1(() => {
             var e;
-            null == (e = o.value) || e.pageOnShow();
+            null == (e = a.value) || e.pageOnShow();
           });
         }),
-        (n, r) => ({ a: e.sr(o, '7e669c68-0', { k: 'healthRecordsRef' }) })
+        e.onHide(() => {
+          e.nextTick$1(() => {
+            var e;
+            null == (e = a.value) || e.pageOnHide();
+          });
+        }),
+        e.onUnload(() => {
+          var e;
+          null == (e = a.value) || e.pageOnHide();
+        }),
+        (n, o) => ({ a: e.sr(a, 'c76458b4-0', { k: 'healthRecordsRef' }) })
       );
     },
   });
-wx.createPage(o);
+wx.createPage(a);

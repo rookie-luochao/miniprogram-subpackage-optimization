@@ -1,0 +1,1 @@
+<view class="card-container data-v-66f3b0af"><view class="card-title data-v-66f3b0af"><slot name="title"/></view><view class="card-content data-v-66f3b0af" style="{{a}}"><slot name="content"/></view><view wx:if="{{b}}" class="card-footer data-v-66f3b0af"><slot name="footer"/></view></view>

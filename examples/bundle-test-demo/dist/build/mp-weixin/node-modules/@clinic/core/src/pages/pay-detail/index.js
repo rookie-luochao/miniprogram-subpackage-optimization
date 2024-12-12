@@ -1,151 +1,182 @@
 'use strict';
-const e = require('../../../../../../common/vendor.js'),
-  a = e.defineComponent({
+const e = require('../../../../../../common/vendor.js');
+if (!Array) {
+  e.resolveComponent('nut-countdown')();
+}
+Math ||
+  (
+    a +
+    (() =>
+      '../../../node-modules/nutui-uniapp/components/countdown/countdown.js')
+  )();
+const a = () => '../../components/Navbar/index.js',
+  t = e.defineComponent({
     __name: 'index',
     setup(a, { expose: t }) {
+      e.ref(1);
       const n = e.useAppConfigStore(),
-        { ORG_ID: o, ORG_CODE: r, ORG_NAME: i, WECHAT_APP_ID: u } = n.CONFIG,
-        s = e.useUserInfoStore(),
-        { userInfo: l } = e.storeToRefs(s),
-        c = e.useMedicalInsuranceAuthStore(),
-        { paymentInfo: y } = e.storeToRefs(c),
-        d = e.reactive({
-          totalAmount: '0',
-          medicalInsurancePayment: '0',
-          personalAccountPayment: '0',
-          cashPayment: '0',
-        }),
-        p = e.ref(''),
-        m = e.ref(null),
-        h = async () => {
-          if (!m.value) return;
-          const a = m.value.payWay,
-            t = m.value.inquiryMoney;
-          if (
-            ([e.PaymentWay.Wechatpay, e.PaymentWay.Alipay].includes(a) &&
-              (await f(),
-              (d.totalAmount = e.formatCurrency(t)),
-              (d.cashPayment = e.formatCurrency(t))),
-            [e.PaymentWay.Insurance].includes(a))
-          ) {
-            e.index.showLoading({ title: '正在获取支付信息…', mask: !0 });
-            try {
-              const { data: a } = await e.requestUldFeeInfo({
-                orgId: o,
-                orgCode: r,
-                yibaoOrderNo: m.value.orgHisOrderNo,
-                payAuthNo: p.value,
-              });
-              (d.totalAmount = e.formatCurrency(a.feeSumamt)),
-                (d.medicalInsurancePayment = e.formatCurrency(a.fundPay)),
-                (d.personalAccountPayment = e.formatCurrency(a.psnAcctPay)),
-                (d.cashPayment = e.formatCurrency(a.ownPayAmt));
-            } finally {
-              e.index.hideLoading();
-            }
-          }
+        { MEDICAL_INSURANCE_ORG_CODG: o, MEDICAL_INSURANCE_HOS_CODE: u } =
+          n.CONFIG,
+        i = e.useUserInfoStore(),
+        { userInfo: l } = e.storeToRefs(i),
+        r = e.useMedicalInsuranceAuthStore(),
+        { paymentInfo: d } = e.storeToRefs(r),
+        s = e.ref(''),
+        p = e.ref(0),
+        v = e.ref(e.PaymentType.GoodsPay),
+        c = e.ref(''),
+        m = e.ref({ m: 0, s: 0 }),
+        g = () => {
+          e.index.showToast({
+            title: '支付时间已过，请重新支付',
+            icon: 'none',
+            mask: !0,
+          }),
+            setTimeout(() => {
+              e.appNavigator.navigateBack();
+            }, 1500);
         },
-        v = e.ref(null),
+        y = e.ref([]),
         f = async () => {
+          const { data: a } = await e.requestQueryPaymentDetails({
+            orderId: s.value,
+          });
+          y.value = a;
+        },
+        h = async () => {
           var a, t;
-          try {
-            e.index.showLoading({ title: '正在获取支付信息…', mask: !0 });
-            const { data: n } = await e.requestArousePay({
-              orgID: o,
-              tradeOrderID: null == (a = m.value) ? void 0 : a.tradeOrderID,
-              arouseClient: i,
-              arouseClientType: 'wx_pro',
-              appID: u,
-              thirdUserID: null == (t = l.value) ? void 0 : t.openID,
-            });
-            v.value = n;
-          } finally {
-            e.index.hideLoading();
+          if (
+            (1 === y.value.length &&
+              ('CASH' === y.value[0].billType && (await I(), await C()),
+              'INSURANCE' === y.value[0].billType && (await S())),
+            2 === y.value.length)
+          ) {
+            const n =
+                null != (a = y.value.find((e) => 'INSURANCE' === e.billType))
+                  ? a
+                  : {},
+              o =
+                null != (t = y.value.find((e) => 'CASH' === e.billType))
+                  ? t
+                  : {},
+              u = null == n ? void 0 : n.tradeStatus,
+              i = null == o ? void 0 : o.tradeStatus;
+            [e.TradeStatus.Init, e.TradeStatus.Commit].includes(u) &&
+              (await S()),
+              [e.TradeStatus.Success].includes(u) &&
+                [e.TradeStatus.Init, e.TradeStatus.Commit].includes(i) &&
+                (await I(), await C());
           }
         },
-        { requestWechatPay: g } = e.useWechatPay(),
+        T = e.ref(null),
         I = async () => {
-          var a, t;
-          if (!m.value)
-            return e.index.showToast({ title: '未获取到订单信息，请重试' });
-          const n = m.value.payWay;
-          if ([e.PaymentWay.Wechatpay, e.PaymentWay.Alipay].includes(n)) {
-            if (!(null == (a = v.value) ? void 0 : a.arousePayData))
-              return e.index.showToast({ title: '未获取到支付信息，请重试' });
-            let t = !1;
-            try {
-              (t = await g(v.value)),
-                t &&
-                  e.appNavigator.navigateTo(
-                    e.appNavigator.pagesMap['pay-result'],
-                    {
-                      query: {
-                        orderDetail: encodeURIComponent(
-                          JSON.stringify(m.value)
-                        ),
-                      },
-                    }
-                  );
-            } catch (i) {
-              e.index.showToast({ title: '支付失败，请重试', icon: 'none' });
-            }
+          var a;
+          const { data: t } = await e.requestArousePay({
+            orderId: s.value,
+            openId: null == (a = l.value) ? void 0 : a.openId,
+          });
+          T.value = t;
+        },
+        { requestWechatPay: w } = e.useWechatPay(),
+        C = async () => {
+          var a;
+          if (!(null == (a = T.value) ? void 0 : a.paySign))
+            return e.index.showToast({
+              title: '未获取到支付信息，请重试',
+              icon: 'none',
+            });
+          let t = !1;
+          try {
+            (t = await w(T.value)),
+              t &&
+                e.appNavigator.navigateTo(
+                  e.appNavigator.pagesMap['pay-result'],
+                  { query: { paymentType: v.value, orderId: s.value } }
+                );
+          } catch (n) {
+            e.index.showToast({ title: '支付失败，请重试', icon: 'none' });
           }
-          if ([e.PaymentWay.Insurance].includes(n))
-            try {
-              e.index.showLoading({ title: '支付中…', mask: !0 });
-              const { data: a } = await e.requestUnifieOrder({
-                orgId: o,
-                orgCode: r,
-                yibaoOrderNo: m.value.orgHisOrderNo,
-                openid: null == (t = l.value) ? void 0 : t.openID,
-                payAuthNo: p.value,
-                returnUrl: 'test',
-              });
-              e.index.hideLoading(),
-                e.index.navigateToMiniProgram({
-                  appId: a.payAppid,
-                  path: a.payUrl,
-                });
-            } catch (i) {
-              e.index.hideLoading(),
-                e.index.showToast({
-                  title: '未获取到支付信息，请重试',
-                  icon: 'none',
-                });
-            }
+        },
+        S = async () => {
+          var a;
+          const t = requirePlugin('AuthParamPlugin'),
+            n = await t.getAuthParam({
+              orgCodg: o,
+              hosCode: u,
+              openId: null == (a = l.value) ? void 0 : a.openId,
+            });
+          '0' === n.code && e.wx$1.navigateToMiniProgram(n.data);
         };
       return (
         t({
-          pageOnLoad: async (e) => {
-            (m.value = JSON.parse(decodeURIComponent(e.orderDetail))),
-              (p.value = e.payAuthNo),
-              h();
-          },
           pageOnShow: async () => {
-            var a, t;
-            (null == (a = y.value) ? void 0 : a.orderDetail) &&
-              (null == (t = y.value) ? void 0 : t.payAuthNo) &&
-              (c.setPaymentInfo({ orderDetail: '', payAuthNo: '' }),
-              e.appNavigator.navigateTo(e.appNavigator.pagesMap['pay-result'], {
-                query: {
-                  orderDetail: encodeURIComponent(JSON.stringify(m.value)),
-                },
-              }));
+            var a, t, n, i;
+            if ((await f(), null == (a = d.value) ? void 0 : a.authNo)) {
+              const a = d.value.authNo,
+                s =
+                  null !=
+                  (n =
+                    null ==
+                    (t = y.value.find((e) => 'INSURANCE' === e.billType))
+                      ? void 0
+                      : t.thirdTransId)
+                    ? n
+                    : '',
+                p = null == (i = l.value) ? void 0 : i.openId,
+                v = encodeURIComponent(e.appNavigator.pagesMap['pay-detail']);
+              e.index.navigateTo({
+                url: `plugin://AuthParamPlugin/order-page?authCode=${a}&medOrgOrd=${s}&openId=${p}&hosCode=${u}&orgCodg=${o}&callBackPath=${v}`,
+              }),
+                r.setPaymentInfo({ authNo: '' });
+            }
+          },
+          pageOnLoad: async (a) => {
+            var t;
+            if (
+              ((s.value = a.orderId),
+              (p.value = Number(a.totalPrice)),
+              (v.value = a.paymentType),
+              (c.value = null != (t = a.orderCreateTime) ? t : ''),
+              !s.value)
+            )
+              return e.index.showToast({
+                title: '未获取到订单信息，请重试',
+                icon: 'none',
+              });
+            try {
+              e.index.showLoading({ title: '正在获取支付信息…', mask: !0 }),
+                await f(),
+                await h();
+            } finally {
+              e.index.hideLoading();
+            }
+          },
+          pageOnHide: () => {
+            console.log('pageOnHide');
           },
         }),
-        (a, t) => ({
-          a: e.t(e.unref(i)),
-          b: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24082717333982154340201240.png',
-          c: e.t(d.totalAmount),
-          d: e.t(d.medicalInsurancePayment),
-          e: e.t(d.personalAccountPayment),
-          f: e.t(d.cashPayment),
-          g: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24082717343840950020201233.png',
-          h: e.t(d.cashPayment),
-          i: e.o(I),
-        })
+        (a, t) =>
+          e.e(
+            {
+              a: e.p({ title: '收银台' }),
+              b: e.t(e.unref(e.padZeroToTwoDigits)(m.value.m)),
+              c: e.t(e.unref(e.padZeroToTwoDigits)(m.value.s)),
+              d: e.o(g),
+              e: e.o((e) => (m.value = e)),
+              f: e.p({
+                'end-time': e.dayjs(c.value).add(15, 'minutes').valueOf(),
+                modelValue: m.value,
+              }),
+              g: e.t(e.unref(e.formatCurrency)(p.value)),
+            },
+            {},
+            {
+              m: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24111911064005109920201233.png',
+              n: e.o(h),
+            }
+          )
       );
     },
   }),
-  t = e._export_sfc(a, [['__scopeId', 'data-v-52af4471']]);
-wx.createComponent(t);
+  n = e._export_sfc(t, [['__scopeId', 'data-v-d9a81737']]);
+wx.createComponent(n);

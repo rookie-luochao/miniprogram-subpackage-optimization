@@ -7,6 +7,9 @@ const e = require('../../../../../../common/vendor.js'),
       disabled: { type: Boolean, default: !1 },
       limit: { default: 9 },
       fileSize: { default: 20 },
+      background: { default: '#f3f3f3' },
+      gap: { default: '12px' },
+      columns: { default: 4 },
     },
     emits: ['update:fileList'],
     setup(i, { emit: t }) {
@@ -36,14 +39,14 @@ const e = require('../../../../../../common/vendor.js'),
               const {
                 validFiles: l,
                 invalidFileCount: d,
-                oversizedFileCount: r,
+                oversizedFileCount: u,
               } = s(t);
               d > 0 &&
                 e.index.showToast({
                   title: '请上传图片格式文件',
                   icon: 'none',
                 }),
-                r > 0 &&
+                u > 0 &&
                   e.index.showToast({
                     title: `图片大小不能超过${a.fileSize}M `,
                     icon: 'none',
@@ -51,7 +54,7 @@ const e = require('../../../../../../common/vendor.js'),
                 l.length > 0 && (await c(l));
             },
             fail: async (i) => {
-              if ('chooseImage:fail cancel' === i.errMsg)
+              if (i.errMsg.includes('chooseImage:fail'))
                 return e.index.showToast({
                   title: '请选择图片文件',
                   icon: 'none',
@@ -84,7 +87,7 @@ const e = require('../../../../../../common/vendor.js'),
               n('update:fileList', o.value.join(',')),
               e.index.hideLoading();
           } catch (t) {
-            e.index.showToast({ title: `上传失败: ${t}`, icon: 'none' });
+            e.index.showToast({ title: `${t}`, icon: 'none' });
           }
         };
       return (i, t) =>
@@ -105,7 +108,7 @@ const e = require('../../../../../../common/vendor.js'),
                 i.disabled
                   ? {}
                   : {
-                      c: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24071715330740958020201240.png',
+                      c: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24103115305846393830201240.png',
                       d: e.o((e) => {
                         return (
                           (i = t),
@@ -123,12 +126,14 @@ const e = require('../../../../../../common/vendor.js'),
           },
           !i.disabled && o.value.length < i.limit
             ? {
-                d: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24071715265553097510201233.png',
-                e: e.o(l),
+                d: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24103114292788983450201240.png',
+                e: i.background,
+                f: e.o(l),
               }
-            : {}
+            : {},
+          { g: i.gap, h: `repeat(${i.columns}, 1fr)` }
         );
     },
   }),
-  t = e._export_sfc(i, [['__scopeId', 'data-v-573d4fdb']]);
+  t = e._export_sfc(i, [['__scopeId', 'data-v-c429838f']]);
 wx.createComponent(t);

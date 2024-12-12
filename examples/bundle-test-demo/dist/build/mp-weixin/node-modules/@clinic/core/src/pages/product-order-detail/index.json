@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "usingComponents": {
+    "nut-countdown": "../../../node-modules/nutui-uniapp/components/countdown/countdown",
+    "nut-overlay": "../../../node-modules/nutui-uniapp/components/overlay/overlay",
+    "modal": "../../components/Modal/index",
+    "nav-bar": "../../components/Navbar/index",
+    "product-detail-card": "../../components/ProductDetailCard/index"
+  }
+}
