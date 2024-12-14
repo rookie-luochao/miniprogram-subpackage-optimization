@@ -12,7 +12,7 @@ const i = require('../../common/vendor.js');
 exports.ChatTim = class {
   constructor() {
     e(this, 'tim'),
-      (this.tim = i.TIM.create({ SDKAppID: Number('1400642667') })),
+      (this.tim = i.TIM.create({ SDKAppID: Number('1400822105') })),
       this.tim.setLogLevel(1),
       this.tim.registerPlugin({ 'tim-upload-plugin': i.TIMUploadPlugin }),
       this.extras();

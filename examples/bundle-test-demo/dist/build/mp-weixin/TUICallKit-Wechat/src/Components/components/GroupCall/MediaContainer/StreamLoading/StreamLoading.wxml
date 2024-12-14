@@ -1,0 +1,1 @@
+<view class="stream-loading-container data-v-33b26436"><loading wx:if="{{a}}" class="data-v-33b26436" u-i="33b26436-0" bind:__l="__l" u-p="{{a}}"/></view>

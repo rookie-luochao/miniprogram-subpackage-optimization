@@ -1,27 +1,32 @@
 'use strict';
 var t = Object.defineProperty,
-  a = (a, i, e) => (
-    ((a, i, e) => {
-      i in a
-        ? t(a, i, { enumerable: !0, configurable: !0, writable: !0, value: e })
-        : (a[i] = e);
-    })(a, 'symbol' != typeof i ? i + '' : i, e),
-    e
+  a = (a, e, i) => (
+    ((a, e, i) => {
+      e in a
+        ? t(a, e, { enumerable: !0, configurable: !0, writable: !0, value: i })
+        : (a[e] = i);
+    })(a, 'symbol' != typeof e ? e + '' : e, i),
+    i
   );
-const i = require('./ChatCall.js'),
-  e = require('./ChatTim.js');
-const c = new (class {
+const e = require('../../common/vendor.js'),
+  i = require('./ChatCall.js'),
+  s = require('./ChatTim.js');
+const h = new (class {
   constructor() {
     a(this, 'chatTim'),
       a(this, 'chatCall'),
-      (this.chatTim = new e.ChatTim()),
+      (this.chatTim = new s.ChatTim()),
       (this.chatCall = new i.ChatCall());
   }
   async init(t) {
     try {
       await this.chatTim.tim.login(t), await this.chatCall.init(t);
     } catch (a) {
-      throw a;
+      throw (
+        (e.useAuth().getAuthStatus() ||
+          (e.useAuth().setAuthStatus(!0), e.request.handleLoggedOut()),
+        a)
+      );
     }
   }
   async destroyed() {
@@ -32,4 +37,4 @@ const c = new (class {
     }
   }
 })();
-exports.TCSDK = c;
+exports.TCSDK = h;

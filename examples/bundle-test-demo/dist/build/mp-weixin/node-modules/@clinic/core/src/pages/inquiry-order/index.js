@@ -5,287 +5,334 @@ if (!Array) {
 }
 Math ||
   (
+    n +
+    u +
     (() =>
       '../../../node-modules/nutui-uniapp/components/countdown/countdown.js') +
     (() =>
-      '../../../node-modules/@dcloudio/uni-ui/lib/uni-load-more/uni-load-more.js')
+      '../../../node-modules/@dcloudio/uni-ui/lib/uni-load-more/uni-load-more.js') +
+    a +
+    t
   )();
-const a = e.defineComponent({
+const a = () => '../../components/Empty/index.js',
+  t = () => '../../components/Modal/index.js',
+  n = () => '../../components/Navbar/index.js',
+  u = () => '../../components/Tabs/index.js',
+  i = e.defineComponent({
     __name: 'index',
-    props: { isPayment: { type: Boolean, default: !0 } },
     setup(a, { expose: t }) {
-      const u = e.useUserInfoStore(),
-        { userInfo: n } = e.storeToRefs(u),
-        o = e.useMedicalInsuranceAuthStore(),
-        { medicalAuthStatus: r, payAuthInfo: s } = e.storeToRefs(o),
-        { medicalInfo: i, fetchMedicalPayment: d } = e.useMedicalInfo(),
-        c = e.ref({ m: '00', s: '00' }),
-        m = e.reactive({ pages: 1, pageIndex: 1, total: 0 }),
-        p = e.ref(null),
-        l = async () => {
-          var a, t;
-          if (!s.value.authNo) return;
-          const u = {
-            [e.AutoJumpEnum.Payment]: e.appNavigator.pagesMap['pay-detail'],
-            [e.AutoJumpEnum.Refund]: e.appNavigator.pagesMap['refund-result'],
-          };
-          try {
-            if (
-              p.value === e.AutoJumpEnum.Payment ||
-              p.value === e.AutoJumpEnum.Refund
-            ) {
-              const n = u[p.value];
-              await d(),
-                (null == (a = i.value) ? void 0 : a.pay_auth_no) &&
-                  ((p.value = null),
-                  e.appNavigator.navigateTo(n, {
-                    query: {
-                      payAuthNo: null == (t = i.value) ? void 0 : t.pay_auth_no,
-                      orderDetail: encodeURIComponent(JSON.stringify(q.value)),
-                    },
-                  }));
-            }
-          } catch (n) {}
+      const n = e.ref('all'),
+        u = e.ref(0),
+        i = e.reactive({ old: 0, value: 0 }),
+        o = e.ref([
+          { title: '全部', value: 'all' },
+          {
+            title: '待支付',
+            value: 'waitPay',
+            query: { payStatus: e.InquiryPayStatus.Unpaid },
+          },
+          {
+            title: '待接诊',
+            value: 'waitConsult',
+            query: { inquiryStatus: e.InquiryStatus.WaitDiagnosis },
+          },
+          {
+            title: '问诊中',
+            value: 'consulting',
+            query: { inquiryStatus: e.InquiryStatus.DealingDiagnosis },
+          },
+          {
+            title: '待评价',
+            value: 'waitEvaluate',
+            query: { commentStatus: e.CommentStatus.AwaitingEvaluation },
+          },
+        ]),
+        s = e.ref({
+          all: [],
+          waitPay: [],
+          waitConsult: [],
+          consulting: [],
+          waitEvaluate: [],
+        }),
+        l = (e, a) => {
+          (u.value = a), (v.pageIndex = 1);
         },
-        y = e.ref(e.LoadMoreStatus.More),
-        S = e.ref([]),
-        f = async (a = !1) => {
-          var t, u;
-          if (!(m.pageIndex > m.pages))
+        r = (e) => {
+          i.old = e.detail.scrollTop;
+        },
+        d = () => {
+          (i.value = i.old),
+            e.nextTick$1(() => {
+              i.value = 0;
+            });
+        },
+        c = (e) => {
+          (u.value = e.detail.current),
+            (n.value = o.value[u.value].value),
+            (v.pageIndex = 1),
+            f(!1, n.value, o.value[u.value].query),
+            d();
+        },
+        v = e.reactive({ pages: 1, pageIndex: 1, total: 0 }),
+        p = () => {
+          f(!0, n.value);
+        },
+        y = (a) =>
+          a.map((a) => {
+            const t = e.calcInquiryOrderStatus(a);
+            return { ...a, actions: e.StatusButtons[t], status: t };
+          }),
+        g = e.ref(e.LoadMoreStatus.More),
+        f = async (a = !1, t, n) => {
+          if (!(0 !== v.pages && v.pageIndex > v.pages))
             try {
-              (y.value = e.LoadMoreStatus.Loading),
+              (g.value = e.LoadMoreStatus.Loading),
                 a || e.index.showLoading({ title: '加载中…', mask: !0 });
-              const { data: o } = await e.requestCusPageMyInquiryOrder({
-                  pageIndex: m.pageIndex,
+              const { data: u } = await e.requestInquiryOrderList({
+                  ...n,
+                  pageIndex: v.pageIndex,
                   pageSize: 10,
-                  orgID: null == (t = n.value) ? void 0 : t.orgID,
-                  patientID: null == (u = n.value) ? void 0 : u.keyID,
-                  serviceCode: e.SERVICE_CODE,
+                  customDeleted: 0,
                 }),
-                { current: r, total: s, pages: i, records: d } = o;
-              (m.pageIndex = r + 1),
-                (m.total = s),
-                (m.pages = i),
-                (y.value =
-                  m.pageIndex > m.pages
+                { current: i, total: o, pages: l, records: r } = u;
+              (v.pageIndex = i + 1),
+                (v.total = o),
+                (v.pages = l),
+                (g.value =
+                  v.pageIndex > v.pages
                     ? e.LoadMoreStatus.NoMore
-                    : e.LoadMoreStatus.More);
-              const c = d.map((a) => {
-                const [t, u, n] = e
-                  .dayjs(a.addTime)
-                  .format('YYYY-MM-DD')
-                  .split('-');
-                return { ...a, year: t, month: u, day: n };
-              });
-              S.value = a ? [...S.value, ...c] : c;
-            } catch (o) {
-              y.value = e.LoadMoreStatus.More;
+                    : e.LoadMoreStatus.More),
+                (s.value[t] = a ? [...s.value[t], ...y(r)] : y(r));
+            } catch (u) {
+              g.value = e.LoadMoreStatus.More;
             } finally {
               e.index.hideLoading();
             }
         },
-        v = (a) => e.dayjs(a.dispatchTime).add(10, 'minute').valueOf(),
-        g = (a) => {
-          const t = a.inquiryStatus;
-          return e.InquiryStatusColor[t] || '#cccccc';
-        },
-        E = (a) => {
-          const t = a.payStatus,
-            u = a.inquiryStatus;
-          if (1 === a.referral) return '已转诊';
-          const n = [
-            e.PaymentStatusEnum.PaySuccess,
-            e.PaymentStatusEnum.NoNeed,
-          ];
-          if (u === e.InquiryStatusEnum.DealingWaitAccept) {
-            if (t === e.PaymentStatusEnum.WaitPay) return '待支付';
-            if (n.includes(t)) return '待接诊';
-          }
-          return e.InquiryStatusDesc[u] || '--';
-        },
-        I = (a) => {
-          const t = a.payStatus,
-            u = a.inquiryStatus,
-            n = [e.PaymentStatusEnum.WaitPay],
-            o = [
-              e.InquiryStatusEnum.DealingWaitDispatch,
-              e.InquiryStatusEnum.EndPatientCancel,
-              e.InquiryStatusEnum.EndOverTimeCancel,
-            ];
-          return n.includes(t) && !o.includes(u);
-        },
-        h = (a) => {
-          const t = a.payStatus,
-            u = a.inquiryStatus;
-          if (t === e.PaymentStatusEnum.WaitRefund) return !0;
-          const n = [
-              e.InquiryStatusEnum.EndDoctorCancel,
-              e.InquiryStatusEnum.EndOverTimeCancel,
-              e.InquiryStatusEnum.EndDoctorRefund,
-            ].includes(u),
-            o = t === e.PaymentStatusEnum.PaySuccess;
-          return n && o;
-        },
-        D = (a) => {
-          const t = a.payStatus,
-            u = a.inquiryStatus,
-            n = [
-              e.InquiryStatusEnum.DealingAccept,
-              e.InquiryStatusEnum.SystemEnd,
-              e.InquiryStatusEnum.EndFinish,
-              e.InquiryStatusEnum.DealingWaitAccept,
-              e.InquiryStatusEnum.EndDoctorCancel,
-              e.InquiryStatusEnum.EndDoctorRefund,
-            ],
-            o = [
-              e.PaymentStatusEnum.PaySuccess,
-              e.PaymentStatusEnum.RefundSuccess,
-              e.PaymentStatusEnum.NoNeed,
-            ];
-          return n.includes(u) && o.includes(t);
-        },
-        q = e.ref(null),
-        P = (a, t) => {
-          q.value = a;
-          const u = {
-            [e.AutoJumpEnum.Payment]: e.appNavigator.pagesMap['pay-detail'],
-            [e.AutoJumpEnum.Refund]: e.appNavigator.pagesMap['refund-result'],
-          };
-          if (t === e.AutoJumpEnum.Payment || t === e.AutoJumpEnum.Refund) {
-            const n = u[t];
-            r.value === e.AuthStatus.NO_AUTH &&
-              e.appNavigator.navigateTo(n, {
-                query: { orderDetail: encodeURIComponent(JSON.stringify(a)) },
-              }),
-              r.value === e.AuthStatus.NEED_AUTH &&
-                ((p.value = t), e.wxPaymentAuth());
-          }
+        m = e.ref(null),
+        O = () => {
+          (v.pageIndex = 1), d(), f(!1, n.value);
         };
       return (
         t({
           pageOnShow: async () => {
-            (m.pageIndex = 1),
-              f(!1),
-              e.index.pageScrollTo({ scrollTop: 0, duration: 0 }),
-              await l();
+            console.log('pageOnShow');
           },
-          pageOnReachBottom: () => {
-            f(!0);
+          pageOnLoad: (a) => {
+            console.log('pageOnload', a),
+              O(),
+              e.index.$on(e.REFRESH_INQUIRY_ORDER_LIST, () => {
+                O();
+              });
+          },
+          pageOnHide: () => {
+            console.log('pageOnHide');
           },
         }),
-        (a, t) =>
-          e.e(
-            { a: S.value.length },
-            S.value.length
-              ? {
-                  b: e.f(S.value, (t, u, n) =>
-                    e.e(
-                      { a: I(t) },
-                      I(t)
-                        ? {
-                            b: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24061315284909309340201240.png',
-                            c: e.t(e.unref(e.padZeroToTwoDigits)(c.value.m)),
-                            d: e.t(e.unref(e.padZeroToTwoDigits)(c.value.s)),
-                            e: e.o((a) => {
-                              return (
-                                (u = t),
-                                void S.value.forEach((a) => {
-                                  a.orderID === u.orderID &&
-                                    ((a.payStatus =
-                                      e.PaymentStatusEnum.OverTime),
-                                    (a.inquiryStatus =
-                                      e.InquiryStatusEnum.EndOverTimeCancel));
-                                })
-                              );
-                              var u;
-                            }, t.orderID),
-                            f: '19511559-0-' + n,
-                            g: e.o((e) => (c.value = e), t.orderID),
-                            h: e.p({ 'end-time': v(t), modelValue: c.value }),
-                          }
-                        : {
-                            i: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/21030410325655262692822001/24030710454958366680201233.png',
-                            j: e.t(t.year),
-                            k: e.t(e.unref(e.padZeroToTwoDigits)(t.month)),
-                            l: e.t(e.unref(e.padZeroToTwoDigits)(t.day)),
-                          },
-                      { m: e.t(E(t)), n: g(t) },
-                      a.isPayment
-                        ? { o: e.t(e.unref(e.formatCurrency)(t.inquiryMoney)) }
-                        : {},
-                      {
-                        p: e.t(e.unref(e.formatValue)(t.doctorName)),
-                        q: t.doctorName,
-                      },
-                      (t.doctorName, {}),
-                      {
-                        r: e.t(t.sectionName),
-                        s: e.t(e.unref(e.formatValue)(t.patientName)),
-                        t: e.t(e.unref(e.inquiryModeDesc)[t.inquiryWay]),
-                        v:
-                          t.payStatus ===
-                          e.unref(e.PaymentStatusEnum).RefundSuccess,
-                      },
-                      (t.payStatus,
-                      e.unref(e.PaymentStatusEnum).RefundSuccess,
-                      {}),
-                      { w: D(t) },
-                      D(t)
-                        ? {
-                            x: e.o(
-                              (a) =>
-                                ((a) => {
-                                  e.appNavigator.navigateTo(
-                                    e.appNavigator.pagesMap.chat,
-                                    { query: { orderID: a.orderID } }
-                                  );
-                                })(t),
-                              t.orderID
-                            ),
-                          }
-                        : {},
-                      { y: h(t) },
-                      h(t)
-                        ? {
-                            z: e.o(
-                              (a) => P(t, e.unref(e.AutoJumpEnum).Refund),
-                              t.orderID
-                            ),
-                          }
-                        : {},
-                      { A: I(t) },
-                      I(t)
-                        ? {
-                            B: e.o(
-                              (a) => P(t, e.unref(e.AutoJumpEnum).Payment),
-                              t.orderID
-                            ),
-                          }
-                        : {},
-                      {
-                        C: t.orderID,
-                        D: e.o(
-                          (a) =>
-                            ((a) => {
-                              e.appNavigator.navigateTo(
+        (a, t) => ({
+          a: e.sr('navbarRef', 'd11db613-0'),
+          b: e.p({ title: '订单列表', 'border-bottom': !1 }),
+          c: e.o(l),
+          d: e.o((e) => (n.value = e)),
+          e: e.p({ tabs: o.value, 'active-tab': n.value }),
+          f: e.f(o.value, (a, t, n) =>
+            e.e(
+              { a: s.value[a.value].length > 0 },
+              s.value[a.value].length > 0
+                ? {
+                    b: e.f(s.value[a.value], (t, u, i) => {
+                      var o, l, r;
+                      return e.e(
+                        {
+                          a: t.payStatus == e.unref(e.InquiryPayStatus).Unpaid,
+                        },
+                        t.payStatus == e.unref(e.InquiryPayStatus).Unpaid
+                          ? {
+                              b: e.o(
+                                (n) =>
+                                  ((a, t) => {
+                                    const n = s.value[a].findIndex(
+                                      (e) => e.id === t.id
+                                    );
+                                    -1 !== n &&
+                                      ((s.value[a][n].status =
+                                        e.DetailStatus.TIMEOUT),
+                                      (s.value[a][n].actions =
+                                        e.StatusButtons[
+                                          e.DetailStatus.TIMEOUT
+                                        ]));
+                                  })(a.value, t),
+                                t.id
+                              ),
+                              c: 'd11db613-2-' + n + '-' + i,
+                              d: e.p({
+                                'end-time': e
+                                  .unref(e.dayjs)(t.addTime)
+                                  .add(15, 'minutes')
+                                  .valueOf(),
+                              }),
+                            }
+                          : {},
+                        {
+                          e: e.unref(e.getServiceUserInfo)(t).avatar,
+                          f: e.t(e.unref(e.getServiceUserInfo)(t).name),
+                          g: e.t(e.unref(e.DetailStatusDesc)[t.status]),
+                          h: [
+                            e.unref(e.DetailStatus).CANCELLED,
+                            e.unref(e.DetailStatus).TIMEOUT,
+                            e.unref(e.DetailStatus).WITHDRAWAL,
+                          ].includes(t.status)
+                            ? 1
+                            : '',
+                          i: e.t(e.unref(e.InquiryTypeDesc)[t.inquiryType]),
+                          j: null !== t.inquiryWay || void 0 !== t.inquiryWay,
+                        },
+                        (null !== t.inquiryWay || t.inquiryWay, {}),
+                        {
+                          k: e.t(e.unref(e.InquiryWayDesc)[t.inquiryWay]),
+                          l:
+                            null == (o = t.inquiryPatientVO)
+                              ? void 0
+                              : o.illDesc,
+                        },
+                        (null == (l = t.inquiryPatientVO) ? void 0 : l.illDesc)
+                          ? {
+                              m: e.t(
+                                null == (r = t.inquiryPatientVO)
+                                  ? void 0
+                                  : r.illDesc
+                              ),
+                            }
+                          : {},
+                        {
+                          n: e.t(t.addTime),
+                          o: t.actions.includes(e.unref(e.Buttons).TO_PAY),
+                        },
+                        t.actions.includes(e.unref(e.Buttons).TO_PAY)
+                          ? {
+                              p: e.o(
+                                (a) =>
+                                  ((a) => {
+                                    e.OrderActions.toPay(a);
+                                  })(t),
+                                t.id
+                              ),
+                            }
+                          : {},
+                        {
+                          q: t.actions.includes(
+                            e.unref(e.Buttons).CONTACT_DOCTOR
+                          ),
+                        },
+                        t.actions.includes(e.unref(e.Buttons).CONTACT_DOCTOR)
+                          ? {
+                              r: e.o(
+                                (a) =>
+                                  ((a) => {
+                                    e.OrderActions.contactDoctor(a);
+                                  })(t),
+                                t.id
+                              ),
+                            }
+                          : {},
+                        {
+                          s: t.actions.includes(
+                            e.unref(e.Buttons).DELETE_ORDER
+                          ),
+                        },
+                        t.actions.includes(e.unref(e.Buttons).DELETE_ORDER)
+                          ? {
+                              t: e.o(
+                                (a) =>
+                                  ((a) => {
+                                    var t;
+                                    null == (t = m.value) ||
+                                      t.openModal({
+                                        content: '是否删除订单?',
+                                        confirmText: '删除',
+                                        onConfirm: async () => {
+                                          e.index.showLoading({
+                                            title: '删除中…',
+                                            mask: !0,
+                                          }),
+                                            await e.OrderActions.deleteOrder(a),
+                                            e.index.showToast({
+                                              title: '删除成功',
+                                              icon: 'none',
+                                              mask: !0,
+                                            }),
+                                            O();
+                                        },
+                                      });
+                                  })(t),
+                                t.id
+                              ),
+                            }
+                          : {},
+                        {
+                          v: t.actions.includes(
+                            e.unref(e.Buttons).EVALUATE_DOCTOR
+                          ),
+                        },
+                        t.actions.includes(e.unref(e.Buttons).EVALUATE_DOCTOR)
+                          ? {
+                              w: e.o(
+                                (a) =>
+                                  ((a) => {
+                                    e.index.$on(
+                                      e.REFRESH_INQUIRY_ORDER_LIST,
+                                      async () => {
+                                        await O(),
+                                          e.index.$off(
+                                            e.REFRESH_INQUIRY_ORDER_LIST
+                                          );
+                                      }
+                                    ),
+                                      e.OrderActions.evaluateDoctor(a);
+                                  })(t),
+                                t.id
+                              ),
+                            }
+                          : {},
+                        {
+                          x: e.o((a) => {
+                            return (
+                              (n = t.id),
+                              void e.appNavigator.navigateTo(
                                 e.appNavigator.pagesMap['inquiry-order-detail'],
-                                { query: { orderID: a.orderID } }
-                              );
-                            })(t),
-                          t.orderID
-                        ),
-                      }
-                    )
-                  ),
-                  c: a.isPayment,
-                  d: e.p({ status: y.value }),
-                }
-              : {
-                  e: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24082717461502315460201233.png',
-                }
-          )
+                                { query: { inquiryOrderId: n } }
+                              )
+                            );
+                            var n;
+                          }, t.id),
+                          y: t.id,
+                        }
+                      );
+                    }),
+                    c: 'd11db613-3-' + n,
+                    d: e.p({ status: g.value }),
+                    e: i.value,
+                    f: e.o(r, a.value),
+                    g: e.o(p, a.value),
+                  }
+                : {
+                    h: 'd11db613-4-' + n,
+                    i: e.p({
+                      'empty-icon':
+                        'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24110616150969161510201233.png',
+                      title: '暂无订单',
+                      'sub-title': '订单在此查看',
+                    }),
+                  },
+              { j: a.value }
+            )
+          ),
+          g: u.value,
+          h: e.o(c),
+          i: e.sr(m, 'd11db613-5', { k: 'modalRef' }),
+        })
       );
     },
   }),
-  t = e._export_sfc(a, [['__scopeId', 'data-v-19511559']]);
-wx.createComponent(t);
+  o = e._export_sfc(i, [['__scopeId', 'data-v-d11db613']]);
+wx.createComponent(o);

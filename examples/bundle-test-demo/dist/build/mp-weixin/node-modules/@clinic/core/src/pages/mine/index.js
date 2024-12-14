@@ -1,85 +1,164 @@
 'use strict';
 const e = require('../../../../../../common/vendor.js'),
+  a =
+    'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24110515534601906850201240.png',
   t =
-    'https://com-shuibei-peach-pharmacy-cs.100cbc.com/rp/21030410325655262692822001/24030714023224393830201253.png',
-  p = e.defineComponent({
+    'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24102515562443956060201240.png',
+  p = 'customer service',
+  r = e.defineComponent({
     __name: 'index',
-    props: { isCustomerServiceCenter: { type: Boolean, default: !0 } },
-    setup(p, { expose: a }) {
-      const o = [
+    setup(r, { expose: c }) {
+      const i = e.useUserInfoStore(),
+        { userInfo: o } = e.storeToRefs(i),
+        { checkAuth: n } = e.useAuth(),
+        s = e.ref(a),
+        h = (a) => {
+          e.index.setStorageSync('avatarUrl', a.detail.avatarUrl),
+            (s.value = a.detail.avatarUrl);
+        },
+        l = () => {
+          s.value = a;
+        },
+        u = e.ref(),
+        m = e.ref([
+          { number: 0, title: '待付款', key: e.OrderStatus.WaitPay },
+          { number: 0, title: '待发货', key: e.OrderStatus.WaitDeliver },
+          { number: 0, title: '待收货', key: e.OrderStatus.Delivered },
+        ]),
+        g = async () => {
+          var a, t, p;
+          const { data: r } = await e.requestQueryGoodsOrderStatus();
+          m.value = [
+            {
+              number: null != (a = r.waitPay) ? a : 0,
+              title: '待付款',
+              key: e.OrderStatus.WaitPay,
+            },
+            {
+              number: null != (t = r.waitDeliver) ? t : 0,
+              title: '待发货',
+              key: e.OrderStatus.WaitDeliver,
+            },
+            {
+              number: null != (p = r.delivered) ? p : 0,
+              title: '待收货',
+              key: e.OrderStatus.Delivered,
+            },
+          ];
+        },
+        v = [
           {
-            icon: 'http://hospital-test-1308953979.cos.ap-chengdu.myqcloud.com/img/111/24012411250858133840201065.png',
-            title: '健康档案',
-            path: e.appNavigator.pagesMap['health-records'],
+            path: e.appNavigator.pagesMap['inquiry-order'],
+            title: '问诊订单',
+            icon: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24102515591290320580201240.png',
           },
           {
-            icon: 'http://hospital-test-1308953979.cos.ap-chengdu.myqcloud.com/img/111/24012411250883956850201065.png',
-            title: '就诊人管理',
             path: e.appNavigator.pagesMap.patient,
+            title: '就诊人',
+            icon: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24102515595649641270201240.png',
           },
           {
-            icon: 'http://hospital-test-1308953979.cos.ap-chengdu.myqcloud.com/img/111/24012411250895432310201065.png',
-            title: '设置',
+            path: e.appNavigator.pagesMap.address,
+            title: '收货地址',
+            icon: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24102516002215114530201240.png',
+          },
+          {
+            path: e.appNavigator.pagesMap.prescription,
+            title: '我的处方',
+            icon: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24102516003446846410201233.png',
+          },
+          {
+            path: e.appNavigator.pagesMap.evaluate,
+            title: '评价中心',
+            icon: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24102516004946839920201240.png',
+          },
+          {
+            path: e.appNavigator.pagesMap['after-sales'],
+            title: '售后服务',
+            icon: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24102516010035262140201233.png',
+          },
+          {
+            path: p,
+            title: '联系客服',
+            icon: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24102516011171761270201240.png',
+          },
+          {
             path: e.appNavigator.pagesMap.settings,
+            title: '设置',
+            icon: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24102516013715127690201240.png',
           },
         ],
-        c = e.useUserInfoStore(),
-        { userInfo: i } = e.storeToRefs(c),
-        n = (t) => {
-          e.appNavigator.navigateTo(t);
+        d = (a) => {
+          e.appNavigator.navigateTo(e.appNavigator.pagesMap['product-order'], {
+            query: { status: a },
+          });
         };
       return (
-        a({
+        c({
           pageOnShow: () => {
-            if (!e.index.getStorageSync('token'))
-              return (
-                e.index.showToast({
-                  title: '未登录，请先登录',
-                  icon: 'none',
-                  mask: !0,
-                }),
-                void setTimeout(() => {
-                  e.index.hideToast(),
-                    e.appNavigator.navigateTo(e.appNavigator.pagesMap.login);
-                }, 1500)
-              );
+            var e;
+            n() && (null == (e = u.value) || e.pageOnShow(), g());
+          },
+          pageOnLoad: (a) => {
+            console.log('pageOnload', a);
+            const t = e.index.getStorageSync('avatarUrl');
+            t && (s.value = t);
+          },
+          pageOnHide: () => {
+            console.log('pageOnHide');
           },
         }),
-        (p, a) => {
-          var c;
-          return e.e(
-            {
-              a: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24082717504129610380201240.png',
-              b: e.t(
-                e.unref(e.encryptPhone)(
-                  null == (c = e.unref(i)) ? void 0 : c.phone
-                )
-              ),
-              c: 'https://com-shuibei-peach-pharmacy-cs.100cbc.com/rp/21030410325655262692822001/24030711364848859340201253.png',
-              d: e.o((t) =>
-                n(e.unref(e.appNavigator).pagesMap['inquiry-order'])
-              ),
-              e: 'https://com-shuibei-peach-pharmacy-cs.100cbc.com/rp/21030410325655262692822001/24030711370616862240201253.png',
-              f: e.o((t) => n(e.unref(e.appNavigator).pagesMap.prescription)),
-              g: e.f(o, (t, p, a) => ({
-                a: t.icon,
-                b: e.t(t.title),
-                c: t.path,
-                d: e.o((e) => n(t.path), t.path),
-              })),
-              h: t,
-              i: p.isCustomerServiceCenter,
-            },
-            p.isCustomerServiceCenter
-              ? {
-                  j: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/21030410325655262692824465/24081416063609317740201240.png',
-                  k: t,
-                }
-              : {}
-          );
+        (a, r) => {
+          var c, i;
+          return {
+            a: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24102515295426259830201233.png',
+            b: s.value,
+            c: e.o(l),
+            d: e.o(h),
+            e: e.t(null == (c = e.unref(o)) ? void 0 : c.userName),
+            f: e.t(
+              e.unref(e.encryptPhone)(
+                null == (i = e.unref(o)) ? void 0 : i.phone
+              )
+            ),
+            g: t,
+            h: t,
+            i: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24102515563820856020201233.png',
+            j: e.o((e) => d('all')),
+            k: e.f(m.value, (a, t, p) =>
+              e.e(
+                {
+                  a: e.t(a.number),
+                  b: e.t(a.title),
+                  c: e.o((e) => d(a.key), a.title),
+                  d: t !== m.value.length - 1,
+                },
+                (m.value.length, {}),
+                { e: a.title }
+              )
+            ),
+            l: t,
+            m: t,
+            n: e.f(v, (a, t, r) =>
+              e.e(
+                { a: a.path === p },
+                a.path === p
+                  ? { b: a.icon, c: e.t(a.title) }
+                  : {
+                      d: a.icon,
+                      e: e.t(a.title),
+                      f: e.o(
+                        (t) => e.unref(e.appNavigator).navigateTo(a.path),
+                        a.title
+                      ),
+                    },
+                { g: a.title }
+              )
+            ),
+          };
         }
       );
     },
   }),
-  a = e._export_sfc(p, [['__scopeId', 'data-v-2ac86e6d']]);
-wx.createComponent(a);
+  c = e._export_sfc(r, [['__scopeId', 'data-v-e9e87d41']]);
+wx.createComponent(c);

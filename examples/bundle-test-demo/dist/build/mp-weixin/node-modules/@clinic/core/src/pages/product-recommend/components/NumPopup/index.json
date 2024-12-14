@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "nut-popup": "../../../../../node-modules/nutui-uniapp/components/popup/popup"
+  }
+}

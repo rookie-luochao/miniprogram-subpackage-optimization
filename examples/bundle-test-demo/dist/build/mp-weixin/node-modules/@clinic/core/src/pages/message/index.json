@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "empty": "../../components/Empty/index",
+    "custom-image": "../../components/Image/index"
+  }
+}

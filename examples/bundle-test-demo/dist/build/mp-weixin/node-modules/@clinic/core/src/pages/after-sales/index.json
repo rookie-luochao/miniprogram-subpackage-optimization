@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "usingComponents": {
+    "uni-load-more": "../../../node-modules/@dcloudio/uni-ui/lib/uni-load-more/uni-load-more",
+    "empty": "../../components/Empty/index",
+    "navbar": "../../components/Navbar/index",
+    "tabs": "../../components/Tabs/index",
+    "sales-card": "./components/SalesCard/index"
+  }
+}

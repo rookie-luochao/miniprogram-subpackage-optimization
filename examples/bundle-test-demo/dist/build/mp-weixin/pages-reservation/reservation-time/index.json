@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "预约时间",
+  "usingComponents": {
+    "reservation-time": "../../node-modules/@clinic/core/src/pages/reservation-time/index"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "usingComponents": {
+    "nut-cascader": "../../../node-modules/nutui-uniapp/components/cascader/cascader",
+    "nut-switch": "../../../node-modules/nutui-uniapp/components/switch/switch",
+    "modal": "../../components/Modal/index",
+    "nav-bar": "../../components/Navbar/index"
+  }
+}

@@ -20,12 +20,6 @@ const n = () =>
             null == (e = a.value) || e.pageOnShow();
           });
         }),
-        e.onPageScroll((n) => {
-          e.nextTick$1(() => {
-            var e;
-            null == (e = a.value) || e.pageOnScroll(n);
-          });
-        }),
         e.onHide(() => {
           e.nextTick$1(() => {
             var e;
@@ -36,11 +30,8 @@ const n = () =>
           var e;
           null == (e = a.value) || e.pageOnHide();
         }),
-        (n, l) => ({
-          a: e.sr(a, '5738913a-0', { k: 'inquiryOrderDetailRef' }),
-          b: e.p({ 'is-payment': !0 }),
-        })
+        (n, o) => ({ a: e.sr(a, '160830bc-0', { k: 'inquiryOrderDetailRef' }) })
       );
     },
   });
-(a.__runtimeHooks = 1), wx.createPage(a);
+wx.createPage(a);

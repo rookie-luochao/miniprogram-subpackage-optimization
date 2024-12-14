@@ -5,216 +5,159 @@ if (!Array) {
 }
 Math ||
   (
+    a +
     (() =>
-      '../../../node-modules/nutui-uniapp/components/countdown/countdown.js') +
-    a
+      '../../../node-modules/nutui-uniapp/components/countdown/countdown.js')
   )();
-const a = () => '../../components/Modal/index.js',
-  t =
-    'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24071710451661521470201233.png',
-  u = e.defineComponent({
+const a = () => '../../components/Navbar/index.js',
+  o = e.defineComponent({
     __name: 'index',
-    setup(a, { expose: u }) {
-      const r = e.ref({ d: '00', h: '00', m: '00', s: '00' }),
-        { medicalInfo: o, fetchMedicalPrescription: n } = e.useMedicalInfo(),
-        i = e.useMedicalInsuranceAuthStore(),
-        {
-          medicalAuthStatus: l,
-          medicalAuthType: s,
-          prescriptionAuthInfo: c,
-        } = e.storeToRefs(i),
-        { scanCodeData: p, scanCodeAuth: d } = e.useScanCodeAuth(),
-        v = e.ref(null),
-        m = e.ref({ rpID: '', inquiryOrderID: '' }),
-        h = e.ref(null),
-        y = e.ref(!0),
-        f = e.ref(!1),
-        S = e.ref(!1),
-        g = e.ref(0),
-        D = e.ref(null),
-        I = async (a) => {
-          const { rpID: t, inquiryOrderID: u } = m.value;
-          try {
-            a &&
-              ((y.value = !0),
-              e.index.showLoading({ title: '加载中…', mask: !0 }));
-            const { data: r } = await e.requestGetDetailXz({
-              type: 'rp',
-              rpID: t,
-              inquiryOrderID: u,
-            });
-            (D.value = r.rp),
-              r.rp.rpUploadStatus == e.PrescriptionStatusEnum.Revoke &&
-                (S.value = !0),
-              (g.value = e.dayjs(r.rp.expirationTime).valueOf());
-            const o = e.calculateTimeDifference(
-              e.dayjs(),
-              e.dayjs(r.rp.expirationTime)
-            );
-            f.value = o.diffValue <= 0;
-          } finally {
-            a && ((y.value = !1), e.index.hideLoading());
-          }
+    setup(a, { expose: o }) {
+      const r = e.ref({ d: 0, h: 0, m: 0, s: 0 }),
+        d = () => {
+          s.value = !0;
         },
-        w = e.computed(() => {
-          const { d: a, h: t, m: u, s: o } = r.value;
-          return `${e.padZeroToTwoDigits(a)}天${e.padZeroToTwoDigits(t)}小时${e.padZeroToTwoDigits(u)}分${e.padZeroToTwoDigits(o)}秒`;
-        }),
-        T = e.computed(() => {
-          var a;
-          const t = null == (a = D.value) ? void 0 : a.rpUploadStatus;
-          return `处方${e.PrescriptionStatusDesc[t]}` || '无法进行处方流转';
-        }),
-        A = e.computed(() => {
-          var a;
-          const u = null == (a = D.value) ? void 0 : a.rpUploadStatus;
-          return {
-            [e.PrescriptionStatusEnum.ToProcess]: t,
-            [e.PrescriptionStatusEnum.Processing]: t,
-            [e.PrescriptionStatusEnum.Success]:
-              'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24071710443751248550201240.png',
-            [e.PrescriptionStatusEnum.Fail]:
-              'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24071710455475979970201240.png',
-          }[u];
-        }),
-        P = e.computed(() => {
+        i = e.ref(!1),
+        n = e.ref({}),
+        u = e.ref({}),
+        t = async (a) => {
+          const { data: o } = await e.requestInquiryRecipeGoodsOrderInfo({
+            rpId: a,
+          });
+          u.value = o;
+        },
+        l = e.computed(() => {
           var a;
           return (
-            !f.value &&
-            (null == (a = D.value) ? void 0 : a.rpUploadStatus) ===
-              e.PrescriptionStatusEnum.Fail
+            !s.value &&
+            ((u.value.hasGoodsOrder &&
+              (null == (a = u.value.goodsOrderDetail)
+                ? void 0
+                : a.payStatus) === e.InquiryPayStatus.Unpaid) ||
+              !u.value.hasGoodsOrder)
           );
         }),
-        x = async () => {
-          l.value === e.AuthStatus.NO_AUTH && _(),
-            l.value === e.AuthStatus.NEED_AUTH &&
-              ((h.value = e.AutoJumpEnum.Prescription),
-              s.value === e.AuthType.MINI_PROGRAM && e.wxPrescriptionAuth(),
-              s.value === e.AuthType.SCAN_CODE && (await d(), _()));
+        p = e.computed(() => {
+          var a, o;
+          return (null == (a = n.value) ? void 0 : a.recipeStatus) ===
+            e.RecipeStatus.Pass
+            ? e
+                .dayjs(null == (o = n.value) ? void 0 : o.expirationTime)
+                .valueOf()
+            : 0;
+        }),
+        s = e.ref(!0),
+        v = () => {
+          var a;
+          s.value = e
+            .dayjs()
+            .isAfter(
+              e.dayjs(null == (a = n.value) ? void 0 : a.expirationTime)
+            );
         },
-        _ = async () => {
-          var a, t, u, r, n;
-          if (D.value)
-            try {
-              e.index.showLoading({ title: '处方流转中…', mask: !0 });
-              const {
-                  keyID: i,
-                  orgID: l,
-                  orgCode: s,
-                  inquiryOrderID: c,
-                } = D.value,
-                d =
-                  null != (t = null == (a = o.value) ? void 0 : a.auth_no)
-                    ? t
-                    : '',
-                v =
-                  null != (r = null == (u = o.value) ? void 0 : u.city_id)
-                    ? r
-                    : '',
-                m = null == (n = p.value) ? void 0 : n.ecToken;
-              await e.requestRecipePush({
-                orgID: l,
-                orgCode: s,
-                inquiryOrderID: c,
-                rpID: i,
-                authno: d,
-                cityId: v,
-                ecToken: m,
-              }),
-                await E();
-            } catch (i) {
-              e.index.hideLoading();
-            }
-        },
-        E = async () => {
-          if (!D.value) return;
-          const { keyID: a } = D.value,
-            t = async () => {
-              var u;
-              try {
-                const { data: r } = await e.requestGetRpUpdateStatusAndUpdate({
-                    rpId: a,
-                  }),
-                  { pushStatus: o, pushResult: n } = r;
-                o === e.PrescriptionStatus.Success ||
-                o === e.PrescriptionStatus.Failed
-                  ? (e.index.hideLoading(),
-                    I(!1),
-                    o === e.PrescriptionStatus.Failed &&
-                      (null == (u = v.value) ||
-                        u.openModal({
-                          title: n || '处方流转失败',
-                          showCancel: !1,
-                        })))
-                  : (await e.sleep(2e3), await t());
-              } catch (r) {
-                console.log(r);
-              }
-            };
-          t();
+        c = () => {
+          var a;
+          u.value.hasGoodsOrder
+            ? e.appNavigator.navigateTo(
+                e.appNavigator.pagesMap['product-order-detail'],
+                {
+                  query: {
+                    orderId:
+                      null == (a = u.value.goodsOrderDetail)
+                        ? void 0
+                        : a.goodsOrderId,
+                  },
+                }
+              )
+            : e.appNavigator.navigateTo(
+                e.appNavigator.pagesMap['order-info-confirm'],
+                {
+                  query: {
+                    orgId: n.value.channelId,
+                    rpId: n.value.id,
+                    goodsOrderType: e.GoodsOrderType.Inquiry,
+                  },
+                }
+              );
         };
       return (
-        u({
-          pageOnLoad: (e) => {
-            (m.value = e), I(!0);
+        o({
+          pageOnShow: () => {
+            console.log('pageOnShow');
           },
-          pageOnShow: async () => {
-            var a;
-            if (h.value === e.AutoJumpEnum.Prescription) {
-              if (!c.value.authNo) return;
-              try {
-                await n(),
-                  (null == (a = o.value) ? void 0 : a.auth_no) &&
-                    ((h.value = null), _());
-              } catch (t) {}
-            }
+          pageOnLoad: (a) => {
+            a.recipeId &&
+              (async (a) => {
+                try {
+                  e.index.showLoading({ title: '加载中...', mask: !0 });
+                  const { data: o } = await e.requestInquiryRecipeDetail({
+                    recipeId: a,
+                  });
+                  (n.value = o), v(), o.id && (await t(o.id)), (i.value = !0);
+                } catch (o) {
+                  console.error(o);
+                } finally {
+                  e.index.hideLoading();
+                }
+              })(a.recipeId);
+          },
+          pageOnHide: () => {
+            console.log('pageOnHide');
           },
         }),
-        (a, t) => {
-          var u, o, n;
-          return e.e(
-            { a: !y.value },
-            y.value
-              ? {
-                  q: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24082717531384828430201233.png',
-                }
-              : e.e(
-                  { b: S.value },
-                  S.value
-                    ? {
-                        c: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24071710462412404360201233.png',
-                        d: e.t(null == (u = D.value) ? void 0 : u.undoRea),
-                      }
-                    : f.value
-                      ? { f: e.t(T.value) }
-                      : {
-                          g: A.value,
-                          h: e.t(T.value),
-                          i: e.t(w.value),
-                          j: e.o((e) => (r.value = e)),
-                          k: e.p({ 'end-time': g.value, modelValue: r.value }),
-                          l: e.n(
-                            (null == (o = D.value)
-                              ? void 0
-                              : o.rpUploadStatus) ===
-                              e.unref(e.PrescriptionStatusEnum).Fail
-                              ? 'prescription-error'
-                              : 'prescription-progress'
-                          ),
-                        },
+        (a, o) =>
+          e.e(
+            {
+              a: e.sr('navbarRef', '00fc02e0-0'),
+              b: e.p({ title: '处方详情' }),
+              c: n.value.id,
+            },
+            n.value.id
+              ? e.e(
                   {
-                    e: f.value,
-                    m: null == (n = D.value) ? void 0 : n.rpImgFileUrl,
-                    n: e.n(P.value ? 'prescription-content-fail' : ''),
-                    o: P.value,
+                    d: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24111223531919927720201240.png',
+                    e: s.value,
                   },
-                  P.value ? { p: e.o(x) } : {}
-                ),
-            { r: e.sr(v, 'c02e8a00-1', { k: 'modalRef' }) }
-          );
-        }
+                  s.value
+                    ? {}
+                    : {
+                        f: e.t(
+                          e.unref(e.padZeroToTwoDigits)(
+                            24 * r.value.d + r.value.h
+                          )
+                        ),
+                        g: e.t(e.unref(e.padZeroToTwoDigits)(r.value.m)),
+                        h: e.t(e.unref(e.padZeroToTwoDigits)(r.value.s)),
+                        i: e.o(d),
+                        j: e.o((e) => (r.value = e)),
+                        k: e.p({ 'end-time': p.value, modelValue: r.value }),
+                      },
+                  {
+                    l: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24111223571666847940201233.png',
+                    m: n.value.recipeImgFileUrl,
+                    n: e.o((a) => {
+                      var o, r;
+                      (r = null != (o = n.value.recipeImgFileUrl) ? o : '') &&
+                        e.index.previewImage({ urls: [r] });
+                    }),
+                    o: !s.value || u.value.hasGoodsOrder,
+                  },
+                  !s.value || u.value.hasGoodsOrder
+                    ? e.e(
+                        { p: l.value },
+                        l.value
+                          ? {
+                              q: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24111223581246712500201240.png',
+                              r: e.o((e) => c()),
+                            }
+                          : { s: e.o((e) => c()) }
+                      )
+                    : {}
+                )
+              : {}
+          )
       );
     },
   }),
-  r = e._export_sfc(u, [['__scopeId', 'data-v-c02e8a00']]);
+  r = e._export_sfc(o, [['__scopeId', 'data-v-00fc02e0']]);
 wx.createComponent(r);

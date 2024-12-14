@@ -1,0 +1,1 @@
+<view class="empty-container data-v-27d8b021" style="{{'padding-top:' + d}}"><image src="{{a}}" class="empty-icon data-v-27d8b021" mode="scaleToFill"/><text class="title data-v-27d8b021">{{b}}</text><text class="sub-title data-v-27d8b021">{{c}}</text></view>

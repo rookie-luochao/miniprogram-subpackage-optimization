@@ -1,6 +1,5 @@
 {
   "navigationBarTitleText": "我的",
-  "navigationStyle": "custom",
   "usingComponents": {
     "mine": "../../node-modules/@clinic/core/src/pages/mine/index"
   }

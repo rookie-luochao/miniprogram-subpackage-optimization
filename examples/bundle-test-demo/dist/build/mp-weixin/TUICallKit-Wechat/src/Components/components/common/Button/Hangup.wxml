@@ -1,0 +1,1 @@
+<view class="btn-content data-v-9ccde3f7"><button wx:if="{{b}}" class="data-v-9ccde3f7" bindclick="{{a}}" u-i="9ccde3f7-0" bind:__l="__l" u-p="{{b}}"/><t-k-text wx:if="{{c}}" class="data-v-9ccde3f7" u-s="{{['d']}}" u-i="9ccde3f7-1" bind:__l="__l" u-p="{{e}}">{{d}}</t-k-text></view>

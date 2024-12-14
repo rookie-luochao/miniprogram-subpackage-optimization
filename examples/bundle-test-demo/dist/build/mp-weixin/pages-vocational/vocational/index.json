@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "专科问诊",
+  "usingComponents": {
+    "vocational": "../../node-modules/@clinic/core/src/pages/vocational/index"
+  }
+}

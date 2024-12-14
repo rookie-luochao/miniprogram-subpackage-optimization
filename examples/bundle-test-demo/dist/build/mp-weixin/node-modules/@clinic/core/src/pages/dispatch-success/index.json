@@ -1,6 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "nut-countdown": "../../../node-modules/nutui-uniapp/components/countdown/countdown"
-  }
-}

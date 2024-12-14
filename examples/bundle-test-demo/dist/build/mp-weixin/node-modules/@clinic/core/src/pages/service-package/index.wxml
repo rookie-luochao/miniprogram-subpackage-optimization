@@ -1,0 +1,1 @@
+<view class="service-package data-v-0fb2daca"><nav-bar wx:if="{{b}}" class="r data-v-0fb2daca" u-r="navbarRef" u-i="0fb2daca-0" bind:__l="__l" u-p="{{b}}"/></view>

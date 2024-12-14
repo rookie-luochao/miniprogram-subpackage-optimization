@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "usingComponents": {
+    "date-picker": "../DatePicker/index",
+    "modal": "../Modal/index",
+    "custom-textarea": "../Textarea/index",
+    "upload-img": "../Upload/index",
+    "diagnosis-popup": "./components/DiagnosisPopup/index"
+  }
+}

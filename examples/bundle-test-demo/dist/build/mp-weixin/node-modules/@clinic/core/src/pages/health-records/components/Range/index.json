@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "nut-range": "../../../../../node-modules/nutui-uniapp/components/range/range"
+  }
+}

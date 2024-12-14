@@ -2,22 +2,35 @@
 const e = require('../../common/vendor.js');
 Math || n();
 const n = () => '../../node-modules/@clinic/core/src/pages/mine/index.js',
-  c = e.defineComponent({
+  a = e.defineComponent({
     __name: 'index',
     setup(n) {
-      const c = e.ref(null);
+      const a = e.ref(null);
       return (
-        e.onShow(async () => {
+        e.onLoad((n) => {
           e.nextTick$1(() => {
             var e;
-            null == (e = c.value) || e.pageOnShow();
+            null == (e = a.value) || e.pageOnLoad(n);
           });
         }),
-        (n, s) => ({
-          a: e.sr(c, '8d82579c-0', { k: 'mineRef' }),
-          b: e.p({ 'is-customer-service-center': !1 }),
-        })
+        e.onShow(() => {
+          e.nextTick$1(() => {
+            var e;
+            null == (e = a.value) || e.pageOnShow();
+          });
+        }),
+        e.onHide(() => {
+          e.nextTick$1(() => {
+            var e;
+            null == (e = a.value) || e.pageOnHide();
+          });
+        }),
+        e.onUnload(() => {
+          var e;
+          null == (e = a.value) || e.pageOnHide();
+        }),
+        (n, o) => ({ a: e.sr(a, '881db998-0', { k: 'mineRef' }) })
       );
     },
   });
-wx.createPage(c);
+wx.createPage(a);

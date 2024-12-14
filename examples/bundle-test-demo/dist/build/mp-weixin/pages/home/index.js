@@ -29,18 +29,8 @@ const n = () => '../../node-modules/@clinic/core/src/pages/home/index.js',
           var e;
           null == (e = o.value) || e.pageOnHide();
         }),
-        (n, c) => ({
-          a: e.sr(o, '5e981d75-0', { k: 'homeRef' }),
-          b: e.p({
-            'main-bg':
-              'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24082717360796831560201240.png',
-            'logo-icon':
-              'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24082616240885514270201240.png',
-            'is-check-code': !1,
-          }),
-        })
+        (n, a) => ({ a: e.sr(o, '3c069680-0', { k: 'homeRef' }) })
       );
     },
-  }),
-  c = e._export_sfc(o, [['__scopeId', 'data-v-5e981d75']]);
-wx.createPage(c);
+  });
+wx.createPage(o);

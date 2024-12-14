@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "订单信息确认",
+  "usingComponents": {
+    "order-info-confirm": "../../node-modules/@clinic/core/src/pages/order-info-confirm/index"
+  }
+}

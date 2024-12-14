@@ -3,40 +3,43 @@ const e = require('../../../../../../../common/vendor.js');
 Math || o();
 const o = () => '../transition/transition.js',
   t = `${e.PREFIX}-overlay`,
-  s = e.defineComponent({
+  n = e.defineComponent({
     name: t,
     options: { virtualHost: !0, addGlobalClass: !0, styleIsolation: 'shared' },
   }),
-  n = e.defineComponent({
-    ...s,
+  s = e.defineComponent({
+    ...n,
     props: e.overlayProps,
     emits: e.overlayEmits,
-    setup(o, { emit: s }) {
-      const n = o,
-        a = s,
-        r = e.computed(() => e.getMainClass(n, t, { [n.overlayClass]: !0 })),
+    setup(o, { emit: n }) {
+      const s = o,
+        a = n,
+        r = e.computed(() => e.getMainClass(s, t, { [s.overlayClass]: !0 })),
         i = e.computed(() =>
-          e.getMainStyle(n, {
-            transitionDuration: `${n.duration}ms`,
-            zIndex: +n.zIndex,
-            ...n.overlayStyle,
+          'number' == typeof s.duration ? s.duration : Number(s.duration)
+        ),
+        l = e.computed(() =>
+          e.getMainStyle(s, {
+            transitionDuration: `${i.value}ms`,
+            zIndex: s.zIndex,
+            ...s.overlayStyle,
           })
         );
-      function l(o) {
+      function u(o) {
         a(e.CLICK_EVENT, o),
-          n.closeOnClickOverlay && a(e.UPDATE_VISIBLE_EVENT, !1);
+          s.closeOnClickOverlay && a(e.UPDATE_VISIBLE_EVENT, !1);
       }
       return (o, t) => ({
-        a: e.o(l),
+        a: e.o(u),
         b: e.p({
-          show: o.visible,
-          name: 'fade',
-          'custom-style': i.value,
           'custom-class': r.value,
-          duration: Number(n.duration),
-          'destroy-on-close': n.destroyOnClose,
+          'custom-style': l.value,
+          show: s.visible,
+          name: 'fade',
+          duration: i.value,
+          'destroy-on-close': s.destroyOnClose,
         }),
       });
     },
   });
-wx.createComponent(n);
+wx.createComponent(s);

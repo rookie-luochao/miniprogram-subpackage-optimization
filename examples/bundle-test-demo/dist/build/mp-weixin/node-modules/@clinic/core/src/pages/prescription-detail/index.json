@@ -2,6 +2,6 @@
   "component": true,
   "usingComponents": {
     "nut-countdown": "../../../node-modules/nutui-uniapp/components/countdown/countdown",
-    "modal": "../../components/Modal/index"
+    "nav-bar": "../../components/Navbar/index"
   }
 }

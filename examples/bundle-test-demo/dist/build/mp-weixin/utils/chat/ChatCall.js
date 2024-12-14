@@ -1,22 +1,22 @@
 'use strict';
 var a = Object.defineProperty,
-  l = (l, e, r) => (
-    ((l, e, r) => {
-      e in l
-        ? a(l, e, { enumerable: !0, configurable: !0, writable: !0, value: r })
-        : (l[e] = r);
-    })(l, 'symbol' != typeof e ? e + '' : e, r),
-    r
+  e = (e, l, t) => (
+    ((e, l, t) => {
+      l in e
+        ? a(e, l, { enumerable: !0, configurable: !0, writable: !0, value: t })
+        : (e[l] = t);
+    })(e, 'symbol' != typeof l ? l + '' : l, t),
+    t
   );
-const e = require('../../TUICallKit/src/TUICallService/serve/callManager.js');
+const l = require('../../TUICallKit-Wechat/src/TUICallService/serve/callManager.js');
 exports.ChatCall = class {
   constructor() {
-    l(this, 'callManger'), (this.callManger = new e.CallManager());
+    e(this, 'callManger'), (this.callManger = new l.CallManager());
   }
   async init(a) {
     await this.callManger.init({
-      sdkAppID: Number('1400642667'),
-      globalCallPagePath: 'TUICallKit/src/Components/TUICallKit',
+      sdkAppID: Number('1400822105'),
+      globalCallPagePath: 'TUICallKit-Wechat/src/Components/TUICallKit',
       ...a,
     });
   }

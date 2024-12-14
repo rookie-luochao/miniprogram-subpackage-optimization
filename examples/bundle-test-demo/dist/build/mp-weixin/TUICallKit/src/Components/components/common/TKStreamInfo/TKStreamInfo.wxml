@@ -1,1 +1,0 @@
-<view><stream-info-mobile wx:if="{{a}}" u-i="8c8a3d18-0" bind:__l="__l" u-p="{{b}}"/></view>

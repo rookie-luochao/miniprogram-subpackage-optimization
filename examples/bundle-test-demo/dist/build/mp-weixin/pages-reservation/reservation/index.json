@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "填写预约信息",
+  "usingComponents": {
+    "reservation": "../../node-modules/@clinic/core/src/pages/reservation/index"
+  }
+}

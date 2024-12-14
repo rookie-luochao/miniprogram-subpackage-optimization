@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "custom-textarea": "../../../../components/Textarea/index",
+    "upload": "../../../../components/Upload/index"
+  }
+}

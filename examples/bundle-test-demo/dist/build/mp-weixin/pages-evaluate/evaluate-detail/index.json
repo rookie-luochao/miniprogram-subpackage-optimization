@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "评价详情",
+  "usingComponents": {
+    "evaluate-detail": "../../node-modules/@clinic/core/src/pages/evaluate-detail/index"
+  }
+}

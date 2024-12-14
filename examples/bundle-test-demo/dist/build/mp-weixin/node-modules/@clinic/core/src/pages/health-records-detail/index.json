@@ -1,8 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "modal": "../../components/Modal/index",
-    "upload-img": "../../components/Upload/index",
-    "drug-item": "../add-drug/components/DrugItem/index"
-  }
-}

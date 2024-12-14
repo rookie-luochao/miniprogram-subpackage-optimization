@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "申请售后",
+  "usingComponents": {
+    "product-order-after-sales": "../../node-modules/@clinic/core/src/pages/product-order-after-sales/index"
+  }
+}

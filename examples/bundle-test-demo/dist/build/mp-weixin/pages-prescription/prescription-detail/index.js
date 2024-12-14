@@ -3,25 +3,35 @@ const e = require('../../common/vendor.js');
 Math || n();
 const n = () =>
     '../../node-modules/@clinic/core/src/pages/prescription-detail/index.js',
-  o = e.defineComponent({
+  a = e.defineComponent({
     __name: 'index',
     setup(n) {
-      const o = e.ref(null);
+      const a = e.ref(null);
       return (
         e.onLoad((n) => {
           e.nextTick$1(() => {
             var e;
-            null == (e = o.value) || e.pageOnLoad(n);
+            null == (e = a.value) || e.pageOnLoad(n);
           });
         }),
         e.onShow(() => {
           e.nextTick$1(() => {
             var e;
-            null == (e = o.value) || e.pageOnShow();
+            null == (e = a.value) || e.pageOnShow();
           });
         }),
-        (n, a) => ({ a: e.sr(o, '73bead4c-0', { k: 'prescriptionDetailRef' }) })
+        e.onHide(() => {
+          e.nextTick$1(() => {
+            var e;
+            null == (e = a.value) || e.pageOnHide();
+          });
+        }),
+        e.onUnload(() => {
+          var e;
+          null == (e = a.value) || e.pageOnHide();
+        }),
+        (n, o) => ({ a: e.sr(a, '5194454e-0', { k: 'prescriptionDetailRef' }) })
       );
     },
   });
-wx.createPage(o);
+wx.createPage(a);

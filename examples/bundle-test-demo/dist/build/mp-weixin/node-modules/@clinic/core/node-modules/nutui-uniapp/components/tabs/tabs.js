@@ -70,8 +70,8 @@ const t = () => '../icon/icon.js',
       const f = e.computed(() => o.titleScroll && 'horizontal' === o.direction),
         h = e.computed(() => o.titleScroll && 'vertical' === o.direction),
         g = e.ref([]),
-        y = e.ref(0),
         b = e.ref(0),
+        y = e.ref(0),
         T = e.ref(!1),
         C = e.ref(),
         E = e.ref([]),
@@ -114,12 +114,12 @@ const t = () => '../icon/icon.js',
               }),
                 (function (t, l) {
                   let n = 0;
-                  const o = 'horizontal' === l ? y.value : b.value,
+                  const o = 'horizontal' === l ? b.value : y.value,
                     a = 1;
                   function u() {
                     'horizontal' === l
-                      ? (y.value += (t - o) / a)
-                      : (b.value += (t - o) / a),
+                      ? (b.value += (t - o) / a)
+                      : (y.value += (t - o) / a),
                       ++n < a && e.raf(u);
                   }
                   u();
@@ -231,7 +231,7 @@ const t = () => '../icon/icon.js',
                       'line' === t.type ? { a: e.s(R.value) } : {},
                       'smile' === t.type
                         ? {
-                            b: '0c383266-0-' + o,
+                            b: 'c25bce62-0-' + o,
                             c: e.p({
                               name: 'joy-smile',
                               'custom-color': t.customColor,
@@ -263,8 +263,8 @@ const t = () => '../icon/icon.js',
             k: f.value,
             l: h.value,
             m: T.value,
-            n: y.value,
-            o: b.value,
+            n: b.value,
+            o: y.value,
             p: t.type,
             q: t.type ? 1 : '',
             r: t.titleScroll ? 1 : '',

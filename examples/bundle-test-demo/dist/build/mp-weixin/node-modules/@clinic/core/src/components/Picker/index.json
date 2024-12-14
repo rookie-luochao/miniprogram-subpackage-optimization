@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "nut-picker": "../../../node-modules/nutui-uniapp/components/picker/picker",
+    "nut-popup": "../../../node-modules/nutui-uniapp/components/popup/popup"
+  }
+}

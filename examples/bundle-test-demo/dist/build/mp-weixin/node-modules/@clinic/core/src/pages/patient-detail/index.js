@@ -1,559 +1,398 @@
 'use strict';
 const e = require('../../../../../../common/vendor.js');
 if (!Array) {
-  (
-    e.resolveComponent('nut-radio') +
-    e.resolveComponent('nut-radio-group') +
-    e.resolveComponent('nut-date-picker') +
-    e.resolveComponent('nut-popup') +
-    e.resolveComponent('nut-picker') +
-    e.resolveComponent('nut-cascader')
-  )();
+  (e.resolveComponent('nut-picker') + e.resolveComponent('nut-popup'))();
 }
 Math ||
   (
-    (() => '../../../node-modules/nutui-uniapp/components/radio/radio.js') +
-    (() =>
-      '../../../node-modules/nutui-uniapp/components/radiogroup/radiogroup.js') +
-    (() =>
-      '../../../node-modules/nutui-uniapp/components/datepicker/datepicker.js') +
-    (() => '../../../node-modules/nutui-uniapp/components/popup/popup.js') +
+    t +
+    l +
+    a +
     (() => '../../../node-modules/nutui-uniapp/components/picker/picker.js') +
-    (() => '../../../node-modules/nutui-uniapp/components/cascader/cascader.js')
+    (() => '../../../node-modules/nutui-uniapp/components/popup/popup.js') +
+    i +
+    n
   )();
-const a =
-    'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24070910445149098420201240.png',
-  l = e.defineComponent({
+const a = () => '../../components/DatePicker/index.js',
+  n = () => '../../components/Modal/index.js',
+  t = () => '../../components/Navbar/index.js',
+  l = () => '../../components/Radio/index.js',
+  i = () => '../../components/Textarea/index.js',
+  o =
+    'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24102515562443956060201240.png',
+  r = e.defineComponent({
     __name: 'index',
-    setup(l, { expose: u }) {
-      const o = e.useUserInfoStore(),
-        { userInfo: t } = e.storeToRefs(o),
-        n = /^1[3456789]\d{9}$/,
+    setup(a, { expose: n }) {
+      const t = e.ref(!1),
+        l = /^1[3456789]\d{9}$/,
         i =
           /^[1-9]\d{5}(?:18|19|20)\d{2}(?:0[1-9]|10|11|12)(?:0[1-9]|[1-2]\d|30|31)\d{3}[\dXx]$/,
         r = (a) => e.index.showToast({ icon: 'none', title: a }),
-        v = e.ref({
-          keyID: '',
-          familyName: '',
-          idNumber: '',
-          sex: null,
-          weight: 0,
-          birthDay: '',
+        u = e.ref('就诊人信息'),
+        s = e.ref({
+          isRealName: '',
+          patientInfoId: '',
+          patientName: '',
+          idCardNo: '',
+          gender: e.Gender.man,
+          birth: '',
+          relation: '',
+          phone: '',
+          weight: '',
+          guardianName: '',
+          guardianIdCardNo: '',
+          historyOfSickness: e.Presence.None,
+          sicknessDetail: '',
+          historyOfFamilyGenetic: e.Presence.None,
+          familyGeneticDetail: '',
+          historyOfAllergy: e.Presence.None,
+          allergyDetail: '',
+          liver: e.HealthStatus.Normal,
+          renal: e.HealthStatus.Normal,
+          pregnancy: e.HealthStatus.Normal,
           age: null,
           month: null,
-          phone: '',
-          relationCode: '',
-          relationName: '',
-          province: '',
-          provinceCode: '',
-          city: '',
-          cityCode: '',
-          area: '',
-          areaCode: '',
-          illness: !1,
-          illnessDesc: '',
-          allergy: !1,
-          allergyDesc: '',
-          inherit: !1,
-          inheritDesc: '',
-          liver: !1,
-          liverDesc: '',
-          kidney: !1,
-          kidneyDesc: '',
-          pregnancy: !1,
-          pregnancyDecs: '否',
-          orgPersonHealths: [],
         }),
-        s = e.ref(!1),
+        v = (a, n) => {
+          const t = s.value[n] ? `${s.value[n]},${a}` : a;
+          t.length <= 200
+            ? (s.value[n] = t)
+            : e.index.showToast({
+                title: '输入的文本不能超过200个字',
+                icon: 'none',
+              });
+        },
         d = e.ref(!1),
-        c = async (a, l) => {
-          var u, o, t, n, i, r;
-          const { data: s } = await e.requestGetOrgPersonFamilyInfo({
-            orgID: l,
-            keyID: a,
-          });
-          s.isInsuranceUser === e.IsMedicalAuthPatient.YES && (d.value = !0);
-          const c = (e) => s.orgPersonHealths.find((a) => a.docItemCode === e),
-            p = c('ILLNESS'),
-            m = c('ALLERGY'),
-            y = c('INHERIT'),
-            h = c('LIVER'),
-            g = c('KIDNEY'),
-            f = c('PREGNANCY');
-          (v.value = {
-            ...s,
-            age: null,
-            month: null,
-            illness: '有' === (null == p ? void 0 : p.docItemValue),
-            illnessDesc:
-              null != (u = null == p ? void 0 : p.docItemDesc) ? u : '',
-            allergy: '有' === (null == m ? void 0 : m.docItemValue),
-            allergyDesc:
-              null != (o = null == m ? void 0 : m.docItemDesc) ? o : '',
-            inherit: '有' === (null == y ? void 0 : y.docItemValue),
-            inheritDesc:
-              null != (t = null == y ? void 0 : y.docItemDesc) ? t : '',
-            liver: '异常' === (null == h ? void 0 : h.docItemValue),
-            liverDesc:
-              null != (n = null == h ? void 0 : h.docItemDesc) ? n : '',
-            kidney: '异常' === (null == g ? void 0 : g.docItemValue),
-            kidneyDesc:
-              null != (i = null == g ? void 0 : g.docItemDesc) ? i : '',
-            pregnancy: '否' !== (null == f ? void 0 : f.docItemValue),
-            pregnancyDecs:
-              null != (r = null == f ? void 0 : f.docItemDesc) ? r : '',
-          }),
-            (V.value = `${s.province}${s.city}${s.area}`);
-        };
+        c = e.ref([]),
+        p = ({ selectedValue: e }) => {
+          (s.value.relation = e[0]), (d.value = !1);
+        },
+        f = e.ref(!1);
       e.watch(
-        () => v.value.weight,
+        () => s.value.idCardNo,
         () => {
-          const e = v.value.age;
-          if ((!e && 'number' != typeof e) || e > 14) return;
-          const a = Number(v.value.weight);
-          if ('number' != typeof a || isNaN(a)) return r('请输入正确的数字');
-          return a !== Math.round(100 * a) / 100
-            ? r('请保留两位小数')
-            : a <= 0
-              ? r('体重请大于0')
-              : a > 999
-                ? r('体重请小于999')
-                : void 0;
-        }
-      );
-      const p = e.ref(!0);
-      e.watch(
-        () => v.value.idNumber,
-        () => {
-          const e = v.value.idNumber;
-          if (18 === e.length)
-            if (i.test(e)) {
-              v.value.sex = parseInt(e[16], 10) % 2 == 1 ? 1 : 2;
-              const a = `${e.substring(6, 10)}-${e.substring(10, 12)}-${e.substring(12, 14)}`;
-              (v.value.birthDay = a), (p.value = !1);
+          const a = s.value.idCardNo;
+          if (18 === a.length)
+            if (i.test(a)) {
+              s.value.gender =
+                parseInt(a[16], 10) % 2 == 1 ? e.Gender.man : e.Gender.woman;
+              const n = `${a.substring(6, 10)}-${a.substring(10, 12)}-${a.substring(12, 14)}`;
+              (s.value.birth = e.dayjs(n).format('YYYY-MM-DD HH:mm:ss')),
+                (f.value = !0);
             } else
-              (v.value.birthDay = ''),
-                (v.value.sex = null),
-                (p.value = !0),
-                r('请输入合法的身份证号');
-          else p.value = !0;
+              (s.value.birth = ''),
+                (s.value.gender = ''),
+                (f.value = !1),
+                r('请输入正确的患者身份证号');
+          else f.value = !1;
         }
       ),
         e.watch(
-          () => v.value.birthDay,
+          () => s.value.weight,
           () => {
-            const { age: a, month: l } = e.calculateAge(v.value.birthDay);
-            (v.value.age = a), (v.value.month = l);
+            const { weight: e, age: a } = s.value,
+              n = Number(e);
+            if ((!a && 0 !== a) || a > 14) return;
+            if ('number' != typeof n || isNaN(n)) return r('请输入正确的数字');
+            return n !== Math.round(100 * n) / 100
+              ? r('请保留两位小数')
+              : n <= 0
+                ? r('体重请大于0')
+                : n > 999
+                  ? r('体重请小于999')
+                  : void 0;
+          }
+        ),
+        e.watch(
+          () => s.value.birth,
+          () => {
+            const { age: a, month: n } = e.calculateAge(s.value.birth);
+            (s.value.age = a), (s.value.month = n);
           }
         );
-      const m = e.ref(!1),
-        y = e.ref(),
-        h = ({ selectedValue: a }) => {
-          (v.value.birthDay = e.dayjs(a.join('-')).format('YYYY-MM-DD')),
-            (m.value = !1);
-        },
-        g = () => {
-          p.value && (m.value = !0);
-        },
-        f = e.ref([]),
-        D = async () => {
-          const { data: a } = await e.requestQuerySysDictByCode({
-            groupCode: 'PERSON_RELATION',
-            systemCode: 'INQUIRY',
-          });
-          f.value = a.map((e) => ({ text: e.dictName, value: e.dictCode }));
-        },
-        b = e.ref(!1),
-        I = e.ref([]),
-        N = ({ selectedValue: e }) => {
-          var a, l, u, o;
-          (v.value.relationName =
-            null !=
-            (l =
-              null == (a = f.value.find((a) => a.value === e[0]))
-                ? void 0
-                : a.text)
-              ? l
-              : ''),
-            (v.value.relationCode =
-              null !=
-              (o =
-                null == (u = f.value.find((a) => a.value === e[0]))
-                  ? void 0
-                  : u.value)
-                ? o
-                : ''),
-            (b.value = !1);
-        },
-        C = () => {
-          d.value || (b.value = !0);
-        },
-        x = e.ref([]),
-        k = async () => {
-          const { data: a } = await e.requestGetCity();
-          x.value = a;
-        },
-        w = e.ref(!1),
-        V = e.ref(''),
-        E = e.ref(['']),
-        L = (e, a) => {
-          const [l, u, o] = a;
-          (V.value = l.text + u.text + o.text),
-            (v.value.province = l.text),
-            (v.value.provinceCode = l.value),
-            (v.value.city = u.text),
-            (v.value.cityCode = u.value),
-            (v.value.area = o.text),
-            (v.value.areaCode = o.value);
-        },
-        P = e.ref([
-          { text: '否', value: 0 },
-          { text: '备孕', value: 1 },
-          { text: '妊娠', value: 2 },
-          { text: '哺乳', value: 3 },
-        ]),
-        S = e.ref(!1),
-        R = e.ref([]),
-        Y = ({ selectedValue: e }) => {
-          var a, l;
-          (v.value.pregnancy = !0),
-            (v.value.pregnancyDecs =
-              null !=
-              (l =
-                null == (a = P.value.find((a) => a.value === e[0]))
-                  ? void 0
-                  : a.text)
-                ? l
-                : ''),
-            (S.value = !1);
-        },
-        A = async () => {
-          var a, l, u;
+      const m = async () => {
           const {
-            keyID: o,
-            familyName: c,
-            idNumber: p,
-            sex: m,
-            birthDay: y,
-            age: h,
-            month: g,
-            weight: f,
-            phone: D,
-            relationName: b,
-            relationCode: I,
-            province: N,
-            provinceCode: C,
-            city: x,
-            cityCode: k,
-            area: w,
-            areaCode: V,
-            illness: E,
-            illnessDesc: L,
-            allergy: P,
-            allergyDesc: S,
-            inherit: R,
-            inheritDesc: Y,
-            liver: A,
-            kidney: j,
-            pregnancy: G,
-            pregnancyDecs: M,
-            orgPersonHealths: O,
-          } = v.value;
-          if (!c) return r('请填写患者姓名');
-          if (!p) return r('请填写身份证号');
-          if (!i.test(p) || 18 !== p.length)
-            return r('请填写正确的18位身份证号码');
-          if (!n.test(D)) return r('请填写正确的手机号');
-          if (!I) return r('请选择与本人关系');
-          if (!m) return r('请选择性别');
-          if (!y) return r('请选择出生日期');
-          if ((h && h < 14) || (0 === h && g)) {
-            if (!f && 0 !== f) return r('请输入体重');
-            const e = Number(f);
+            patientName: a,
+            idCardNo: n,
+            gender: o,
+            birth: u,
+            relation: v,
+            phone: d,
+            weight: c,
+            guardianName: p,
+            guardianIdCardNo: f,
+            historyOfSickness: m,
+            sicknessDetail: h,
+            historyOfFamilyGenetic: g,
+            familyGeneticDetail: y,
+            historyOfAllergy: N,
+            allergyDetail: O,
+            age: b,
+            month: k,
+          } = s.value;
+          if (!a) return r('请输入患者姓名');
+          if (!n) return r('请输入患者身份证号');
+          if (!i.test(n) || 18 !== n.length)
+            return r('请输入正确的患者身份证号');
+          if (!o) return r('请选择性别');
+          if (!u) return r('请选择出生日期');
+          if (!v) return r('请选择与本人关系');
+          if (!l.test(d)) return r('请输入正确的手机号');
+          if ((b && b < 14) || (0 === b && k)) {
+            if (!c && '0' !== c) return r('请输入体重');
+            const e = Number(c);
             if (isNaN(e)) return r('请输入正确的数字');
             if (e !== Math.round(100 * e) / 100) return r('请保留两位小数');
             if (e <= 0) return r('体重请大于0');
             if (e > 999) return r('体重请小于999');
           }
-          if (E && !L) return r('请输入既往病史描述');
-          if (P && !S) return r('请输入过敏史描述');
-          if (R && !Y) return r('请输入家族遗传史描述');
-          if (R && !Y) return r('请输入家族遗传史描述');
-          const T = {
-              orgID: null == (a = t.value) ? void 0 : a.orgID,
-              orgCode: null == (l = t.value) ? void 0 : l.orgCode,
-              orgPersonUserID: null == (u = t.value) ? void 0 : u.keyID,
-            },
-            _ = (e) => {
-              var a, l;
-              return null !=
-                (l =
-                  null == (a = O.find((a) => a.docItemCode === e))
-                    ? void 0
-                    : a.keyID)
-                ? l
-                : '';
-            },
-            z = (e, a, l, u) => {
-              const o = 'LIVER' === e || 'KIDNEY' === e,
-                t = 'PREGNANCY' === e;
-              let n = '无';
-              return (
-                o && (n = u ? '异常' : '正常'),
-                t && (n = '否' !== l ? '有' : '无'),
-                o || t || (n = u ? '有' : '无'),
-                {
-                  ...T,
-                  keyID: s.value ? _(e) : '',
-                  belongType: 'Self' === I ? 0 : 1,
-                  docGroupCode: 'D_PERSON_DOCS_SICKNESS',
-                  docGroupName: '疾病史',
-                  docItemCode: e,
-                  docItemName: a,
-                  docItemDesc: t ? M : u ? l : '',
-                  docItemValue: n,
-                }
-              );
-            },
-            H = [
-              z('ILLNESS', '既往病史', L, E),
-              z('ALLERGY', '过敏史', S, P),
-              z('INHERIT', '家族遗传史', Y, R),
-              z('LIVER', '肝功能异常', '', A),
-              z('KIDNEY', '肾功能异常', '', j),
-              z('PREGNANCY', '妊娠哺乳', M, G),
-            ],
-            $ = d.value
-              ? e.IsMedicalAuthPatient.YES
-              : e.IsMedicalAuthPatient.NO,
-            q = {
-              orgPersonFamily: {
-                ...T,
-                keyID: o,
-                familyName: c,
-                idNumber: p,
-                phone: D,
-                relationCode: I,
-                relationName: b,
-                weight: f,
-                sex: m,
-                birthDay: y,
-                province: N,
-                provinceCode: C,
-                city: x,
-                cityCode: k,
-                area: w,
-                areaCode: V,
-                isInsuranceUser: $,
-              },
-              orgPersonHealth: H,
-            };
+          if ((b && b < 6) || (0 === b && k)) {
+            if (!p) return r('请输入监护人姓名');
+            if (!f) return r('请输入监护人身份证号码');
+            if (!i.test(f) || 18 !== f.length)
+              return r('请输入正确的监护人身份证号');
+          }
+          if (m === e.Presence.Has && !h) return r('请输入过往史详情');
+          if (g === e.Presence.Has && !y) return r('请输入家族史详情');
+          if (N === e.Presence.Has && !O) return r('请输入过敏史详情');
+          const w = t.value
+            ? e.requestEditPatientInfo
+            : e.requestAddPatientInfo;
           try {
             e.index.showLoading({ title: '保存中…', mask: !0 }),
-              await e.requestAddOrgPersonFamily(q),
+              await w(s.value),
               e.index.showToast({ title: '保存成功', icon: 'none', mask: !0 }),
+              e.index.$emit(e.REFRESH_PATIENT_LIST),
               setTimeout(() => {
                 e.index.hideToast(), e.appNavigator.navigateBack();
               }, 1500);
-          } catch (F) {
+          } catch (x) {
             e.index.hideLoading();
           }
+        },
+        h = e.ref(null),
+        g = () => {
+          var a, n;
+          null == (n = h.value) ||
+            n.openModal({
+              content: `是否删除就诊人【${null == (a = s.value) ? void 0 : a.patientName}】?`,
+              confirmText: '删除',
+              onConfirm: async () => {
+                e.index.showLoading({ title: '删除中…', mask: !0 }),
+                  await e.requestDelPatientInfo({
+                    patientInfoId: s.value.patientInfoId,
+                  }),
+                  e.index.showToast({
+                    title: '删除成功',
+                    icon: 'none',
+                    mask: !0,
+                  }),
+                  setTimeout(() => {
+                    e.index.hideToast(), e.appNavigator.navigateBack();
+                  }, 1500);
+              },
+            });
         };
       return (
-        u({
-          pageOnLoad: async ({
-            keyID: a,
-            orgID: l,
-            familyName: u,
-            idNumber: o,
-          }) => {
-            try {
-              e.index.showLoading({ title: '加载中…', mask: !0 }),
-                await k(),
-                await D(),
-                a && l && ((s.value = !0), await c(a, l)),
-                u &&
-                  o &&
-                  ((d.value = !0),
-                  (v.value.familyName = u),
-                  (v.value.idNumber = o),
-                  (v.value.relationCode = 'Self'),
-                  (v.value.relationName = '本人'));
-            } finally {
-              e.index.hideLoading();
-            }
+        n({
+          pageOnShow: () => {
+            console.log('pageOnShow');
+          },
+          pageOnLoad: (e) => {
+            (u.value = e.navigationBarTitle),
+              e.patientInfo &&
+                ((t.value = !0),
+                (s.value = JSON.parse(decodeURIComponent(e.patientInfo))));
+          },
+          pageOnHide: () => {
+            console.log('pageOnHide');
           },
         }),
-        (l, u) =>
+        (a, n) =>
           e.e(
             {
-              a: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/21030410325655262692822001/24031109591683122810201240.png',
-              b: e.n(d.value ? 'input-disabled' : ''),
-              c: d.value,
-              d: v.value.familyName,
-              e: e.o((e) => (v.value.familyName = e.detail.value)),
-              f: e.n(d.value ? 'input-disabled' : ''),
-              g: d.value,
-              h: v.value.idNumber,
-              i: e.o((e) => (v.value.idNumber = e.detail.value)),
-              j: e.p({ label: 1, disabled: !p.value }),
-              k: e.p({ label: 2, disabled: !p.value }),
-              l: e.o((e) => (v.value.sex = e)),
-              m: e.p({ direction: 'horizontal', modelValue: v.value.sex }),
-              n: v.value.birthDay,
+              a: e.sr('navbarRef', '8b8fa718-0'),
+              b: e.p({ title: u.value }),
+              c: o,
+              d: o,
+              e: t.value,
             },
-            v.value.birthDay
+            t.value
               ? {
-                  o: e.t(v.value.birthDay),
-                  p: e.n(p.value ? '' : 'value-disabled'),
+                  f: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24110419244214565720201240.png',
+                  g: e.o(g),
                 }
               : {},
             {
-              q: a,
-              r: e.o(g),
-              s: e.o(h),
-              t: e.o((e) => (m.value = !1)),
-              v: e.o((e) => (y.value = e)),
-              w: e.p({
-                'min-date': e.unref(e.dayjs)('1900-01-01'),
-                'max-date': e.unref(e.dayjs)(),
-                formatter: e.unref(e.pickerDateFormatter),
-                modelValue: y.value,
+              h: s.value.isRealName === e.unref(e.RealStatus).Real ? 1 : '',
+              i: s.value.isRealName === e.unref(e.RealStatus).Real,
+              j: s.value.patientName,
+              k: e.o(
+                e.m((e) => (s.value.patientName = e.detail.value), { trim: !0 })
+              ),
+              l: s.value.isRealName === e.unref(e.RealStatus).Real ? 1 : '',
+              m: s.value.isRealName === e.unref(e.RealStatus).Real,
+              n: s.value.idCardNo,
+              o: e.o(
+                e.m((e) => (s.value.idCardNo = e.detail.value), { trim: !0 })
+              ),
+              p: e.o((e) => (s.value.gender = e)),
+              q: e.p({
+                disabled: f.value,
+                options: e.unref(e.genderOptions),
+                value: s.value.gender,
               }),
-              x: e.o((e) => (m.value = e)),
-              y: e.p({ position: 'bottom', visible: m.value }),
-              z: null !== v.value.age && v.value.age < 14,
-            },
-            null !== v.value.age && v.value.age < 14
-              ? {
-                  A: v.value.weight,
-                  B: e.o((e) => (v.value.weight = e.detail.value)),
-                }
-              : {},
-            {
-              C: v.value.phone,
-              D: e.o((e) => (v.value.phone = e.detail.value)),
-              E: v.value.relationName,
-            },
-            v.value.relationName
-              ? {
-                  F: e.t(v.value.relationName),
-                  G: e.n(d.value ? 'value-disabled' : ''),
-                }
-              : {},
-            {
-              H: a,
-              I: e.o(C),
-              J: e.o(N),
-              K: e.o((e) => (b.value = !1)),
-              L: e.o((e) => (I.value = e)),
-              M: e.p({ columns: f.value, modelValue: I.value }),
-              N: e.o((e) => (b.value = e)),
-              O: e.p({ position: 'bottom', visible: b.value }),
-              P: V.value,
-            },
-            V.value ? { Q: e.t(V.value) } : {},
-            {
-              R: a,
-              S: e.o((e) => (w.value = !0)),
-              T: e.o(L),
-              U: e.o((e) => (w.value = e)),
-              V: e.o((e) => (E.value = e)),
-              W: e.p({
-                'title-ellipsis': !1,
-                title: '地址选择',
-                'text-key': 'label',
-                'value-key': 'value',
-                options: x.value,
-                visible: w.value,
-                modelValue: E.value,
+              r: e.o((e) => (s.value.birth = e)),
+              s: e.p({
+                disabled: f.value,
+                title: '出生日期',
+                placeholder: '请选择出生日期',
+                date: s.value.birth,
               }),
-              X: e.p({ label: !1 }),
-              Y: e.p({ label: !0 }),
-              Z: e.o((e) => (v.value.illness = e)),
-              aa: e.p({ direction: 'horizontal', modelValue: v.value.illness }),
-              ab: v.value.illness,
+              t: s.value.relation,
             },
-            v.value.illness
+            s.value.relation ? { v: e.t(s.value.relation) } : {},
+            {
+              w: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24102809300973943750201233.png',
+              x: e.o((e) => (d.value = !0)),
+              y: e.o(p),
+              z: e.o((e) => (d.value = !1)),
+              A: e.o((e) => (c.value = e)),
+              B: e.p({
+                title: '与本人关系',
+                columns: e.unref(e.relationList),
+                modelValue: c.value,
+              }),
+              C: e.o((e) => (d.value = e)),
+              D: e.p({ position: 'bottom', round: !0, visible: d.value }),
+              E: s.value.phone,
+              F: e.o(
+                e.m((e) => (s.value.phone = e.detail.value), { trim: !0 })
+              ),
+              G: null !== s.value.age && s.value.age < 14,
+            },
+            null !== s.value.age && s.value.age < 14
               ? {
-                  ac: v.value.illnessDesc,
-                  ad: e.o(
-                    e.m((e) => (v.value.illnessDesc = e.detail.value), {
+                  H: s.value.weight,
+                  I: e.o(
+                    e.m((e) => (s.value.weight = e.detail.value), { trim: !0 })
+                  ),
+                }
+              : {},
+            { J: null !== s.value.age && s.value.age < 6 },
+            null !== s.value.age && s.value.age < 6
+              ? {
+                  K: s.value.guardianName,
+                  L: e.o(
+                    e.m((e) => (s.value.guardianName = e.detail.value), {
+                      trim: !0,
+                    })
+                  ),
+                  M: s.value.guardianIdCardNo,
+                  N: e.o(
+                    e.m((e) => (s.value.guardianIdCardNo = e.detail.value), {
                       trim: !0,
                     })
                   ),
                 }
               : {},
             {
-              ae: e.n(v.value.illness ? 'card-detail' : ''),
-              af: e.p({ label: !1 }),
-              ag: e.p({ label: !0 }),
-              ah: e.o((e) => (v.value.allergy = e)),
-              ai: e.p({ direction: 'horizontal', modelValue: v.value.allergy }),
-              aj: v.value.allergy,
+              O: o,
+              P: o,
+              Q: e.o((e) => (s.value.historyOfSickness = e)),
+              R: e.p({
+                options: e.unref(e.presenceOptions),
+                value: s.value.historyOfSickness,
+              }),
+              S: s.value.historyOfSickness === e.unref(e.Presence).Has,
             },
-            v.value.allergy
+            s.value.historyOfSickness === e.unref(e.Presence).Has
               ? {
-                  ak: v.value.allergyDesc,
-                  al: e.o(
-                    e.m((e) => (v.value.allergyDesc = e.detail.value), {
-                      trim: !0,
-                    })
-                  ),
+                  T: e.f(e.unref(e.medicalHistoryOptions), (a, n, t) => ({
+                    a: e.t(a),
+                    b: a,
+                    c: e.o((e) => v(a, 'sicknessDetail'), a),
+                  })),
+                  U: e.o((e) => (s.value.sicknessDetail = e)),
+                  V: e.p({
+                    height: 70,
+                    placeholder: '请输入过往史详情',
+                    modelValue: s.value.sicknessDetail,
+                  }),
                 }
               : {},
             {
-              am: e.n(v.value.allergy ? 'card-detail' : ''),
-              an: e.p({ label: !1 }),
-              ao: e.p({ label: !0 }),
-              ap: e.o((e) => (v.value.inherit = e)),
-              aq: e.p({ direction: 'horizontal', modelValue: v.value.inherit }),
-              ar: v.value.inherit,
+              W: e.o((e) => (s.value.historyOfAllergy = e)),
+              X: e.p({
+                options: e.unref(e.presenceOptions),
+                value: s.value.historyOfAllergy,
+              }),
+              Y: s.value.historyOfAllergy === e.unref(e.Presence).Has,
             },
-            v.value.inherit
+            s.value.historyOfAllergy === e.unref(e.Presence).Has
               ? {
-                  as: v.value.inheritDesc,
-                  at: e.o(
-                    e.m((e) => (v.value.inheritDesc = e.detail.value), {
-                      trim: !0,
-                    })
-                  ),
+                  Z: e.f(e.unref(e.allergyOptions), (a, n, t) => ({
+                    a: e.t(a),
+                    b: a,
+                    c: e.o((e) => v(a, 'allergyDetail'), a),
+                  })),
+                  aa: e.o((e) => (s.value.allergyDetail = e)),
+                  ab: e.p({
+                    height: 70,
+                    placeholder: '请输入过敏史详情',
+                    modelValue: s.value.allergyDetail,
+                  }),
                 }
               : {},
             {
-              av: e.n(v.value.inherit ? 'card-detail' : ''),
-              aw: e.p({ label: !1 }),
-              ax: e.p({ label: !0 }),
-              ay: e.o((e) => (v.value.liver = e)),
-              az: e.p({ direction: 'horizontal', modelValue: v.value.liver }),
-              aA: e.p({ label: !1 }),
-              aB: e.p({ label: !0 }),
-              aC: e.o((e) => (v.value.kidney = e)),
-              aD: e.p({ direction: 'horizontal', modelValue: v.value.kidney }),
-              aE: 2 === v.value.sex,
+              ac: e.o((e) => (s.value.historyOfFamilyGenetic = e)),
+              ad: e.p({
+                options: e.unref(e.presenceOptions),
+                value: s.value.historyOfFamilyGenetic,
+              }),
+              ae: s.value.historyOfFamilyGenetic === e.unref(e.Presence).Has,
             },
-            2 === v.value.sex
-              ? e.e(
-                  { aF: v.value.pregnancyDecs },
-                  v.value.pregnancyDecs
-                    ? { aG: e.t(v.value.pregnancyDecs) }
-                    : {},
-                  {
-                    aH: a,
-                    aI: e.o((e) => (S.value = !0)),
-                    aJ: e.o(Y),
-                    aK: e.o((e) => (S.value = !1)),
-                    aL: e.o((e) => (R.value = e)),
-                    aM: e.p({ columns: P.value, modelValue: R.value }),
-                    aN: e.o((e) => (S.value = e)),
-                    aO: e.p({ position: 'bottom', visible: S.value }),
-                  }
-                )
+            s.value.historyOfFamilyGenetic === e.unref(e.Presence).Has
+              ? {
+                  af: e.f(e.unref(e.familyHistoryOptions), (a, n, t) => ({
+                    a: e.t(a),
+                    b: a,
+                    c: e.o((e) => v(a, 'familyGeneticDetail'), a),
+                  })),
+                  ag: e.o((e) => (s.value.familyGeneticDetail = e)),
+                  ah: e.p({
+                    height: 70,
+                    placeholder: '请输入家族史详情',
+                    modelValue: s.value.familyGeneticDetail,
+                  }),
+                }
               : {},
-            { aP: e.o(A) }
+            {
+              ai: e.o((e) => (s.value.liver = e)),
+              aj: e.p({
+                options: e.unref(e.healthStatusOptions),
+                value: s.value.liver,
+              }),
+              ak: e.o((e) => (s.value.renal = e)),
+              al: e.p({
+                options: e.unref(e.healthStatusOptions),
+                value: s.value.renal,
+              }),
+              am: s.value.gender === e.unref(e.Gender).woman,
+            },
+            s.value.gender === e.unref(e.Gender).woman
+              ? {
+                  an: e.o((e) => (s.value.pregnancy = e)),
+                  ao: e.p({
+                    options: e.unref(e.pregnancyOptions),
+                    value: s.value.pregnancy,
+                  }),
+                }
+              : {},
+            { ap: e.o(m), aq: e.sr(h, '8b8fa718-14', { k: 'modalRef' }) }
           )
       );
     },
   }),
-  u = e._export_sfc(l, [['__scopeId', 'data-v-521b5d23']]);
+  u = e._export_sfc(r, [['__scopeId', 'data-v-8b8fa718']]);
 wx.createComponent(u);

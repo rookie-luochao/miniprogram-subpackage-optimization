@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "usingComponents": {
+    "nut-rate": "../../../node-modules/nutui-uniapp/components/rate/rate",
+    "nut-popup": "../../../node-modules/nutui-uniapp/components/popup/popup",
+    "empty": "../../components/Empty/index",
+    "nav-bar": "../../components/Navbar/index"
+  }
+}

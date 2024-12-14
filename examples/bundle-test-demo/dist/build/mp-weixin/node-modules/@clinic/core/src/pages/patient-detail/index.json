@@ -1,11 +1,12 @@
 {
   "component": true,
   "usingComponents": {
-    "nut-radio": "../../../node-modules/nutui-uniapp/components/radio/radio",
-    "nut-radio-group": "../../../node-modules/nutui-uniapp/components/radiogroup/radiogroup",
-    "nut-date-picker": "../../../node-modules/nutui-uniapp/components/datepicker/datepicker",
-    "nut-popup": "../../../node-modules/nutui-uniapp/components/popup/popup",
     "nut-picker": "../../../node-modules/nutui-uniapp/components/picker/picker",
-    "nut-cascader": "../../../node-modules/nutui-uniapp/components/cascader/cascader"
+    "nut-popup": "../../../node-modules/nutui-uniapp/components/popup/popup",
+    "date-picker": "../../components/DatePicker/index",
+    "modal": "../../components/Modal/index",
+    "nav-bar": "../../components/Navbar/index",
+    "radio": "../../components/Radio/index",
+    "custom-textarea": "../../components/Textarea/index"
   }
 }

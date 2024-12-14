@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "card": "../Card/index",
+    "custom-image": "../Image/index"
+  }
+}

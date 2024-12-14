@@ -6,10 +6,9 @@ if (!Array) {
 Math;
 const n = e.defineComponent({
     __name: 'index',
-    setup(n, { expose: l }) {
-      const o = {
+    setup(n, { expose: o }) {
+      const l = {
           title: '温馨提示',
-          serviceTime: [],
           content: '',
           contentAlign: 'center',
           showCancel: !0,
@@ -17,70 +16,61 @@ const n = e.defineComponent({
           showConfirm: !0,
           confirmText: '确定',
         },
-        a = e.ref(o),
-        t = e.ref(!1),
+        t = e.ref(l),
+        a = e.ref(!1),
         u = () => {
-          (t.value = !1), a.value.onConfirm && a.value.onConfirm();
+          (a.value = !1), t.value.onConfirm && t.value.onConfirm();
         },
         v = () => {
-          (t.value = !1), a.value.onCancel && a.value.onCancel();
+          (a.value = !1), t.value.onCancel && t.value.onCancel();
         };
       return (
-        l({
+        o({
           openModal: (e) => {
-            (t.value = !0), (a.value = { ...o, ...e });
+            (a.value = !0), (t.value = { ...l, ...e });
           },
         }),
-        (n, l) => {
-          var o, c, i;
+        (n, o) => {
+          var l;
           return e.e(
-            { a: a.value.title },
-            a.value.title
-              ? { b: e.t(a.value.title), c: a.value.content ? '' : '32px' }
+            { a: t.value.title },
+            t.value.title
+              ? { b: e.t(t.value.title), c: t.value.content ? '' : '32px' }
               : {},
-            { d: null == (o = a.value.serviceTime) ? void 0 : o.length },
-            (null == (c = a.value.serviceTime) ? void 0 : c.length)
+            { d: t.value.content },
+            t.value.content
               ? {
-                  e: e.f(a.value.serviceTime, (n, l, o) => ({
-                    a: e.t(n),
-                    b: n,
-                  })),
+                  e: e.t(t.value.content),
+                  f: t.value.title ? '' : '0',
+                  g: null != (l = t.value.contentAlign) ? l : 'center',
                 }
               : {},
-            { f: a.value.content },
-            a.value.content
-              ? {
-                  g: e.t(a.value.content),
-                  h: a.value.title ? '' : '0',
-                  i: null != (i = a.value.contentAlign) ? i : 'center',
-                }
-              : {},
-            { j: a.value.showConfirm || a.value.showCancel },
-            a.value.showConfirm || a.value.showCancel
+            { h: t.value.showConfirm || t.value.showCancel },
+            t.value.showConfirm || t.value.showCancel
               ? e.e(
-                  { k: a.value.showCancel },
-                  a.value.showCancel
+                  { i: t.value.showCancel },
+                  t.value.showCancel
                     ? {
-                        l: e.t(a.value.cancelText),
-                        m: a.value.showConfirm ? '' : '80%',
-                        n: e.o(v),
+                        j: e.t(t.value.cancelText),
+                        k: t.value.showConfirm ? '' : '80%',
+                        l: e.o(v),
                       }
                     : {},
-                  { o: a.value.showConfirm },
-                  a.value.showConfirm
+                  { m: t.value.showConfirm },
+                  t.value.showConfirm
                     ? {
-                        p: e.t(a.value.confirmText),
-                        q: a.value.showCancel ? '' : '80%',
-                        r: e.o(u),
+                        n: e.t(t.value.confirmText),
+                        o: t.value.showCancel ? '' : '80%',
+                        p: e.o(u),
                       }
                     : {}
                 )
               : {},
             {
-              s: e.o((e) => (t.value = e)),
-              t: e.p({
+              q: e.o((e) => (a.value = e)),
+              r: e.p({
                 'custom-style': { borderRadius: '12px' },
-                visible: t.value,
+                visible: a.value,
               }),
             }
           );
@@ -88,5 +78,5 @@ const n = e.defineComponent({
       );
     },
   }),
-  l = e._export_sfc(n, [['__scopeId', 'data-v-e9a95047']]);
-wx.createComponent(l);
+  o = e._export_sfc(n, [['__scopeId', 'data-v-1d231c70']]);
+wx.createComponent(o);

@@ -1,146 +1,118 @@
 'use strict';
 const e = require('../../../../../../common/vendor.js');
 if (!Array) {
-  e.resolveComponent('uni-load-more')();
+  (e.resolveComponent('uni-load-more') + e.resolveComponent('nut-countdown'))();
 }
 Math ||
   (
-    t +
     a +
     n +
+    t +
+    o +
     (() =>
-      '../../../node-modules/@dcloudio/uni-ui/lib/uni-load-more/uni-load-more.js')
+      '../../../node-modules/@dcloudio/uni-ui/lib/uni-load-more/uni-load-more.js') +
+    (() =>
+      '../../../node-modules/nutui-uniapp/components/countdown/countdown.js')
   )();
-const a = () => './components/message-custom/index.js',
-  t = () => './components/message-system/index.js',
-  n = () => './components/message-text/index.js',
-  u = e.defineComponent({
+const a = () => '../../components/Navbar/index.js',
+  t = () => './components/message-custom/index.js',
+  n = () => './components/message-system/index.js',
+  o = () => './components/message-text/index.js',
+  i =
+    'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24110515534601906850201240.png',
+  s = e.defineComponent({
     __name: 'index',
-    props: {
-      isPrescriptionAuth: { type: Boolean, default: !0 },
-      isShowMedicalDocuments: { type: Boolean, default: !1 },
-    },
     setup(a, { expose: t }) {
-      const n = a,
-        {
-          handleToTransfer: u,
-          handleToRefund: i,
-          handleAutoJump: o,
-        } = e.useOrderAction(n.isPrescriptionAuth),
-        l = e.ref(null),
-        s = e.ref(null),
-        r = e.ref(''),
-        c = e.ref(!0),
-        d = e.ref(null),
-        v = e.getCurrentInstance(),
-        m = (e) => {
-          (f.value = e.height), y();
+      const n = e.ref(null),
+        o = e.ref(null),
+        s = e.ref({ h: 0, m: 0, s: 0 }),
+        u = e.computed(() =>
+          m.value.autoEndTime
+            ? e.dayjs(m.value.autoEndTime).valueOf()
+            : e.dayjs().add(1, 'day').valueOf()
+        ),
+        r = e.ref(!0),
+        l = e.ref(''),
+        d = e.ref(''),
+        v = e.ref(null),
+        c = e.ref('远程诊疗中心'),
+        p = e.ref(''),
+        g = e.ref(i),
+        f = () => {
+          g.value = i;
         },
-        p = e.ref(),
-        y = () => {
+        m = e.ref({}),
+        y = async (a) => {
+          const { data: t } = await e.requestInquiryOrderDetail({
+            inquiryOrderId: a,
+          });
+          m.value = t;
+          const n = t.inquiryStatus;
+          [
+            e.InquiryStatus.DealingDiagnosis,
+            e.InquiryStatus.WaitDiagnosis,
+          ].includes(n) || (w.value = !0);
+        },
+        I = (a) => (a.avatar ? a.avatar : e.getServiceUserInfo(m.value).avatar),
+        T = e.getCurrentInstance(),
+        h = (e) => {
+          (M.value = e.height), S();
+        },
+        x = e.ref(),
+        S = () => {
           var a;
-          (null == (a = j.value) ? void 0 : a.length) > 0 &&
-            ((p.value = 0),
+          (null == (a = J.value) ? void 0 : a.length) > 0 &&
+            ((x.value = 0),
             e.nextTick$1(() => {
-              p.value = void 0;
+              x.value = void 0;
             }));
         },
-        g = e.ref(!1),
-        f = e.ref(0),
-        I = e.computed(() =>
-          g.value
+        w = e.ref(!1),
+        M = e.ref(0),
+        q = e.computed(() =>
+          w.value
             ? { paddingBottom: '0px' }
-            : f.value > 0
-              ? { paddingBottom: `${f.value}px`, backgroundColor: '#ffffff' }
+            : M.value > 0
+              ? { paddingBottom: `${M.value}px`, backgroundColor: '#ffffff' }
               : {
-                  paddingBottom: `calc(${f.value}px + env(safe-area-inset-bottom))`,
+                  paddingBottom: `calc(${M.value}px + var(--safe-area-inset-bottom))`,
                   backgroundColor: '#ffffff',
                 }
         ),
-        h = () => {
-          y();
+        D = () => {
+          S();
         },
-        S = () => {
-          y();
+        b = () => {
+          S();
         },
-        q = () => {
-          y();
+        U = () => {
+          S();
         },
-        E = e.computed(() => {
-          var a, t, n;
-          const u = null == (a = x.value) ? void 0 : a.payStatus,
-            i = null == (t = x.value) ? void 0 : t.inquiryStatus;
-          if (1 === (null == (n = x.value) ? void 0 : n.referral))
-            return '已转诊';
-          if (u === e.PaymentStatusEnum.WaitPay) return '待支付';
-          const o = [
-            e.PaymentStatusEnum.PaySuccess,
-            e.PaymentStatusEnum.NoNeed,
-          ];
-          return i === e.InquiryStatusEnum.DealingWaitAccept && o.includes(u)
-            ? '待接诊'
-            : e.InquiryStatusDesc[i] || '--';
-        }),
-        D = (e) => {
-          const a = e.payload.data;
-          if (!a) return;
-          const t = 'hint' === JSON.parse(a).customType;
-          return 'TIMCustomElem' === e.type && t;
-        },
-        M = (e) => 'TIMCustomElem' === e.type,
-        T = (e) => 'TIMTextElem' === e.type,
-        x = e.ref(null),
-        w = async () => {
-          const { data: a } = await e.requestGetInquiryOrderDetail({
-            inquiryOrderID: r.value,
-          });
-          x.value = a;
-          const t = a.inquiryStatus;
-          [
-            e.InquiryStatusEnum.DealingAccept,
-            e.InquiryStatusEnum.DealingWaitAccept,
-          ].includes(t) || (g.value = !0);
-        },
-        C = e.ref(null),
-        b = async () => {
-          var a;
-          const { data: t } = await e.requestGetDoctorInfoDetail({
-            orgStaffID: null == (a = x.value) ? void 0 : a.doctorStaffID,
-          });
-          C.value = t;
-        },
-        A = e.ref(0),
-        O = async () => {
-          var a, t;
-          if (
-            (null == (a = x.value) ? void 0 : a.inquiryStatus) ===
-            e.InquiryStatusEnum.DealingWaitAccept
-          ) {
-            const { data: a } = await e.requestGetHlpDoctorOrderSize({
-              doctorID: null == (t = x.value) ? void 0 : t.doctorImID,
-              inquiryOrderID: r.value,
-            });
-            (0 === A.value || a < A.value) && (A.value = a),
-              (d.value = setTimeout(() => O(), 5e3));
-          }
-        },
-        L = () => {
+        C = () => {
           var e, a;
-          const t = null == (e = U.value) ? void 0 : e.conversationID,
-            n = null == (a = U.value) ? void 0 : a.type;
+          const t = null == (e = R.value) ? void 0 : e.conversationID,
+            n = null == (a = R.value) ? void 0 : a.type;
           return t ? t.replace(n, '') : '';
         },
+        L = (a) => {
+          const t = a.payload.data;
+          if (!t) return;
+          const n = JSON.parse(t).customType === e.TUIKitMessageCustomType.Hint;
+          return a.type === e.TUIKitMessageType.Custom && n;
+        },
+        K = (a) => a.type === e.TUIKitMessageType.Custom,
+        O = (a) => a.type === e.TUIKitMessageType.Text,
         { handleUploadImage: $ } = e.useUploadImage(),
-        N = async (a) => {
+        H = async (a) => {
           var t;
           const n = await $(a);
           if (!n) return;
-          const u = null == (t = U.value) ? void 0 : t.type;
-          if (!u) return;
-          const i = L(),
-            o = e.index.$TUIKit.createCustomMessage({
+          const o = null == (t = R.value) ? void 0 : t.type;
+          if (!o) return;
+          const i = C(),
+            s = e.index.$TUIKit.createCustomMessage({
               to: i,
-              conversationType: u,
+              conversationType: o,
               payload: {
                 data: JSON.stringify({
                   customType: 'image',
@@ -153,343 +125,306 @@ const a = () => './components/message-custom/index.js',
                 extension: 'ycf',
               },
             });
-          await e.index.$TUIKit.sendMessage(o),
-            (j.value = e.filterImMessage([...j.value, o])),
-            y();
+          await e.index.$TUIKit.sendMessage(s),
+            (J.value = e.filterImMessage([...J.value, s])),
+            S();
         },
-        H = e.ref(''),
-        K = async () => {
+        N = e.ref(''),
+        E = async () => {
           var a;
-          const t = H.value.trim();
+          const t = N.value.trim();
           if (!t)
             return void e.index.showToast({
               title: '请输入聊天内容',
               icon: 'none',
             });
-          const n = null == (a = U.value) ? void 0 : a.type;
+          const n = null == (a = R.value) ? void 0 : a.type;
           if (n)
             try {
-              const a = L(),
-                u = e.index.$TUIKit.createTextMessage({
+              const a = C(),
+                o = e.index.$TUIKit.createTextMessage({
                   to: a,
                   conversationType: n,
                   payload: { text: t },
                 });
-              await e.index.$TUIKit.sendMessage(u),
-                (j.value = e.filterImMessage([...j.value, u])),
-                (H.value = ''),
-                y();
-            } catch (u) {
-              console.error('消息发送失败：', u),
+              await e.index.$TUIKit.sendMessage(o),
+                (J.value = e.filterImMessage([...J.value, o])),
+                (N.value = ''),
+                S();
+            } catch (o) {
+              console.error('消息发送失败：', o),
                 e.index.showToast({
                   title: '消息发送失败，请重试',
                   icon: 'none',
                 });
             }
         },
-        U = e.ref(null),
-        R = async () => {
-          var a;
+        R = e.ref(null),
+        j = async () => {
           if (e.index.$TUIKit.isReady())
             try {
-              const t = await e.index.$TUIKit.getConversationProfile(
-                'C2C' + (null == (a = x.value) ? void 0 : a.doctorImID)
+              const { data: a } = await e.index.$TUIKit.getConversationProfile(
+                e.ConversationType.GROUP + l.value
               );
-              (U.value = t.data.conversation), await J();
-            } catch (t) {
-              console.log(t);
-            }
-        },
-        P = e.ref(!1),
-        _ = e.ref(e.LoadMoreStatus.More),
-        F = async () => {
-          if (_.value === e.LoadMoreStatus.More)
-            try {
-              (_.value = e.LoadMoreStatus.Loading),
-                P.value ? await z() : await J();
+              (R.value = a.conversation), await A();
             } catch (a) {
               console.log(a);
             }
         },
-        k = e.ref(''),
-        j = e.ref([]),
-        J = async () => {
-          var a, t, n;
-          const { data: u } = await e.index.$TUIKit.getMessageList({
-            conversationID: null == (a = U.value) ? void 0 : a.conversationID,
-            nextReqMessageID: k.value,
-          });
-          (P.value = u.isCompleted),
-            (k.value = u.nextReqMessageID),
-            (_.value = e.LoadMoreStatus.More),
-            (j.value = e.filterImMessage([...u.messageList, ...j.value])),
-            u.isCompleted &&
-              (null == (t = u.messageList) ? void 0 : t.length) &&
-              ((B.value = `${u.messageList[0].sequence}_${u.messageList[0].random}_${u.messageList[0].time}`),
-              (G.value = u.messageList[0].time)),
-            (null == (n = j.value) ? void 0 : n.length) || (await z());
+        k = e.ref(!1),
+        _ = e.ref(e.LoadMoreStatus.More),
+        P = async () => {
+          if (_.value === e.LoadMoreStatus.More)
+            try {
+              (_.value = e.LoadMoreStatus.Loading),
+                k.value ? await V() : await A();
+            } catch (a) {
+              console.log(a);
+            }
         },
         B = e.ref(''),
-        G = e.ref(0),
-        W = e.ref(!1),
-        z = async () => {
-          var a, t;
-          try {
-            const { data: n } = await e.requestGetRecordsForChat({
-              toAccountID: null == (a = x.value) ? void 0 : a.doctorImID,
-              accountID: null == (t = x.value) ? void 0 : t.patientImID,
-              msgKey: B.value,
-              msgTime: G.value,
-            });
-            _.value = e.LoadMoreStatus.More;
-            let u = n.messageList;
-            (null == u ? void 0 : u.length) &&
-              ((u =
-                null == u
-                  ? void 0
-                  : u.map((e) => {
-                      var a;
-                      return e.from ===
-                        (null == (a = x.value) ? void 0 : a.doctorImID)
-                        ? { ...e, ID: e.id, flow: 'in' }
-                        : { ...e, ID: e.id, flow: 'out' };
-                    })),
-              (j.value = e.filterImMessage([...u, ...j.value])),
-              (B.value = `${u[0].sequence}_${u[0].random}_${u[0].time}`),
-              (G.value = u[0].time)),
-              (W.value = n.completed),
-              n.completed && (_.value = e.LoadMoreStatus.NoMore);
-          } catch (n) {
-            console.log(n);
-          }
+        J = e.ref([]),
+        A = async () => {
+          var a, t, n;
+          const { data: o } = await e.index.$TUIKit.getMessageList({
+            conversationID: null == (a = R.value) ? void 0 : a.conversationID,
+            nextReqMessageID: B.value,
+          });
+          (k.value = o.isCompleted),
+            (B.value = o.nextReqMessageID),
+            (_.value = e.LoadMoreStatus.More),
+            (J.value = e.filterImMessage([...o.messageList, ...J.value])),
+            console.log('messageList.value', J.value),
+            o.isCompleted &&
+              (null == (t = o.messageList) ? void 0 : t.length) &&
+              ((G.value = `${o.messageList[0].sequence}_${o.messageList[0].random}_${o.messageList[0].time}`),
+              (Z.value = o.messageList[0].time)),
+            (null == (n = J.value) ? void 0 : n.length) || (await V());
         },
-        V = async (a) => {
-          var t, n, u, i;
-          const o = JSON.parse(JSON.stringify(a.data)),
-            l = o.filter((e) => {
+        G = e.ref(''),
+        Z = e.ref(0),
+        z = e.ref(!1),
+        V = async () => {
+          (_.value = e.LoadMoreStatus.Loading),
+            setTimeout(() => {
+              (z.value = !0), (_.value = e.LoadMoreStatus.NoMore);
+            }, 300);
+        },
+        W = async (a) => {
+          var t, n, o;
+          const i = JSON.parse(JSON.stringify(a.data)),
+            s = i.filter((e) => {
               var a;
               return (
                 e.conversationID ===
-                (null == (a = U.value) ? void 0 : a.conversationID)
+                (null == (a = R.value) ? void 0 : a.conversationID)
               );
             });
-          j.value = e.filterImMessage([...j.value, ...l]);
-          const s = JSON.parse(
+          J.value = e.filterImMessage([...J.value, ...s]);
+          const u = JSON.parse(
             null !=
-              (u =
-                null == (n = null == (t = o[0]) ? void 0 : t.payload)
+              (o =
+                null == (n = null == (t = i[0]) ? void 0 : t.payload)
                   ? void 0
                   : n.data)
-              ? u
+              ? o
               : '{}'
           );
-          if (
-            (console.log('data:接收消息 ', s),
-            'transfer' === s.childType &&
-              (null == (i = x.value) ? void 0 : i.payStatus) ===
-                e.PaymentStatusEnum.NoNeed)
-          ) {
-            const { inquiryOrderID: a } = s.data;
-            return void setTimeout(() => {
-              e.appNavigator.redirectTo(e.appNavigator.pagesMap.chat, {
-                query: { orderID: a },
-              });
-            }, 2e3);
-          }
-          const r = {
-            [e.InquiryMsgStatusEnum.Finish]: e.InquiryStatusEnum.EndFinish,
-            [e.InquiryMsgStatusEnum.CancelInquiryHint]:
-              e.InquiryStatusEnum.EndDoctorCancel,
-            [e.InquiryMsgStatusEnum.FinishHint]:
-              e.InquiryStatusEnum.EndOverTimeCancel,
-            [e.InquiryMsgStatusEnum.ProficientRefundInquiry]:
-              e.InquiryStatusEnum.EndDoctorRefund,
-            [e.InquiryMsgStatusEnum.AcceptOverTimeHint]:
-              e.InquiryStatusEnum.EndOverTimeCancel,
-            [e.InquiryMsgStatusEnum.AutoFinishHint]:
-              e.InquiryStatusEnum.EndFinish,
-            [e.InquiryMsgStatusEnum.AcceptInquiryOrderHint]:
-              e.InquiryStatusEnum.DealingAccept,
-            [e.InquiryMsgStatusEnum.RpOrderStart]:
-              e.InquiryStatusEnum.DealingAccept,
-          };
-          x.value && r[s.childType] && (x.value.inquiryStatus = r[s.childType]);
-          new Set([
-            e.InquiryMsgStatusEnum.Finish,
-            e.InquiryMsgStatusEnum.CancelInquiryHint,
-            e.InquiryMsgStatusEnum.FinishHint,
-            e.InquiryMsgStatusEnum.ProficientRefundInquiry,
-            e.InquiryMsgStatusEnum.AcceptOverTimeHint,
-            e.InquiryMsgStatusEnum.AutoFinishHint,
-          ]).has(s.childType) && (g.value = !0),
-            y();
+          console.log('data:接收消息 ', u),
+            u.childType === e.InquiryHintMsgStatusEnum.DiagnosisAcceptSys &&
+              (m.value.inquiryStatus = e.InquiryStatus.DealingDiagnosis),
+            [
+              e.InquiryHintMsgStatusEnum.DiagnosisEndSys,
+              e.InquiryHintMsgStatusEnum.WithdrawalPatientHint,
+              e.InquiryHintMsgStatusEnum.CancelPatientHint,
+            ].includes(u.childType) && (w.value = !0),
+            S();
+        },
+        F = () => {
+          const { channelId: a } = m.value,
+            {
+              id: t,
+              userStaffId: n,
+              isDoctor: o,
+            } = e.getServiceUserInfo(m.value);
+          e.appNavigator.navigateTo(e.appNavigator.pagesMap['doctor-detail'], {
+            query: {
+              doctorUserStaffId: n || t,
+              type: o ? e.ExpertListType.Expert : e.ExpertListType.Health,
+              orgId: a,
+            },
+          });
+        },
+        Q = () => {
+          p.value !== e.appNavigator.pagesMap['pay-result']
+            ? e.appNavigator.navigateBack()
+            : e.appNavigator.switchTab(e.appNavigator.pagesMap.message);
         };
       return (
         t({
-          pageOnLoad: async (a) => {
-            r.value = a.orderID;
-            try {
-              (c.value = !0),
-                e.index.showLoading({ title: '加载中…', mask: !0 }),
-                await w(),
-                await b(),
-                await O(),
-                await R();
-            } finally {
-              (c.value = !1), e.index.hideLoading();
-            }
-          },
           pageOnShow: async () => {
-            e.index.onKeyboardHeightChange && e.index.onKeyboardHeightChange(m),
-              e.index.$TUIKit.on(e.index.$TUIKitEvent.MESSAGE_RECEIVED, V, v),
-              o();
+            e.index.onKeyboardHeightChange && e.index.onKeyboardHeightChange(h),
+              e.index.$TUIKit.setMessageRead({
+                conversationID: e.ConversationType.GROUP + l.value,
+              }),
+              e.index.$TUIKit.on(e.TUIKitEventType.MessageReceived, W, T);
+          },
+          pageOnLoad: async (a) => {
+            var t;
+            (d.value = a.doctorAssistUserStaffId),
+              (c.value = a.navigationBarTitle),
+              (l.value = a.chatImId),
+              (v.value = a.inquiryType),
+              (p.value = null != (t = a.fromPage) ? t : '');
+            const n = e.index.getStorageSync('avatarUrl');
+            n && (g.value = n);
+            try {
+              if (
+                ((r.value = !0),
+                e.index.showLoading({ title: '加载中…', mask: !0 }),
+                v.value !== e.InquiryType.Specialist)
+              ) {
+                if (!a.inquiryOrderId)
+                  return e.index.showToast({
+                    title: '缺少订单信息',
+                    icon: 'none',
+                  });
+                await y(a.inquiryOrderId);
+              }
+              setTimeout(async () => {
+                await j(), (r.value = !1), e.index.hideLoading();
+              }, 500);
+            } catch (o) {
+              (r.value = !1), e.index.hideLoading();
+            }
           },
           pageOnHide: () => {
             e.index.offKeyboardHeightChange &&
-              e.index.offKeyboardHeightChange(m),
-              (f.value = 0),
-              d.value && clearTimeout(d.value);
+              e.index.offKeyboardHeightChange(h),
+              (M.value = 0),
+              e.index.$TUIKit.setMessageRead({
+                conversationID: e.ConversationType.GROUP + l.value,
+              });
           },
         }),
-        (a, t) => {
-          var n, o, r, d, v, m, y, f, w, b, O, L;
-          return e.e(
-            { a: null == (n = C.value) ? void 0 : n.photoUrl },
-            (null == (o = C.value) ? void 0 : o.photoUrl)
-              ? { b: null == (r = C.value) ? void 0 : r.photoUrl }
-              : {},
+        (a, t) =>
+          e.e(
             {
-              c: e.t(
-                e.unref(e.formatValue)(
-                  null == (d = C.value) ? void 0 : d.doctorName
-                )
-              ),
-              d: null == (v = C.value) ? void 0 : v.doctorName,
-            },
-            (null == (m = C.value) || m.doctorName, {}),
-            {
-              e: e.t(null == (y = C.value) ? void 0 : y.sectionName),
-              f: e.t(null == (f = C.value) ? void 0 : f.titleName),
-              g: !c.value,
-            },
-            c.value
-              ? {}
-              : e.e(
-                  {
-                    h:
-                      (null == (w = x.value) ? void 0 : w.inquiryStatus) ===
-                      e.unref(e.InquiryStatusEnum).DealingWaitAccept,
-                  },
-                  (null == (b = x.value) ? void 0 : b.inquiryStatus) ===
-                    e.unref(e.InquiryStatusEnum).DealingWaitAccept
-                    ? {
-                        i: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24080511392455944240201233.png',
-                        j: e.t(E.value),
-                        k: e.t(A.value),
-                      }
-                    : (null == (O = x.value) ? void 0 : O.inquiryStatus) ===
-                        e.unref(e.InquiryStatusEnum).DealingAccept
-                      ? { m: e.t(E.value) }
-                      : { n: e.t(E.value) },
-                  {
-                    l:
-                      (null == (L = x.value) ? void 0 : L.inquiryStatus) ===
-                      e.unref(e.InquiryStatusEnum).DealingAccept,
-                  }
-                ),
-            {
-              o: e.f(j.value, (a, t, n) =>
+              a: e.sr('navbarRef', '49a4cb62-0'),
+              b: e.p({ title: e.unref(e.formatValue)(c.value), back: Q }),
+              c: e.f(J.value, (a, t, i) =>
                 e.e(
                   { a: a.showTime },
                   a.showTime ? { b: e.t(a.timeString) } : {},
-                  { c: D(a) },
-                  D(a)
+                  { c: L(a) },
+                  L(a)
                     ? {
-                        d: '080cd11b-0-' + n,
+                        d: '49a4cb62-1-' + i,
                         e: e.p({ message: a, 'is-patient': 'out' === a.flow }),
                       }
                     : e.e(
-                        { f: M(a) },
-                        M(a)
+                        { f: 'in' === a.flow },
+                        'in' === a.flow ? { g: I(a) } : {},
+                        { h: K(a) },
+                        K(a)
                           ? {
-                              g: e.sr(s, '080cd11b-1-' + n, {
+                              i: e.sr(o, '49a4cb62-2-' + i, {
                                 k: 'customMessageRef',
                                 f: 1,
                               }),
-                              h: '080cd11b-1-' + n,
-                              i: e.p({
+                              j: '49a4cb62-2-' + i,
+                              k: e.p({
                                 message: a,
-                                'order-detail': x.value,
-                                'handle-to-transfer': e.unref(u),
-                                'handle-to-refund': e.unref(i),
+                                'im-group-id': l.value,
+                                'doctor-assist-user-staff-id': d.value,
+                                'is-patient': 'out' === a.flow,
                               }),
                             }
                           : {},
-                        { j: T(a) },
-                        T(a)
+                        { l: O(a) },
+                        O(a)
                           ? {
-                              k: e.sr(l, '080cd11b-2-' + n, {
+                              m: e.sr(n, '49a4cb62-3-' + i, {
                                 k: 'textMessageRef',
                                 f: 1,
                               }),
-                              l: '080cd11b-2-' + n,
-                              m: e.p({
+                              n: '49a4cb62-3-' + i,
+                              o: e.p({
                                 message: a,
                                 'is-patient': 'out' === a.flow,
                               }),
                             }
                           : {},
+                        { p: 'out' === a.flow },
+                        'out' === a.flow ? { q: g.value, r: e.o(f, a.ID) } : {},
                         {
-                          n: e.n(
+                          s: e.n(
                             'out' === a.flow
                               ? 'message-item-patient'
                               : 'message-item-doctor'
                           ),
                         }
                       ),
-                  { o: 'id-' + a.ID, p: a.ID }
+                  { t: 'id-' + a.ID, v: a.ID }
                 )
               ),
-              p: g.value && !c.value,
+              d: e.p({ 'icon-size': 18, status: _.value }),
+              e: _.value ? '' : 'none',
+              f: x.value,
+              g: e.o(P),
+              h: w.value && !r.value,
             },
-            (g.value && c.value, {}),
-            {
-              q: e.p({ 'icon-size': 18, status: _.value }),
-              r: _.value ? '' : 'none',
-              s: p.value,
-              t: e.o(F),
-              v: !g.value,
-            },
-            g.value
+            w.value && !r.value ? { i: e.o(F) } : {},
+            { j: !w.value },
+            w.value
               ? {}
               : e.e(
                   {
-                    w: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24080514105505561090201240.png',
-                    x: e.o((e) => N('album')),
-                    y: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24080514115898678620201233.png',
-                    z: e.o((e) => N('camera')),
-                    A: a.isShowMedicalDocuments,
+                    k: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24102817375561647810201240.png',
+                    l: e.o((e) => H('album')),
+                    m: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24102817373678215750201233.png',
+                    n: e.o((e) => H('camera')),
+                    o: v.value !== e.unref(e.InquiryType).Specialist,
                   },
-                  a.isShowMedicalDocuments
-                    ? {
-                        B: 'https://com-shuibei-peach-pharmacy.100cbc.com/rp/210304103256552626/24080514114234420950201240.png',
-                      }
+                  v.value !== e.unref(e.InquiryType).Specialist
+                    ? e.e(
+                        {
+                          p: e.t(
+                            e.unref(e.InquiryStatusDesc)[m.value.inquiryStatus]
+                          ),
+                          q:
+                            m.value.inquiryStatus ===
+                            e.unref(e.InquiryStatus).DealingDiagnosis,
+                        },
+                        m.value.inquiryStatus ===
+                          e.unref(e.InquiryStatus).DealingDiagnosis
+                          ? {
+                              r: e.t(e.unref(e.padZeroToTwoDigits)(s.value.h)),
+                              s: e.t(e.unref(e.padZeroToTwoDigits)(s.value.m)),
+                              t: e.t(e.unref(e.padZeroToTwoDigits)(s.value.s)),
+                              v: e.o((e) => (s.value = e)),
+                              w: e.p({
+                                'end-time': u.value,
+                                modelValue: s.value,
+                              }),
+                            }
+                          : {}
+                      )
                     : {},
                   {
-                    C: e.o(q),
-                    D: e.o(h),
-                    E: e.o(S),
-                    F: e.o(K),
-                    G: H.value,
-                    H: e.o((e) => (H.value = e.detail.value)),
-                    I: e.o(K),
+                    x: e.o(U),
+                    y: e.o(D),
+                    z: e.o(b),
+                    A: e.o(E),
+                    B: N.value,
+                    C: e.o((e) => (N.value = e.detail.value)),
+                    D: e.o(E),
                   }
                 ),
-            { J: e.s(I.value) }
-          );
-        }
+            { E: e.s(q.value) }
+          )
       );
     },
   }),
-  i = e._export_sfc(u, [['__scopeId', 'data-v-080cd11b']]);
-wx.createComponent(i);
+  u = e._export_sfc(s, [['__scopeId', 'data-v-49a4cb62']]);
+wx.createComponent(u);

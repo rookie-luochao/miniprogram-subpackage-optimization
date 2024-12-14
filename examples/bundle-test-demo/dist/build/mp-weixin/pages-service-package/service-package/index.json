@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "服务包列表",
+  "usingComponents": {
+    "service-package": "../../node-modules/@clinic/core/src/pages/service-package/index"
+  }
+}

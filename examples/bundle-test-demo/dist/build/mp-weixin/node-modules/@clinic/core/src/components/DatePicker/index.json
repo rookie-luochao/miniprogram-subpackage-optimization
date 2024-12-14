@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "nut-date-picker": "../../../node-modules/nutui-uniapp/components/datepicker/datepicker",
+    "nut-popup": "../../../node-modules/nutui-uniapp/components/popup/popup"
+  }
+}

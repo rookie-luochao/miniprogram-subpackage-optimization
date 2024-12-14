@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "知情同意书",
+  "usingComponents": {
+    "informed-consent": "../../node-modules/@clinic/core/src/pages/agreement-informed-consent/index"
+  }
+}
