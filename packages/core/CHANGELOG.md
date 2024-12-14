@@ -1,5 +1,11 @@
 # miniprogram-subpackage-optimization
 
+## 0.3.0
+
+### Minor Changes
+
+- [#74](https://github.com/rookie-luochao/miniprogram-subpackage-optimization/pull/74) [`3b2bad7`](https://github.com/rookie-luochao/miniprogram-subpackage-optimization/commit/3b2bad7c43f36461b15465e1420dcd49617e1ffd) Thanks [@rookie-luochao](https://github.com/rookie-luochao)! - feat: optimize package node-modules components dependencies
+
 ## 0.2.1
 
 ### Patch Changes
