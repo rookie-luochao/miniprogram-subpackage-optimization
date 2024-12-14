@@ -42,6 +42,7 @@ export default async function miniprogramSubpackageOptimization(
     process.exit(1);
   }
 
+  // 获取所有分包的目录名称
   const packageDirNames: string[] = await getNeedPackageDirNames(
     join(cwdPath, projectDistPath),
     targetDirTag
@@ -49,7 +50,7 @@ export default async function miniprogramSubpackageOptimization(
 
   modifyPackageFiles();
 
-  // 调整 package 目录文件对 node-modules 的引用
+  // 调整分包中的文件对 node-modules 的引用 path 层级
   function modifyPackageFiles() {
     for (const packageDirName of packageDirNames) {
       replacePackageFiles(
@@ -61,7 +62,7 @@ export default async function miniprogramSubpackageOptimization(
 
   modifyNodeModulesFiles();
 
-  // 调整 node-modules 目录文件对 vendor.js 的引用
+  // 调整 node-modules 目录文件对 vendor.js 的引用 path 层级
   function modifyNodeModulesFiles() {
     const files = globbySync(`${projectDistPath}/${originDirName}/**/*.js`);
 
@@ -74,7 +75,7 @@ export default async function miniprogramSubpackageOptimization(
       while ((match = vendorPathPattern.exec(content)) !== null) {
         isMatched = true;
         const assetPath = match[0];
-        // 原始 node_modules 中的 js 文件对 vendor.js 的相对路径引用需要增加一个 ../
+        // 原始根目录中的 node-modules 的 js 文件对 vendor.js 的相对路径引用需要增加一个 ../
         content = content.replace(assetPath, `../${assetPath}`);
       }
 
@@ -92,7 +93,7 @@ export default async function miniprogramSubpackageOptimization(
 
   copyNodeModulesToPackage(packageDirNames, nodeModulesDirPath);
 
-  // 拷贝 node-modules 到 package
+  // 拷贝根目录的所有 node-modules 到 所有的分包中
   function copyNodeModulesToPackage(
     dirNames: string[],
     nodeModulesDirPath: string
@@ -107,7 +108,7 @@ export default async function miniprogramSubpackageOptimization(
       } catch (err) {
         console.error(
           chalk.redBright(
-            `Error copy node_module to package directory ${dirName}: `,
+            `Error copy node-module to package directory ${dirName}: `,
             err
           )
         );
@@ -117,11 +118,13 @@ export default async function miniprogramSubpackageOptimization(
 
   deletePackageNodeModulesPageDirs();
 
-  // 删除 package/node-modules 多余的文件
+  // 删除所有分包的 node-modules 中多余的 pages 和 components 目录
   function deletePackageNodeModulesPageDirs() {
     for (const packageDirName of packageDirNames) {
       void deletePackageNodeModulesPageDir(
-        join(cwdPath, projectDistPath, packageDirName)
+        join(cwdPath, projectDistPath, packageDirName),
+        originDirName,
+        targetDirTag
       );
     }
   }
