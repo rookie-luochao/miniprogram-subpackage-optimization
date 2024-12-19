@@ -17,6 +17,7 @@ export interface IMiniprogramSubpackageOptimizationOptions {
   targetDirTag?: string;
   vendorPathPattern?: RegExp;
   nodeModulesPathPattern?: RegExp;
+  onlyOptimizeMainPackage?: boolean;
 }
 
 const defaultVendorPathPattern = /(\.\.\/)+common\/vendor\.js/g;
@@ -31,6 +32,7 @@ export default async function miniprogramSubpackageOptimization(
     targetDirTag = 'pages',
     vendorPathPattern = defaultVendorPathPattern,
     nodeModulesPathPattern = defaultNodeModulesPathPattern,
+    onlyOptimizeMainPackage = true,
   } = options;
   const cwdPath = process.cwd();
   const nodeModulesDirPath = join(cwdPath, projectDistPath, originDirName);
@@ -121,11 +123,12 @@ export default async function miniprogramSubpackageOptimization(
   // 删除所有分包的 node-modules 中多余的 pages 和 components 目录
   function deletePackageNodeModulesPageDirs() {
     for (const packageDirName of packageDirNames) {
-      void deletePackageNodeModulesPageDir(
-        join(cwdPath, projectDistPath, packageDirName),
+      void deletePackageNodeModulesPageDir({
+        dirName: join(cwdPath, projectDistPath, packageDirName),
         originDirName,
-        targetDirTag
-      );
+        targetDirTag,
+        onlyOptimizeMainPackage,
+      });
     }
   }
 
