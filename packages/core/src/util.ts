@@ -65,11 +65,14 @@ export function replacePackageFiles(
   }
 }
 
-export async function deletePackageNodeModulesPageDir(
-  dirName: string,
-  originDirName: string,
-  targetDirTag: string
-) {
+export async function deletePackageNodeModulesPageDir(props: {
+  dirName: string;
+  originDirName: string;
+  targetDirTag: string;
+  onlyOptimizeMainPackage: boolean;
+}) {
+  const { dirName, originDirName, targetDirTag, onlyOptimizeMainPackage } =
+    props;
   let needPackagePagesNames = await getChildrenDirNamesByFilePath(dirName);
   const needCommonComponentDirNames: string[] = [];
 
@@ -294,6 +297,11 @@ export async function deletePackageNodeModulesPageDir(
     packageNodeModulesComponentsPath &&
     needCommonComponentDirNames.length > 0
   ) {
+    // 仅仅优化主包 components，子包的 node-modules components 不删除
+    if (onlyOptimizeMainPackage && basename(dirName) !== targetDirTag) {
+      return;
+    }
+
     readdir(packageNodeModulesComponentsPath, (err, files) => {
       if (err) {
         console.error(
