@@ -1,5 +1,11 @@
 # miniprogram-subpackage-optimization
 
+## 0.4.0
+
+### Minor Changes
+
+- [#77](https://github.com/rookie-luochao/miniprogram-subpackage-optimization/pull/77) [`3e9a23e`](https://github.com/rookie-luochao/miniprogram-subpackage-optimization/commit/3e9a23e747b7fbd78f0e8a2a4513fc2fa225dca3) Thanks [@rookie-luochao](https://github.com/rookie-luochao)! - feat: support onlyOptimizeMainPackage
+
 ## 0.3.0
 
 ### Minor Changes
