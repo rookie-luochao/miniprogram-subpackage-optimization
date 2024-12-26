@@ -106,6 +106,38 @@ export async function deletePackageNodeModulesPageDir(props: {
   const packageNodeModulesComponentsPath =
     packageNodeModulesComponentsPaths?.[0];
 
+  const getPagesComponentsDependentComponent = (componentPath: string) => {
+    try {
+      const content = readFileSync(componentPath, 'utf8');
+
+      const usingComponents = (
+        JSON.parse(content) as Record<string, Record<string, string>>
+      ).usingComponents;
+
+      Object.keys(usingComponents).forEach((key) => {
+        const path = formatPath(usingComponents[key]);
+        const commonComponentDirName = path.split('/')[0];
+
+        if (path.startsWith(originDirName)) {
+          return;
+        }
+
+        if (!needCommonComponentDirNames.includes(commonComponentDirName)) {
+          needCommonComponentDirNames.push(commonComponentDirName);
+
+          getDependentComponent(commonComponentDirName);
+        }
+      });
+    } catch (err) {
+      console.error(
+        chalk.redBright(
+          'Failed to read package node-modules pages components components file: ',
+          err
+        )
+      );
+    }
+  };
+
   const getDependentComponent = (componentDirName: string) => {
     try {
       const content = readFileSync(
@@ -119,7 +151,21 @@ export async function deletePackageNodeModulesPageDir(props: {
       Object.keys(usingComponents).forEach((key) => {
         const path = formatPath(usingComponents[key]);
 
-        if (path.startsWith(originDirName) || path.startsWith('components')) {
+        if (path.startsWith(originDirName)) {
+          return;
+        }
+
+        if (path.startsWith('components')) {
+          if (usingComponents[key].startsWith('./')) {
+            getPagesComponentsDependentComponent(
+              join(
+                packageNodeModulesComponentsPath,
+                componentDirName,
+                `${path}.json`
+              )
+            );
+          }
+
           return;
         }
 
@@ -218,7 +264,17 @@ export async function deletePackageNodeModulesPageDir(props: {
                 if (path.startsWith('components')) {
                   const commonComponentDirName = path.split('/')[1];
 
-                  if (
+                  if (usingComponents[key].startsWith('./')) {
+                    getPagesComponentsDependentComponent(
+                      join(
+                        packageNodeModulesPagesPath,
+                        pageDirName,
+                        'components',
+                        componentDirName,
+                        `${path}.json`
+                      )
+                    );
+                  } else if (
                     !needCommonComponentDirNames.includes(
                       commonComponentDirName
                     )
@@ -227,8 +283,6 @@ export async function deletePackageNodeModulesPageDir(props: {
 
                     getDependentComponent(commonComponentDirName);
                   }
-
-                  return;
                 }
               });
             } catch (err) {

@@ -32,7 +32,7 @@ export default async function miniprogramSubpackageOptimization(
     targetDirTag = 'pages',
     vendorPathPattern = defaultVendorPathPattern,
     nodeModulesPathPattern = defaultNodeModulesPathPattern,
-    onlyOptimizeMainPackage = true,
+    onlyOptimizeMainPackage = false,
   } = options;
   const cwdPath = process.cwd();
   const nodeModulesDirPath = join(cwdPath, projectDistPath, originDirName);
