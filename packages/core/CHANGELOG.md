@@ -1,5 +1,11 @@
 # miniprogram-subpackage-optimization
 
+## 0.4.1
+
+### Patch Changes
+
+- [#83](https://github.com/rookie-luochao/miniprogram-subpackage-optimization/pull/83) [`b6caea3`](https://github.com/rookie-luochao/miniprogram-subpackage-optimization/commit/b6caea31a7139e1b0b89e42a5bc3291bd45418e6) Thanks [@rookie-luochao](https://github.com/rookie-luochao)! - perf: perf pages components dependencies
+
 ## 0.4.0
 
 ### Minor Changes
